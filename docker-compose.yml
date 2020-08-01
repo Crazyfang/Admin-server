@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  admin.core:
+    image: ${DOCKER_REGISTRY-}admin
+    build:
+      context: .
+      dockerfile: Admin.Core/Dockerfile
+    ports:
+      - "8888:8888"
+    network_mode: "bridge"
+
