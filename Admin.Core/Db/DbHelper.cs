@@ -11,6 +11,7 @@ using Admin.Core.Common.Configs;
 using Admin.Core.Common.Helpers;
 using Admin.Core.Model.Admin;
 using System.Reflection;
+using Admin.Core.Model.Record;
 
 namespace Admin.Core.Db
 {
@@ -82,7 +83,17 @@ namespace Admin.Core.Db
                 typeof(OprationLogEntity),
                 typeof(LoginLogEntity),
                 typeof(DocumentEntity),
-                typeof(DocumentImageEntity)
+                typeof(DocumentImageEntity),
+                typeof(DepartmentEntity),
+                typeof(UserDepartmentEntity),
+                typeof(RecordEntity),
+                typeof(RecordTypeEntity),
+                typeof(RecordFileTypeEntity),
+                typeof(RecordFileEntity),
+                typeof(CheckedRecordFileEntity),
+                typeof(RecordFileContractEntity),
+                typeof(OtherRecordFileEntity),
+                typeof(RecordHistoryEntity)
             });
             Console.WriteLine($"{(msg.NotNull() ? msg : $"sync {dbType} structure")} succeed\r\n");
         }

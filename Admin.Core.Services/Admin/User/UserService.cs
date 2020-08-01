@@ -13,6 +13,7 @@ using Admin.Core.Service.Admin.User;
 using Admin.Core.Service.Admin.User.Input;
 using Admin.Core.Service.Admin.User.Output;
 using Admin.Core.Common.Attributes;
+using Admin.Core.Repository.Admin.UserDepartment;
 
 namespace Admin.Core.FrameWork.Service.User
 {
@@ -27,6 +28,7 @@ namespace Admin.Core.FrameWork.Service.User
         private readonly IUserRepository _userRepository;
         private readonly IUserRoleRepository _userRoleRepository;
         private readonly IRolePermissionRepository _rolePermissionRepository;
+        private readonly IUserDepartmentRepository _userDepartmentRepository;
 
         public UserService(
             IUser user,
@@ -34,7 +36,8 @@ namespace Admin.Core.FrameWork.Service.User
             IMapper mapper,
             IUserRepository userRepository,
             IUserRoleRepository userRoleRepository,
-            IRolePermissionRepository rolePermissionRepository
+            IRolePermissionRepository rolePermissionRepository,
+            IUserDepartmentRepository userDepartmentRepository
         )
         {
             _user = user;
@@ -43,6 +46,7 @@ namespace Admin.Core.FrameWork.Service.User
             _userRepository = userRepository;
             _userRoleRepository = userRoleRepository;
             _rolePermissionRepository = rolePermissionRepository;
+            _userDepartmentRepository = userDepartmentRepository;
         }
 
         public async Task<ResponseOutput<UserGetOutput>> GetAsync(long id)
@@ -52,6 +56,7 @@ namespace Admin.Core.FrameWork.Service.User
             var entity = await _userRepository.Select
             .WhereDynamic(id)
             .IncludeMany(a => a.Roles.Select(b => new RoleEntity { Id = b.Id }))
+            .IncludeMany(a => a.Departments.Select(b => new DepartmentEntity { Id = b.Id}))
             .ToOneAsync();
 
             var entityDto = _mapper.Map<UserGetOutput>(entity);
@@ -99,6 +104,7 @@ namespace Admin.Core.FrameWork.Service.User
             .Count(out var total)
             .OrderByDescending(true, a => a.Id)
             .IncludeMany(a => a.Roles.Select(b => new RoleEntity{ Name = b.Name }))
+            .IncludeMany(a => a.Departments.Select(b => new DepartmentEntity { DepartmentName = b.DepartmentName, DepartmentCode = b.DepartmentCode }))
             .Page(input.CurrentPage, input.PageSize)
             .ToListAsync();
 
@@ -134,6 +140,11 @@ namespace Admin.Core.FrameWork.Service.User
                 var roles = input.RoleIds.Select(a => new UserRoleEntity { UserId = user.Id, RoleId = a });
                 await _userRoleRepository.InsertAsync(roles);
             }
+            if (input.DepartmentIds != null && input.DepartmentIds.Any())
+            {
+                var departments = input.DepartmentIds.Select(a => new UserDepartmentEntity { UserId = user.Id, DepartmentId = a });
+                await _userDepartmentRepository.InsertAsync(departments);
+            }
 
             return ResponseOutput.Ok();
         }
@@ -160,6 +171,13 @@ namespace Admin.Core.FrameWork.Service.User
                 var roles = input.RoleIds.Select(a => new UserRoleEntity { UserId = user.Id, RoleId = a });
                 await _userRoleRepository.InsertAsync(roles);
             }
+            await _userDepartmentRepository.DeleteAsync(a => a.UserId == user.Id);
+            if (input.DepartmentIds != null && input.DepartmentIds.Any())
+            {
+                var departments = input.DepartmentIds.Select(a => new UserDepartmentEntity { UserId = user.Id, DepartmentId = a });
+                await _userDepartmentRepository.InsertAsync(departments);
+            }
+
 
             return ResponseOutput.Ok();
         }
@@ -218,6 +236,14 @@ namespace Admin.Core.FrameWork.Service.User
             var result = await _userRepository.SoftDeleteAsync(ids);
 
             return ResponseOutput.Result(result);
+        }
+
+        public async Task<IResponseOutput> GetUserSelectAsync()
+        {
+            var entity = await _userRepository.Select.ToListAsync();
+
+            var result = _mapper.Map<List<UserSelectOutput>>(entity);
+            return ResponseOutput.Ok(result);
         }
     }
 }

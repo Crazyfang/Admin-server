@@ -70,7 +70,7 @@ namespace Admin.Core.Service.Admin.Role
             var entity = await _roleRepository.GetAsync(input.Id);
             if (!(entity?.Id > 0))
             {
-                return ResponseOutput.NotOk("½ÇÉ«²»´æÔÚ£¡");
+                return ResponseOutput.NotOk("å½“å‰ç¼–è¾‘è§’è‰²ä¸å­˜åœ¨!");
             }
 
             _mapper.Map(input, entity);

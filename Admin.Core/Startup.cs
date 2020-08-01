@@ -184,7 +184,7 @@ namespace Admin.Core
             })
             //.AddFluentValidation(config =>
             //{
-            //    var assembly = Assembly.LoadFrom(Path.Combine(basePath, "Admin.Core.dll"));
+            //    var assembly = Assembly.LoadFrom(Path.Combine(basePath, "Admin.Core.dll"));   
             //    config.RegisterValidatorsFromAssembly(assembly);
             //})
             .AddNewtonsoftJson(options =>
@@ -204,6 +204,7 @@ namespace Admin.Core
             {
                 var csredis = new CSRedis.CSRedisClient(cacheConfig.Redis.ConnectionString);
                 RedisHelper.Initialization(csredis);
+                RedisDataHelper.SetIndex("NumberIndex");
                 services.AddSingleton<ICache, RedisCache>();
             }
             else

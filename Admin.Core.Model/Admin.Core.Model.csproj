@@ -23,4 +23,7 @@
     <ProjectReference Include="..\Admin.Core.Common\Admin.Core.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Record\" />
+  </ItemGroup>
 </Project>

@@ -178,6 +178,53 @@
             <param name="cacheKey"></param>
             <returns></returns>
         </member>
+        <member name="T:Admin.Core.Controllers.Admin.DepartmentController">
+            <summary>
+            用户管理
+            </summary>
+        </member>
+        <member name="M:Admin.Core.Controllers.Admin.DepartmentController.GetList(System.String)">
+            <summary>
+            获取部门列表
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Admin.DepartmentController.GetDepartment(System.Int64)">
+            <summary>
+            获取单个部门信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Admin.DepartmentController.UpdateDepartment(Admin.Core.Service.Admin.Department.Input.DepartmentUpdateInput)">
+            <summary>
+            更新部门
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Admin.DepartmentController.AddDepartment(Admin.Core.Service.Admin.Department.Input.DepartmentUpdateInput)">
+            <summary>
+            增加部门
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Admin.DepartmentController.SoftDelete(System.Int64)">
+            <summary>
+            删除部门
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Admin.DepartmentController.DeleteDepartment(System.Int64)">
+            <summary>
+            删除部门
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:Admin.Core.Controllers.Admin.DictionaryController">
             <summary>
             数据字典
@@ -630,7 +677,7 @@
             <summary>
             同步视图
             支持新增和修改视图
-            根据视图是否存在自动禁用和启用视图
+            根据视图是否存在自动禁用和启用视图   
             </summary>
             <param name="input"></param>
             <returns></returns>
@@ -639,6 +686,25 @@
             <summary>
             基础控制器
             </summary>
+        </member>
+        <member name="T:Admin.Core.Controllers.Record.AreaController">
+            <summary>
+            域控制器
+            </summary>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileController.Get(System.Int64)">
+            <summary>
+            根据id获取特定的档案文件条目
+            </summary>
+            <param name="id">档案文件id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileController.GetListByRecFileTypeId(System.Int64)">
+            <summary>
+            根据档案文件类型Id获取档案文件列表
+            </summary>
+            <param name="id">档案文件类型Id</param>
+            <returns>档案文件列表</returns>
         </member>
         <member name="T:Admin.Core.Db.Data">
             <summary>

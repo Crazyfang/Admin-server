@@ -26,11 +26,31 @@ namespace Admin.Core.Service.Admin.User
             CreateMap<UserEntity, UserGetOutput>().ForMember(
                 d => d.RoleIds,
                 m => m.MapFrom(s => s.Roles.Select(a => a.Id))
+            ).ForMember(
+                d => d.DepartmentIds,
+                m => m.MapFrom(s => s.Departments.Select(a => a.Id))
             );
 
             CreateMap<UserEntity, UserListOutput>().ForMember(
                 d => d.RoleNames,
                 m => m.MapFrom(s => s.Roles.Select(a => a.Name))
+            ).ForMember(
+                d => d.DepartmentNames,
+                m => m.MapFrom(s => s.Departments.Select(a => a.DepartmentName))
+            ).ForMember(
+                d => d.DepartmentCodes,
+                m => m.MapFrom(s => s.Departments.Select(a => a.DepartmentCode.ToString()))
+            );
+
+            CreateMap<UserEntity, UserSelectOutput>().ForMember(
+                d => d.Value,
+                m => m.MapFrom(s => s.Id)
+            ).ForMember(
+                d => d.Label,
+                m => m.MapFrom(s => s.NickName)
+            ).ForMember(
+                d => d.PeopleId,
+                m => m.MapFrom(s => s.UserName)
             );
         }
     }

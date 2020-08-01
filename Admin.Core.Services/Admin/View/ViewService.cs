@@ -41,7 +41,7 @@ namespace Admin.Core.Service.Admin.View
 
         public async Task<IResponseOutput> PageAsync(PageInput<ViewEntity> input)
         {
-            var key = input.Filter?.Label;
+            var key = input.Filter?.Label;  
 
             long total;
             var list = await _viewRepository.Select
@@ -78,7 +78,7 @@ namespace Admin.Core.Service.Admin.View
             var entity = await _viewRepository.GetAsync(input.Id);
             if (!(entity?.Id > 0))
             {
-                return ResponseOutput.NotOk("ÊÓÍ¼²»´æÔÚ£¡");
+                return ResponseOutput.NotOk("è·å–å½“å‰ç¼–è¾‘è§†å›¾å¤±è´¥!");
             }
 
             _mapper.Map(input, entity);
@@ -114,11 +114,11 @@ namespace Admin.Core.Service.Admin.View
         [Transaction]
         public async Task<IResponseOutput> SyncAsync(ViewSyncInput input)
         {
-            //²éÑ¯ËùÓĞview
+            //ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½view
             var views = await _viewRepository.Select.ToListAsync();
             var paths = views.Select(a => a.Path).ToList();
 
-            //path´¦Àí
+            //pathï¿½ï¿½ï¿½ï¿½
             foreach (var view in input.Views)
             {
                 view.Path = view.Path?.Trim().ToLower();
@@ -126,8 +126,8 @@ namespace Admin.Core.Service.Admin.View
             }
 
 
-            #region Ö´ĞĞ²åÈë
-            //Ö´ĞĞ¸¸¼¶view²åÈë
+            #region Ö´ï¿½Ğ²ï¿½ï¿½ï¿½
+            //Ö´ï¿½Ğ¸ï¿½ï¿½ï¿½viewï¿½ï¿½ï¿½ï¿½
             var parentViews = input.Views.FindAll(a => a.ParentPath.IsNull());
             var pViews = (from a in parentViews where !paths.Contains(a.Path) select a).ToList();
             if (pViews.Count > 0)
@@ -137,7 +137,7 @@ namespace Admin.Core.Service.Admin.View
                 views.AddRange(insertPViews);
             }
 
-            //Ö´ĞĞ×Ó¼¶view²åÈë
+            //Ö´ï¿½ï¿½ï¿½Ó¼ï¿½viewï¿½ï¿½ï¿½ï¿½
             var childViews = input.Views.FindAll(a => a.ParentPath.NotNull());
             var cViews = (from a in childViews where !paths.Contains(a.Path) select a).ToList();
             if (cViews.Count > 0)
@@ -148,8 +148,8 @@ namespace Admin.Core.Service.Admin.View
             }
             #endregion
 
-            #region ĞŞ¸ÄºÍ½ûÓÃ
-            //viewĞŞ¸Ä
+            #region ï¿½Ş¸ÄºÍ½ï¿½ï¿½ï¿½
+            //viewï¿½Ş¸ï¿½
             {
                 ViewEntity a;
                 List<string> labels;
@@ -195,7 +195,7 @@ namespace Admin.Core.Service.Admin.View
                 }
             }
 
-            //view½ûÓÃ
+            //viewï¿½ï¿½ï¿½ï¿½
             var inputPaths = input.Views.Select(a => a.Path).ToList();
             var disabledViews = (from a in views where !inputPaths.Contains(a.Path) select a).ToList();
             if (disabledViews.Count > 0)
@@ -207,7 +207,7 @@ namespace Admin.Core.Service.Admin.View
             } 
             #endregion
 
-            //ÅúÁ¿¸üĞÂ
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             await _viewRepository.UpdateDiy.SetSource(views)
             .UpdateColumns(a => new { a.ParentId, a.Label,a.Description,a.Enabled })
             .ExecuteAffrowsAsync();

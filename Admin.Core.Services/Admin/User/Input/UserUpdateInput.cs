@@ -45,6 +45,11 @@ namespace Admin.Core.Service.Admin.User.Input
         public long[] RoleIds { get; set; }
 
         /// <summary>
+        /// 部门
+        /// </summary>
+        public long[] DepartmentIds { get; set; }
+
+        /// <summary>
         /// 版本
         /// </summary>
         public long Version { get; set; }

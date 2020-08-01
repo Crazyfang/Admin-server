@@ -100,7 +100,7 @@ namespace Admin.Core.Controllers.Admin
         /// <summary>
         /// 同步视图
         /// 支持新增和修改视图
-        /// 根据视图是否存在自动禁用和启用视图
+        /// 根据视图是否存在自动禁用和启用视图   
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>

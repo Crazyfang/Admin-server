@@ -39,4 +39,28 @@
     <ProjectReference Include="..\Admin.Core.Repository\Admin.Core.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Admin\Department\" />
+    <Folder Include="Admin\Department\Output\" />
+    <Folder Include="Admin\Department\Input\" />
+    <Folder Include="Record\" />
+    <Folder Include="Record\Record\" />
+    <Folder Include="Record\Record\Output\" />
+    <Folder Include="Record\Record\Input\" />
+    <Folder Include="Record\RecordType\" />
+    <Folder Include="Record\RecordFileType\" />
+    <Folder Include="Record\RecordFile\" />
+    <Folder Include="Record\RecordType\Output\" />
+    <Folder Include="Record\RecordType\Input\" />
+    <Folder Include="Record\RecordFileType\Output\" />
+    <Folder Include="Record\RecordFile\Output\" />
+    <Folder Include="Record\RecordFileType\Input\" />
+    <Folder Include="Record\RecordFile\Input\" />
+    <Folder Include="Record\CheckedRecordFile\" />
+    <Folder Include="Record\CheckedRecordFile\Input\" />
+    <Folder Include="Record\RecordFileContract\" />
+    <Folder Include="Record\RecordFileContract\Output\" />
+    <Folder Include="Record\OtherRecordFile\" />
+    <Folder Include="Record\OtherRecordFile\Output\" />
+  </ItemGroup>
 </Project>

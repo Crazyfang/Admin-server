@@ -10,7 +10,7 @@ using Admin.Core.Service.Admin.User.Output;
 namespace Admin.Core.Service.Admin.User
 {
     /// <summary>
-    /// 用户服务
+    /// 鐢ㄦ埛鎿嶄綔
     /// </summary>	
     public interface IUserService
 	{
@@ -35,5 +35,8 @@ namespace Admin.Core.Service.Admin.User
         Task<IResponseOutput> GetBasicAsync();
 
         Task<IList<string>> GetPermissionsAsync();
+
+        Task<IResponseOutput> GetUserSelectAsync();
+
     }
 }

@@ -43,5 +43,15 @@ namespace Admin.Core.Service.Admin.User.Output
         /// 创建时间
         /// </summary>
         public DateTime? CreatedTime { get; set; }
+
+        /// <summary>
+        /// 部门名称集合
+        /// </summary>
+        public string[] DepartmentNames { get; set; }
+
+        /// <summary>
+        /// 部门编号集合
+        /// </summary>
+        public long[] DepartmentCodes { get; set; }
     }
 }

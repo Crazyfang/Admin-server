@@ -49,6 +49,21 @@
             启用
             </summary>
         </member>
+        <member name="P:Admin.Core.Model.Admin.DepartmentEntity.DepartmentCode">
+            <summary>
+            部门代码
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Admin.DepartmentEntity.DepartmentName">
+            <summary>
+            部门名称
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Admin.DepartmentEntity.ParentId">
+            <summary>
+            上级部门
+            </summary>
+        </member>
         <member name="T:Admin.Core.Model.Admin.DictionaryEntity">
             <summary>
             数据字典
@@ -409,6 +424,26 @@
             权限
             </summary>
         </member>
+        <member name="P:Admin.Core.Model.Admin.UserDepartmentEntity.DepartmentId">
+            <summary>
+            部门Id
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Admin.UserDepartmentEntity.Department">
+            <summary>
+            部门
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Admin.UserDepartmentEntity.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Admin.UserDepartmentEntity.User">
+            <summary>
+            用户
+            </summary>
+        </member>
         <member name="T:Admin.Core.Model.Admin.UserEntity">
             <summary>
             用户
@@ -497,6 +532,76 @@
         <member name="P:Admin.Core.Model.Admin.ViewEntity.Sort">
             <summary>
             排序
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordEntity.RecordId">
+            <summary>
+            档案编号
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordEntity.RecordUserName">
+            <summary>
+            档案用户姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordEntity.RecordUserInCode">
+            <summary>
+            客户内码
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordEntity.RecordUserCode">
+            <summary>
+            客户码
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordEntity.ManagerDepartmentId">
+            <summary>
+            档案归属支行
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordEntity.ManagerUserId">
+            <summary>
+            档案归属客户经理
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordEntity.RecordType">
+            <summary>
+            档案类型
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordEntity.CreditDueDate">
+            <summary>
+            授信到期日
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordEntity.Status">
+            <summary>
+            档案状态
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordFileEntity.RecordFileName">
+            <summary>
+            档案文件名称
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordFileEntity.RecordFileTypeId">
+            <summary>
+            档案文件类型
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordFileTypeEntity.FileTypeName">
+            <summary>
+            文件类型名称
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordFileTypeEntity.RecordTypeId">
+            <summary>
+            档案类型
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordTypeEntity.RecordTypeName">
+            <summary>
+            档案类型名称
             </summary>
         </member>
     </members>

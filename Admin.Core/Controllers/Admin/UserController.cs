@@ -11,6 +11,7 @@ using Admin.Core.Common.Auth;
 using Admin.Core.Common.Configs;
 using Admin.Core.Common.Helpers;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Admin.Core.Controllers.Admin
 {
@@ -154,6 +155,13 @@ namespace Admin.Core.Controllers.Admin
             }
 
             return ResponseOutput.NotOk("上传失败！");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IResponseOutput> GetUserSelect()
+        {
+            return await _userServices.GetUserSelectAsync();
         }
     }
 }

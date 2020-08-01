@@ -49,5 +49,8 @@ namespace Admin.Core.Model.Admin
 
         [Navigate(ManyToMany = typeof(UserRoleEntity))]
         public ICollection<RoleEntity> Roles { get; set; }
+
+        [Navigate(ManyToMany = typeof(UserDepartmentEntity))]
+        public ICollection<DepartmentEntity> Departments { get; set; }
     }
 }

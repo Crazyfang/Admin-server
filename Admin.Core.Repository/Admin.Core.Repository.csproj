@@ -27,4 +27,17 @@
     <ProjectReference Include="..\Admin.Core.Model\Admin.Core.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Admin\Department\" />
+    <Folder Include="Record\" />
+    <Folder Include="Record\Record\" />
+    <Folder Include="Record\RecordType\" />
+    <Folder Include="Record\RecordFileType\" />
+    <Folder Include="Record\RecordFile\" />
+    <Folder Include="Record\CheckedRecordFile\" />
+    <Folder Include="Record\OtherRecordFile\" />
+    <Folder Include="Record\RecordFileContract\" />
+    <Folder Include="Admin\UserDepartment\" />
+    <Folder Include="Admin\RecordHistory\" />
+  </ItemGroup>
 </Project>

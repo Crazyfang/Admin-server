@@ -44,5 +44,7 @@ namespace Admin.Core.Service.Admin.User.Input
         /// 角色
         /// </summary>
         public long[] RoleIds { get; set; }
+
+        public long[] DepartmentIds { get; set; }
     }
 }
