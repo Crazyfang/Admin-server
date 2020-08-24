@@ -12,6 +12,7 @@ using Admin.Core.Common.Helpers;
 using Admin.Core.Model.Admin;
 using System.Reflection;
 using Admin.Core.Model.Record;
+using Admin.Core.Controllers.Record;
 
 namespace Admin.Core.Db
 {
@@ -91,9 +92,13 @@ namespace Admin.Core.Db
                 typeof(RecordFileTypeEntity),
                 typeof(RecordFileEntity),
                 typeof(CheckedRecordFileEntity),
-                typeof(RecordFileContractEntity),
-                typeof(OtherRecordFileEntity),
-                typeof(RecordHistoryEntity)
+                typeof(RecordHistoryEntity),
+                typeof(CheckedRecordFileTypeEntity),
+                typeof(RecordBorrowEntity),
+                typeof(RecordBorrowItemEntity),
+                typeof(RecordIdEntity),
+                typeof(InitiativeUpdateEntity),
+                typeof(InitiativeUpdateItemEntity)
             });
             Console.WriteLine($"{(msg.NotNull() ? msg : $"sync {dbType} structure")} succeed\r\n");
         }

@@ -52,6 +52,9 @@ namespace Admin.Core.Model.Record
 
         /// <summary>
         /// 档案状态
+        /// 0-待移交
+        /// 1-在库
+        /// 2-借阅中
         /// </summary>
         public int Status { get; set; }
     }

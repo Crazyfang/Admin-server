@@ -51,6 +51,6 @@ namespace Admin.Core.Model.Admin
         public ICollection<RoleEntity> Roles { get; set; }
 
         [Navigate(ManyToMany = typeof(UserDepartmentEntity))]
-        public ICollection<DepartmentEntity> Departments { get; set; }
+        public IList<DepartmentEntity> Departments { get; set; }
     }
 }

@@ -34,6 +34,7 @@ using Admin.Core.Logs;
 using PermissionHandler = Admin.Core.Auth.PermissionHandler;
 using Admin.Core.Extensions;
 using Admin.Core.Common.Attributes;
+using Admin.Core.Hubs;
 
 namespace Admin.Core
 {
@@ -72,11 +73,19 @@ namespace Admin.Core
                 c.AddPolicy("Limit", policy =>
                 {
                     policy
-                    .WithOrigins(_appConfig.Urls)
+                    //.WithOrigins(_appConfig.Urls)
+                    .SetIsOriginAllowed((host) => true)
+                    .AllowCredentials()
+                    //.AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });
             });
+            #endregion
+
+            //添加SignalR
+            #region
+            services.AddSignalR();
             #endregion
 
             #region Swagger Api文档
@@ -276,6 +285,8 @@ namespace Admin.Core
             //异常
             app.UseExceptionHandler("/Error");
 
+            app.UseDefaultFiles();
+
             //静态文件
             app.UseUploadConfig();
 
@@ -295,6 +306,7 @@ namespace Admin.Core
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/hub");
             });
             #endregion
 

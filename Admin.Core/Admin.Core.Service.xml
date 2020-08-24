@@ -247,6 +247,11 @@
             姓名
             </summary>
         </member>
+        <member name="P:Admin.Core.Service.Admin.Auth.Output.AuthLoginOutput.DepartmentId">
+            <summary>
+            部门Id
+            </summary>
+        </member>
         <member name="T:Admin.Core.Service.Admin.Auth.MapConfig">
             <summary>
             映射配置
@@ -1591,6 +1596,18 @@
         <member name="P:Admin.Core.Service.Record.Record.Output.RecordListOutput.CreditDueDate">
             <summary>
             授信到期日
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Record.RecordBorrow.Input.RecordBorrowVerifyInput.VerifyType">
+            <summary>
+            审核类别
+            0-不同意
+            1-同意
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Record.RecordBorrow.Input.RecordBorrowVerifyInput.RefuseReason">
+            <summary>
+            拒绝意见
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Record.RecordType.Input.RecordTypeAddInput.RecordTypeName">

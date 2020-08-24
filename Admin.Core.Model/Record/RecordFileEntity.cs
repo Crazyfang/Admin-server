@@ -19,7 +19,7 @@ namespace Admin.Core.Model.Record
         public long? RecordFileTypeId { get; set; }
         public RecordFileTypeEntity RecordFileType { get; set; }
 
-        [Navigate(nameof(CheckedRecordFileEntity.RecordFileId))]
-        public List<CheckedRecordFileEntity> CheckedRecordFileList { get; set; }
+        //[Column(IsIgnore = true)]
+        //public long? CheckedRecordFileId { get; set; }
     }
 }

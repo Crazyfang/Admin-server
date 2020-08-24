@@ -34,7 +34,6 @@ namespace Admin.Core.Service.Record.CheckedRecordFile
         {
             var entityList = await _checkedRecordFileRepository.Select
                 .Where(i => i.RecordFile.RecordFileTypeId == id && i.RecordId == recordId)
-                .IncludeMany(i => i.Contract)
                 .ToListAsync();
 
             var recordFileList = await _recordFileRepositroy.Select

@@ -16,7 +16,7 @@ namespace Admin.Core.Service.Admin.User
 	{
         Task<ResponseOutput<UserGetOutput>> GetAsync(long id);
 
-        Task<IResponseOutput> PageAsync(PageInput<UserEntity> input);
+        Task<IResponseOutput> PageAsync(PageInput<UserSearchInput> input);
 
         Task<IResponseOutput> AddAsync(UserAddInput input);
 
@@ -36,7 +36,9 @@ namespace Admin.Core.Service.Admin.User
 
         Task<IList<string>> GetPermissionsAsync();
 
-        Task<IResponseOutput> GetUserSelectAsync();
+        Task<IResponseOutput> GetUserSelectAsync(long departmentId);
+
+        Task<IList<string>> GetPermissionsNameAsync();
 
     }
 }

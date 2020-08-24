@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Admin.Core.Common.Output;
 using Admin.Core.Service.Record.CheckedRecordFile;
-using Admin.Core.Service.Record.OtherRecordFile;
 using Admin.Core.Service.Record.Record;
 using Admin.Core.Service.Record.RecordFile;
 using Admin.Core.Service.Record.RecordFileType;
@@ -20,7 +19,6 @@ namespace Admin.Core.Controllers.Record
         private readonly IRecordService _recordService;
         public RecordFileTypeController(IRecordFileTypeService recordFileTypeService
             , ICheckedRecordFileService checkedRecordFileService
-            , IOtherRecordFileService otherRecordFileService
             , IRecordFileService recordFileService
             , IRecordService recordService)
         {
@@ -72,11 +70,6 @@ namespace Admin.Core.Controllers.Record
             if (id == record)
             {
                 var recordFileTypeList = await _recordFileTypeService.UpdateRecordPageListAsync(id, recordId);
-                foreach (var item in recordFileTypeList)
-                {
-                    var data = await _checkedRecordFileService.GetCheckedRecordFileAsync(item.Id, recordId);
-                    item.Children = data;
-                }
 
                 return ResponseOutput.Ok(recordFileTypeList);
             }

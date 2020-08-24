@@ -75,13 +75,13 @@ namespace Admin.Core.Service.Record.RecordFile
             return ResponseOutput.Result(result);
         }
 
-        public async Task<List<NewRecordFileOutput>> GetRecordFileByRecordTypeIdAsync(long id)
+        public async Task<List<AddRecordFileOutput>> GetRecordFileByRecordTypeIdAsync(long id)
         {
             var entityList = await _recordFileRepository.Select
                 .Where(i => i.RecordFileTypeId == id)
                 .ToListAsync();
 
-            var output = _mapper.Map<List<NewRecordFileOutput>>(entityList);
+            var output = _mapper.Map<List<AddRecordFileOutput>>(entityList);
 
             return output;
         }

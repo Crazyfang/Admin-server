@@ -19,6 +19,6 @@ namespace Admin.Core.Service.Record.RecordFile
 
         Task<IResponseOutput> DeleteAsync(long id);
 
-        Task<List<NewRecordFileOutput>> GetRecordFileByRecordTypeIdAsync(long id);
+        Task<List<AddRecordFileOutput>> GetRecordFileByRecordTypeIdAsync(long id);
     }
 }

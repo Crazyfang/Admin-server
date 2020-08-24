@@ -24,5 +24,7 @@ namespace Admin.Core.Service.Admin.Department
         Task<IResponseOutput> DeleteAsync(long id);
 
         Task<IResponseOutput> SoftDeleteAsync(long id);
+
+        Task<IResponseOutput> GetSelectListAsync(long id);
     }
 }

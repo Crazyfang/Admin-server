@@ -534,6 +534,113 @@
             排序
             </summary>
         </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileEntity.RecordId">
+            <summary>
+            档案主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileEntity.RecordFileId">
+            <summary>
+            关联文件主键
+            0-代表是自定义文件
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileEntity.CheckedRecordFileTypeId">
+            <summary>
+            选中文件类型主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileEntity.CreditDueDate">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileEntity.Num">
+            <summary>
+            份数
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileEntity.Name">
+            <summary>
+            文件名称
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileEntity.OtherSign">
+            <summary>
+            自定义文件标识
+            0-预设文件
+            1-自定义文件
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileEntity.HandOverSign">
+            <summary>
+            移交标识
+            0-未移交
+            1-移交
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileTypeEntity.RecordFileTypeId">
+            <summary>
+            关联文件类型主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileTypeEntity.RecordId">
+            <summary>
+            档案主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.CheckedRecordFileTypeEntity.Remarks">
+            <summary>
+            备注项（合同号或者担保人名称）
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.InitiativeUpdateEntity.Status">
+            <summary>
+            状态
+            0-待审核
+            1-审核通过
+            2-审核被拒绝
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.InitiativeUpdateEntity.RefuseReason">
+            <summary>
+            拒绝原因
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.InitiativeUpdateEntity.RecordId">
+            <summary>
+            档案主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.InitiativeUpdateEntity.Type">
+            <summary>
+            更新类型
+            0-过期更新
+            1-主动更新
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordBorrowEntity.RefuseReason">
+            <summary>
+            拒绝原因
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordBorrowEntity.BorrowType">
+            <summary>
+            借阅类型
+            0-借阅
+            1-调阅
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordBorrowEntity.ReturnSign">
+            <summary>
+            完成标志
+            0-未完成
+            1-完成
+            2-拒绝
+            3-取消申请
+            4-归还
+            </summary>
+        </member>
         <member name="P:Admin.Core.Model.Record.RecordEntity.RecordId">
             <summary>
             档案编号
@@ -577,6 +684,9 @@
         <member name="P:Admin.Core.Model.Record.RecordEntity.Status">
             <summary>
             档案状态
+            0-待移交
+            1-在库
+            2-借阅中
             </summary>
         </member>
         <member name="P:Admin.Core.Model.Record.RecordFileEntity.RecordFileName">

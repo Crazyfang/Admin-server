@@ -23,8 +23,5 @@ namespace Admin.Core.Model.Record
         public List<RecordFileEntity> RecordFileList { get; set; }
 
         public List<CheckedRecordFileEntity> CheckedRecordFileList { get; set; }
-
-        [Navigate(nameof(OtherRecordFileEntity.RecordFileTypeId))]
-        public List<OtherRecordFileEntity> OtherRecordFileList { get; set; }
     }
 }

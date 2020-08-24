@@ -563,7 +563,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Admin.Core.Controllers.Admin.UserController.GetPage(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Admin.UserEntity})">
+        <member name="M:Admin.Core.Controllers.Admin.UserController.GetPage(Admin.Core.Common.Input.PageInput{Admin.Core.Service.Admin.User.Input.UserSearchInput})">
             <summary>
             查询分页用户
             </summary>

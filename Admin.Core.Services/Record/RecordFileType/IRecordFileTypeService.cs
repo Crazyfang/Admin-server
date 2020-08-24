@@ -19,7 +19,7 @@ namespace Admin.Core.Service.Record.RecordFileType
 
         Task<IResponseOutput> DeleteRecordFileTypeAsync(long id);
 
-        Task<List<RecordFileTypeOutput>> UpdateRecordPageListAsync(long id, long recordId);
+        Task<List<RecordFileTypeUpdateOutput>> UpdateRecordPageListAsync(long id, long recordId);
 
         Task<List<RecordFileTypeAddOutput>> AddRecordPageListAsync(long id);
     }

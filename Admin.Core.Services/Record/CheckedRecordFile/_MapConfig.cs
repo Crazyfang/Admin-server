@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Admin.Core.Model.Record;
 using Admin.Core.Service.Record.CheckedRecordFile.Input;
-using Admin.Core.Service.Record.RecordFileContract.Output;
 using AutoMapper;
 
 namespace Admin.Core.Service.Record.CheckedRecordFile
@@ -26,10 +25,13 @@ namespace Admin.Core.Service.Record.CheckedRecordFile
             );
             CreateMap<CheckedRecordFileEntity, CheckedRecordFileInput>().ForMember(
                 i => i.Checked,
-                m => m.MapFrom(n => true)
+                m => m.MapFrom(n => n.HandOverSign == 1)
             ).ForMember(
                 i => i.Name,
-                m => m.MapFrom(n => n.RecordFile.RecordFileName)
+                m => m.MapFrom(n => n.RecordFile == null?n.Name:n.RecordFile.RecordFileName)
+            ).ForMember(
+                i => i.CheckedRecordFileId,
+                m => m.MapFrom(n => n.Id)
             );
             CreateMap<CheckedRecordFileInput, CheckedRecordFileEntity>();
         }

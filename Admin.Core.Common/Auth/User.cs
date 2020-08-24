@@ -66,6 +66,7 @@ namespace Admin.Core.Common.Auth
                 return "";
             }
         }
+
     }
 
     /// <summary>

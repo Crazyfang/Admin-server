@@ -58,9 +58,16 @@
     <Folder Include="Record\RecordFile\Input\" />
     <Folder Include="Record\CheckedRecordFile\" />
     <Folder Include="Record\CheckedRecordFile\Input\" />
-    <Folder Include="Record\RecordFileContract\" />
-    <Folder Include="Record\RecordFileContract\Output\" />
-    <Folder Include="Record\OtherRecordFile\" />
-    <Folder Include="Record\OtherRecordFile\Output\" />
+    <Folder Include="Record\CheckedRecordFileType\" />
+    <Folder Include="Record\RecordHistory\" />
+    <Folder Include="Record\RecordHistory\Output\" />
+    <Folder Include="Record\RecordBorrow\" />
+    <Folder Include="Record\RecordBorrow\Output\" />
+    <Folder Include="Record\RecordBorrowItem\" />
+    <Folder Include="Record\RecordBorrowItem\Output\" />
+    <Folder Include="Record\RecordBorrow\Input\" />
+    <Folder Include="Record\InitiativeUpdate\" />
+    <Folder Include="Record\InitiativeUpdateItem\" />
+    <Folder Include="Record\InitiativeUpdateItem\Output\" />
   </ItemGroup>
 </Project>

@@ -95,5 +95,14 @@ namespace Admin.Core.Service.Admin.Department
 
             return ResponseOutput.Result(result);
         }
+
+        public async Task<IResponseOutput> GetSelectListAsync(long id)
+        {
+            var result = await _departmentRepository.Select
+                .WhereIf(id != 0, i => i.Id == id)
+                .ToListAsync(i => new { id = i.Id, value = i.DepartmentName });
+
+            return ResponseOutput.Ok(result);
+        }
     }
 }

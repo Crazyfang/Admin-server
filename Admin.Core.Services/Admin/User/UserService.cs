@@ -95,12 +95,25 @@ namespace Admin.Core.FrameWork.Service.User
             }
         }
 
-        public async Task<IResponseOutput> PageAsync(PageInput<UserEntity> input)
+        public async Task<IList<string>> GetPermissionsNameAsync()
+        {
+            var userPermissoins = await _rolePermissionRepository.Select
+                .InnerJoin<UserRoleEntity>((a, b) => a.RoleId == b.RoleId && b.UserId == _user.Id && a.Permission.Type == PermissionType.Api)
+                .Include(a => a.Permission.Api)
+                .Distinct()
+                .ToListAsync(a => a.Permission.Api.Label);
+
+            return userPermissoins;
+        }
+
+        public async Task<IResponseOutput> PageAsync(PageInput<UserSearchInput> input)
         {
             var key = input.Filter?.UserName;
 
             var list = await _userRepository.Select
             .WhereIf(key.NotNull(), a => a.Status >= 0 && (a.UserName.Contains(key) || a.NickName.Contains(key)))
+            .WhereIf(input.Filter.DepartmentId.HasValue, i => i.Departments.AsSelect().Any(a => a.Id == input.Filter.DepartmentId.Value))
+            .WhereIf(input.Filter.RoleId.HasValue, i => i.Roles.AsSelect().Any(a => a.Id == input.Filter.RoleId.Value))
             .Count(out var total)
             .OrderByDescending(true, a => a.Id)
             .IncludeMany(a => a.Roles.Select(b => new RoleEntity{ Name = b.Name }))
@@ -238,11 +251,15 @@ namespace Admin.Core.FrameWork.Service.User
             return ResponseOutput.Result(result);
         }
 
-        public async Task<IResponseOutput> GetUserSelectAsync()
+        public async Task<IResponseOutput> GetUserSelectAsync(long departmentId)
         {
-            var entity = await _userRepository.Select.ToListAsync();
+            var entityList = await _userDepartmentRepository.Select
+                .Where(i => i.DepartmentId == departmentId)
+                .Include(i => i.User)
+                .ToListAsync(i => i.User);
+            //var entity = await _userRepository.Select.ToListAsync();
 
-            var result = _mapper.Map<List<UserSelectOutput>>(entity);
+            var result = _mapper.Map<List<UserSelectOutput>>(entityList);
             return ResponseOutput.Ok(result);
         }
     }

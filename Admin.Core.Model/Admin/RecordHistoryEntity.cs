@@ -18,5 +18,7 @@ namespace Admin.Core.Model.Admin
         [Description("操作内容")]
         [MaxLength(1000)]
         public string OperateInfo { get; set; }
+
+        public UserEntity CreatedUser { get; set; }
     }
 }

@@ -23,9 +23,6 @@ namespace Admin.Core.Service.Record.RecordFileType
             CreateMap<RecordFileTypeEntity, RecordFileTypeOutput>().ForMember(
                 i => i.Name,
                 m => m.MapFrom(n => n.FileTypeName)
-            ).ForMember(
-                i => i.Other,
-                m => m.MapFrom(n => n.OtherRecordFileList)
             ).ReverseMap();
             CreateMap<RecordFileTypeEntity, RecordFileTypeAddOutput>().ForMember(
                 i => i.Children,
@@ -33,6 +30,41 @@ namespace Admin.Core.Service.Record.RecordFileType
             ).ForMember(
                 i => i.Name,
                 m => m.MapFrom(n => n.FileTypeName)
+            ).ForMember(
+                i => i.RecordFileTypeId,
+                m => m.MapFrom(n => n.Id)
+            );
+
+            CreateMap<RecordFileTypeEntity, RecordFileTypeUpdateOutput>().ForMember(
+                i => i.Children,
+                m => m.MapFrom(n => n.RecordFileList)
+            ).ForMember(
+                i => i.Name,
+                m => m.MapFrom(n => n.FileTypeName)
+            ).ForMember(
+                i => i.RecordFileTypeId,
+                m => m.MapFrom(n => n.Id)
+            );
+
+            CreateMap<RecordFileTypeOutput, CheckedRecordFileTypeEntity>().ForMember(
+                i => i.RecordFileTypeId,
+                m => m.MapFrom(n => n.RecordFileTypeId)
+            ).ForMember(
+                i => i.Id,
+                m => m.MapFrom(n => 0)
+            );
+
+            CreateMap<RecordFileTypeEntity, RecordFileTypeAdditionalOutput>().ForMember(
+                i => i.Name,
+                m => m.MapFrom(n => n.FileTypeName)
+            ).ForMember(
+                i => i.RecordFileTypeId,
+                m => m.MapFrom(n => n.Id)
+            );
+
+            CreateMap<RecordFileTypeAdditionalOutput, CheckedRecordFileTypeEntity>().ForMember(
+                i => i.CheckedRecordFileList,
+                m => m.MapFrom(n => n.Children)
             );
         }
     }

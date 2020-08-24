@@ -67,7 +67,7 @@ namespace Admin.Core.Controllers.Admin
         /// <returns></returns>
         [HttpPost]
         //[ResponseCache(Duration = 60)]
-        public async Task<IResponseOutput> GetPage(PageInput<UserEntity> input)
+        public async Task<IResponseOutput> GetPage(PageInput<UserSearchInput> input)
         {
             return await _userServices.PageAsync(input);
         }
@@ -159,9 +159,9 @@ namespace Admin.Core.Controllers.Admin
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IResponseOutput> GetUserSelect()
+        public async Task<IResponseOutput> GetUserSelect(long id)
         {
-            return await _userServices.GetUserSelectAsync();
+            return await _userServices.GetUserSelectAsync(id);
         }
     }
 }

@@ -89,5 +89,12 @@ namespace Admin.Core.Controllers.Admin
         {
             return await _departmentService.DeleteAsync(id);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IResponseOutput> GetSelectList()
+        {
+            return await _departmentService.GetSelectListAsync(0);
+        }
     }
 }
