@@ -687,10 +687,35 @@
             基础控制器
             </summary>
         </member>
+        <member name="T:Admin.Core.Controllers.Loan.AreaController">
+            <summary>
+            域控制器
+            </summary>
+        </member>
         <member name="T:Admin.Core.Controllers.Record.AreaController">
             <summary>
             域控制器
             </summary>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.NotifyController.GetCount">
+            <summary>
+            根据用户主键获取用户消息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.NotifyController.GetPage(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.NotifyEntity})">
+            <summary>
+            根据用户主键获取分页信息
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.NotifyController.ReadNotify(System.Int64)">
+            <summary>
+            读取通知
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
         </member>
         <member name="M:Admin.Core.Controllers.Record.RecordFileController.Get(System.Int64)">
             <summary>

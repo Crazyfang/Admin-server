@@ -291,5 +291,15 @@ namespace Admin.Core.Service.Record.RecordBorrow
 
             return ResponseOutput.Ok();
         }
+
+        public async Task<UserEntity> GetUserByBorrowId(long id)
+        {
+            var entity = await _recordBorrowRepository.Select
+                .WhereDynamic(id)
+                .Include(i => i.User)
+                .ToOneAsync(i => i.User);
+
+            return entity;
+        }
     }
 }

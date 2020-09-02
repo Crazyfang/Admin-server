@@ -1154,6 +1154,76 @@
             <param name="success"></param>
             <returns></returns>
         </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Zhaobaoshan">
+            <summary>
+            招宝山支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Jiaochuan">
+            <summary>
+            蛟川支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Luotuo">
+            <summary>
+            骆驼支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Zhuangshi">
+            <summary>
+            庄市支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Yingyebu">
+            <summary>
+            营业部
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Xiepu">
+            <summary>
+            蟹浦支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Jiulonghu">
+            <summary>
+            九龙湖支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Yufan">
+            <summary>
+            俞范支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Guisi">
+            <summary>
+            贵驷支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Chenghe">
+            <summary>
+            城河支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Zhongguanlu">
+            <summary>
+            中官路科技支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Kaifaqu">
+            <summary>
+            开发区支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Ningzhenlu">
+            <summary>
+            宁镇路支行
+            </summary>
+        </member>
+        <member name="F:Admin.Core.Enums.DepartmentCode.Changshi">
+            <summary>
+            长石支行
+            </summary>
+        </member>
         <member name="M:Admin.Core.StringExtensions.IsNull(System.String)">
             <summary>
             判断字符串是否为Null、空

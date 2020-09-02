@@ -69,5 +69,13 @@
     <Folder Include="Record\InitiativeUpdate\" />
     <Folder Include="Record\InitiativeUpdateItem\" />
     <Folder Include="Record\InitiativeUpdateItem\Output\" />
+    <Folder Include="Loan\" />
+    <Folder Include="Loan\LoanUser\" />
+    <Folder Include="Loan\CompressDeadline\" />
+    <Folder Include="Loan\CompressType\" />
+    <Folder Include="Loan\LoanUser\Input\" />
+    <Folder Include="Loan\CompressDeadline\Input\" />
+    <Folder Include="Loan\CompressType\Input\" />
+    <Folder Include="Record\Notify\" />
   </ItemGroup>
 </Project>

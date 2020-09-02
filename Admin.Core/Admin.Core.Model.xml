@@ -534,6 +534,67 @@
             排序
             </summary>
         </member>
+        <member name="P:Admin.Core.Model.Loan.CompressDeadlineEntity.BeginTime">
+            <summary>
+            起始日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.CompressDeadlineEntity.EndTime">
+            <summary>
+            结束日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.CompressTypeEntity.CompressName">
+            <summary>
+            压缩归属类别(信用、担保、抵押)
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.CompressTypeEntity.TargetValue">
+            <summary>
+            压缩目标值
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.CompressTypeEntity.OverSign">
+            <summary>
+            完成标记
+            0-未完成
+            1-完成
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.CompressTypeEntity.CompleteTime">
+            <summary>
+            完成时间
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanUserEntity.UserName">
+            <summary>
+            客户姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanUserEntity.UserCode">
+            <summary>
+            客户内码
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanUserEntity.VerifyUserId">
+            <summary>
+            审核用户
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanUserEntity.VerifyTime">
+            <summary>
+            审核时间
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanUserEntity.OverSign">
+            <summary>
+            完成标记
+            0-未完成
+            1-完成
+            2-审核通过
+            3-超期未完成
+            </summary>
+        </member>
         <member name="P:Admin.Core.Model.Record.CheckedRecordFileEntity.RecordId">
             <summary>
             档案主键
@@ -594,6 +655,21 @@
             备注项（合同号或者担保人名称）
             </summary>
         </member>
+        <member name="P:Admin.Core.Model.Record.DepartmentSeeddEntity.DepartmentName">
+            <summary>
+            部门名称
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.DepartmentSeeddEntity.DepartmentCode">
+            <summary>
+            部门代码
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.DepartmentSeeddEntity.Seed">
+            <summary>
+            增长种子
+            </summary>
+        </member>
         <member name="P:Admin.Core.Model.Record.InitiativeUpdateEntity.Status">
             <summary>
             状态
@@ -617,6 +693,28 @@
             更新类型
             0-过期更新
             1-主动更新
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.NotifyEntity.Message">
+            <summary>
+            消息通知
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.NotifyEntity.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.NotifyEntity.Sign">
+            <summary>
+            阅读标志
+            false-未阅读
+            true-阅读
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.NotifyEntity.ReadTime">
+            <summary>
+            阅读时间
             </summary>
         </member>
         <member name="P:Admin.Core.Model.Record.RecordBorrowEntity.RefuseReason">

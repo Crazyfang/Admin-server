@@ -58,5 +58,11 @@ namespace Admin.Core.Service.Record.Record
         Task<IResponseOutput> AcceptApplyChangeAsync(long id);
 
         Task<IResponseOutput> RefuseApplyChangeAsync(long id, string refuseReason);
+
+        Task<IResponseOutput> GetNeedCreateRecordList(int type, string userCode, long departmentCode, PageInput<NeedCreateRecordEntity> input);
+
+        Task<IResponseOutput> StockAddAsync(RecordAddInput input, List<RecordFileTypeOutput> fileInput);
+
+        Task<RecordEntity> GetRecordByIniId(long id);
     }
 }

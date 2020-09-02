@@ -13,6 +13,7 @@ using Admin.Core.Model.Admin;
 using System.Reflection;
 using Admin.Core.Model.Record;
 using Admin.Core.Controllers.Record;
+using Admin.Core.Model.Loan;
 
 namespace Admin.Core.Db
 {
@@ -98,7 +99,12 @@ namespace Admin.Core.Db
                 typeof(RecordBorrowItemEntity),
                 typeof(RecordIdEntity),
                 typeof(InitiativeUpdateEntity),
-                typeof(InitiativeUpdateItemEntity)
+                typeof(InitiativeUpdateItemEntity),
+                typeof(DepartmentSeeddEntity),
+                typeof(LoanUserEntity),
+                typeof(CompressTypeEntity),
+                typeof(CompressDeadlineEntity),
+                typeof(NotifyEntity)
             });
             Console.WriteLine($"{(msg.NotNull() ? msg : $"sync {dbType} structure")} succeed\r\n");
         }

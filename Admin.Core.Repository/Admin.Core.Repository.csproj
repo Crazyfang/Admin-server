@@ -44,5 +44,10 @@
     <Folder Include="Record\RecordId\" />
     <Folder Include="Record\InitiativeUpdate\" />
     <Folder Include="Record\initiativeUpdateItem\" />
+    <Folder Include="Loan\" />
+    <Folder Include="Loan\LoanUser\" />
+    <Folder Include="Loan\CompressDeadline\" />
+    <Folder Include="Loan\CompressType\" />
+    <Folder Include="Record\Notify\" />
   </ItemGroup>
 </Project>

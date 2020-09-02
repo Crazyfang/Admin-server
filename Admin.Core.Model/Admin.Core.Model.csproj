@@ -20,10 +20,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Admin.Core.Common\Admin.Core.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Record\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Loan\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Admin.Core.Common\Admin.Core.Common.csproj" />
   </ItemGroup>
 </Project>

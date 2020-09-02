@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Admin.Core.Common.Auth;
+using Admin.Core.Common.Helpers;
 using Admin.Core.Common.Input;
 using Admin.Core.Common.Output;
 using Admin.Core.Hubs;
 using Admin.Core.Model.Record;
 using Admin.Core.Service.Admin.Department;
 using Admin.Core.Service.Admin.User;
+using Admin.Core.Service.Record.Notify;
 using Admin.Core.Service.Record.Record;
 using Admin.Core.Service.Record.Record.Input;
 using Admin.Core.Service.Record.Record.Output;
@@ -27,14 +29,24 @@ namespace Admin.Core.Controllers.Record
         private readonly IDepartmentService _departmentService;
         private readonly IUser _user;
         private readonly IHubContext<ChatHub> _hubContext;
+        private readonly SignalRDictionary _signalRDictionary;
+        private readonly INotifyService _notifyService;
 
-        public RecordController(IUser user, IRecordService recordService, IUserService userService, IHubContext<ChatHub> hubContext, IDepartmentService departmentService)
+        public RecordController(IUser user
+            , IRecordService recordService
+            , IUserService userService
+            , IHubContext<ChatHub> hubContext
+            , IDepartmentService departmentService
+            , SignalRDictionary signalRDictionary
+            , INotifyService notifyService)
         {
             _user = user;
             _recordService = recordService;
             _userService = userService;
             _hubContext = hubContext;
             _departmentService = departmentService;
+            _signalRDictionary = signalRDictionary;
+            _notifyService = notifyService;
         }
 
         [HttpGet]
@@ -163,7 +175,16 @@ namespace Admin.Core.Controllers.Record
         [AllowAnonymous]
         public async Task<IResponseOutput> HandOverCheck(HandOverBasicInfoOutput input)
         {
-            return await _recordService.HandOverCheckAsync(input);
+            var data = await _recordService.HandOverCheckAsync(input);
+            var record = await _recordService.GetRecordAsync(input.Record.Id);
+
+            await _notifyService.InsertAsync(record.ManagerUserId.Value, $"{record.RecordId}档案移交成功");
+
+            if (_signalRDictionary.connections.ContainsKey(record.ManagerUserId.Value))
+            {
+                await _hubContext.Clients.Client(_signalRDictionary.connections[record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您有一份档案移交成功");
+            }
+            return data;
         }
 
         [HttpGet]
@@ -185,6 +206,31 @@ namespace Admin.Core.Controllers.Record
         public async Task<IResponseOutput> RelationChange(List<RecordTransferInput> input)
         {
             return await _recordService.RelationChangeAsync(input);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IResponseOutput> RelationPagePermissions()
+        {
+            var permissionName = await _userService.GetPermissionsNameAsync();
+
+            var fullAccess = permissionName.Any(m => m != null && m.Equals("档案转让完全访问"));
+            var partialAccess = permissionName.Any(m => m != null && m.Equals("档案转让所属部门访问"));
+            var limitedAccess = permissionName.Any(m => m != null && m.Equals("档案转让所属经理访问"));
+
+            if (fullAccess)
+            {
+                return ResponseOutput.Ok(new { DepartmentId = 0, UserId = 0 });
+            }
+
+            var user = await _userService.GetAsync(_user.Id);
+            if (partialAccess)
+            {
+                return ResponseOutput.Ok(new { DepartmentId = user.Data.DepartmentIds.First(), UserId = 0 });
+            }
+
+            return ResponseOutput.Ok(new { DepartmentId = user.Data.DepartmentIds.First(), UserId = _user.Id });
+
         }
 
         [HttpGet]
@@ -257,7 +303,16 @@ namespace Admin.Core.Controllers.Record
         [AllowAnonymous]
         public async Task<IResponseOutput> AcceptApplyChange(long id)
         {
-            return await _recordService.AcceptApplyChangeAsync(id);
+            var data = await _recordService.AcceptApplyChangeAsync(id);
+            var record = await _recordService.GetRecordByIniId(id);
+
+            await _notifyService.InsertAsync(record.ManagerUserId.Value, $"{record.RecordId}申请更新文件成功");
+
+            if (_signalRDictionary.connections.ContainsKey(record.ManagerUserId.Value))
+            {
+                await _hubContext.Clients.Client(_signalRDictionary.connections[record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您申请更新文件成功");
+            }
+            return data;
         }
 
         [HttpPost]
@@ -266,7 +321,67 @@ namespace Admin.Core.Controllers.Record
         {
             var id = Newtonsoft.Json.JsonConvert.DeserializeObject<long>(obj["id"].ToString());
 
-            return await _recordService.RefuseApplyChangeAsync(id, obj["refuseReason"].ToString());
+            var data = await _recordService.RefuseApplyChangeAsync(id, obj["refuseReason"].ToString());
+            var record = await _recordService.GetRecordByIniId(id);
+
+            await _notifyService.InsertAsync(record.ManagerUserId.Value, $"{record.RecordId}申请更新文件被拒绝,原因为: " + obj["refuseReason"].ToString());
+
+            if (_signalRDictionary.connections.ContainsKey(record.ManagerUserId.Value))
+            {
+                await _hubContext.Clients.Client(_signalRDictionary.connections[record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您申请更新文件被拒绝，原因为:{obj["refuseReason"].ToString()}");
+            }
+            return data;
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IResponseOutput> GetNeedCreateRecordList(PageInput<NeedCreateRecordEntity> input)
+        {
+            var permissionName = await _userService.GetPermissionsNameAsync();
+
+            var fullAccess = permissionName.Any(m => m != null && m.Equals("待创建档案完全访问"));
+            var partialAccess = permissionName.Any(m => m != null && m.Equals("待创建档案部门访问"));
+            var limitedAccess = permissionName.Any(m => m != null && m.Equals("待创建档案经理访问"));
+
+            if (fullAccess)
+            {
+                return await _recordService.GetNeedCreateRecordList(0, "8280000", 0, input);
+            }
+
+            var user = await _userService.GetAsync(_user.Id);
+            if (partialAccess)
+            {
+                return await _recordService.GetNeedCreateRecordList(1, "8280000", user.Data.DepartmentIds.FirstOrDefault(), input);
+            }
+
+            return await _recordService.GetNeedCreateRecordList(2, user.Data.UserName, user.Data.DepartmentIds.FirstOrDefault(), input);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IResponseOutput> RefuseHandOver(JObject obj)
+        {
+            var id = Newtonsoft.Json.JsonConvert.DeserializeObject<long>(obj["id"].ToString());
+            var reason = obj["reason"].ToString();
+            var record = await _recordService.GetRecordAsync(id);
+
+            await _notifyService.InsertAsync(record.ManagerUserId.Value, $"{record.RecordId}被退回,原因为: " + reason);
+
+            if (_signalRDictionary.connections.ContainsKey(record.ManagerUserId.Value))
+            {
+                await _hubContext.Clients.Client(_signalRDictionary.connections[record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您有一份档案被退回，原因为:{reason}");
+            }
+
+            return ResponseOutput.Ok();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IResponseOutput> StockAdd(JObject obj)
+        {
+            var input = Newtonsoft.Json.JsonConvert.DeserializeObject<RecordAddInput>(obj["record"].ToString());
+            var recordFileTypeList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RecordFileTypeOutput>>(obj["fileList"].ToString());
+            return await _recordService.StockAddAsync(input, recordFileTypeList);
         }
     }
 }

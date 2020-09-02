@@ -80,6 +80,8 @@
     <Folder Include="wwwroot\" />
     <Folder Include="Controllers\Record\" />
     <Folder Include="Hubs\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Controllers\Loan\" />
   </ItemGroup>
 
   <ItemGroup>

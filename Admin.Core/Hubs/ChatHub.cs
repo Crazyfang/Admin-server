@@ -3,6 +3,8 @@ using Admin.Core.Common.Helpers;
 using Admin.Core.Repository.Admin;
 using Admin.Core.Service.Admin.User;
 using Microsoft.AspNetCore.SignalR;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Admin.Core.Hubs
@@ -11,19 +13,21 @@ namespace Admin.Core.Hubs
     {
         private readonly IUser _user;
         private readonly IUserRepository _userRepository;
+        private readonly SignalRDictionary _signalRDictionary;
+        //public static Dictionary<long, string> _connections = new Dictionary<long, string>();
 
-        public ChatHub(IUser user, IUserRepository userRepository)
+        public ChatHub(IUser user, IUserRepository userRepository, SignalRDictionary signalRDictionary)
         {
             _user = user;
             _userRepository = userRepository;
+            _signalRDictionary = signalRDictionary;
         }
 
-        public override Task OnConnectedAsync()
+        public override async Task OnConnectedAsync()
         {
-            var test2 = Context.UserIdentifier;
-            var test3 = Context.User.FindFirst(ClaimAttributes.UserId);
-            var test = Context.GetHttpContext().User.FindFirst(ClaimAttributes.UserId).Value.ToLong();
-            var data = _userRepository.Select.WhereDynamic(test).IncludeMany(i => i.Roles).ToOne();
+            var userId = Context.User.FindFirst(ClaimAttributes.UserId).Value.ToLong();
+            //var test = Context.GetHttpContext().User.FindFirst(ClaimAttributes.UserId).Value.ToLong();
+            var data = _userRepository.Select.WhereDynamic(userId).IncludeMany(i => i.Roles).ToOne();
             var sign = false;
             foreach(var item in data.Roles)
             {
@@ -34,16 +38,34 @@ namespace Admin.Core.Hubs
             }
             if (sign)
             {
-                Groups.AddToGroupAsync(Context.ConnectionId, "Admin");
+                await Groups.AddToGroupAsync(Context.ConnectionId, "Admin");
             }
-            
-            return base.OnConnectedAsync();
+
+            if (!_signalRDictionary.connections.ContainsKey(userId))
+            {
+                _signalRDictionary.connections.Add(userId, Context.ConnectionId);
+            }
+            else
+            {
+                if(Context.ConnectionId != _signalRDictionary.connections[userId])
+                {
+                    _signalRDictionary.connections[userId] = Context.ConnectionId;
+                }
+            }
+                       
+            await base.OnConnectedAsync();
         }
 
-        public override Task OnDisconnectedAsync(System.Exception exception)
+        public override async Task OnDisconnectedAsync(System.Exception exception)
         {
+            var key = _signalRDictionary.connections.Where(i => i.Value == Context.ConnectionId).Select(i => i.Key).FirstOrDefault();
+            if (key != 0)
+            {
+                _signalRDictionary.connections.Remove(key);
+            }
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "Admin");
             ConsoleHelper.WriteInfoLine($"{Context.ConnectionId}下线");
-            return base.OnDisconnectedAsync(exception);
+            await base.OnDisconnectedAsync(exception);
         }
 
         public Task SendMsg(string info)

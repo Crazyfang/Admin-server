@@ -213,7 +213,7 @@ namespace Admin.Core
             {
                 var csredis = new CSRedis.CSRedisClient(cacheConfig.Redis.ConnectionString);
                 RedisHelper.Initialization(csredis);
-                RedisDataHelper.SetIndex("NumberIndex");
+                services.AddSingleton<RedisDataHelper>();
                 services.AddSingleton<ICache, RedisCache>();
             }
             else

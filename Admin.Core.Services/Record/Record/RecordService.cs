@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Admin.Core.Common.Attributes;
+using Admin.Core.Common.Helpers;
 using Admin.Core.Common.Input;
 using Admin.Core.Common.Output;
+using Admin.Core.Enums;
 using Admin.Core.Model.Admin;
 using Admin.Core.Model.Record;
 using Admin.Core.Repository.Admin;
@@ -43,6 +45,8 @@ namespace Admin.Core.Service.Record.Record
         private readonly IUserRepository _userRepository;
         private readonly IInitiativeUpdateRepository _initiativeUpdateRepository;
         private readonly IInitiativeUpdateItemRepository _initiativeUpdateItemRepository;
+        private readonly IFreeSql _freeSql;
+        private readonly RedisDataHelper _redisDataHelper;
 
         public RecordService(IMapper mapper
             , IRecordRepository recordRepository
@@ -55,7 +59,9 @@ namespace Admin.Core.Service.Record.Record
             , IDepartmentRepository departmentRepository
             , IUserRepository userRepository
             , IInitiativeUpdateRepository initiativeUpdateRepository
-            , IInitiativeUpdateItemRepository initiativeUpdateItemRepository)
+            , IInitiativeUpdateItemRepository initiativeUpdateItemRepository
+            , IFreeSql freeSql
+            , RedisDataHelper redisDataHelper)
         {
             _mapper = mapper;
             _recordRepository = recordRepository;
@@ -69,6 +75,8 @@ namespace Admin.Core.Service.Record.Record
             _userRepository = userRepository;
             _initiativeUpdateRepository = initiativeUpdateRepository;
             _initiativeUpdateItemRepository = initiativeUpdateItemRepository;
+            _freeSql = freeSql;
+            _redisDataHelper = redisDataHelper;
         }
 
         public async Task<IResponseOutput> GetAsync(long id)
@@ -119,23 +127,32 @@ namespace Admin.Core.Service.Record.Record
 
             output.Record = _mapper.Map<RecordGetOutput>(entity);
 
-            var entityList = await _recordFileTypeRepository.Select.From<CheckedRecordFileTypeEntity>((s, b) => s.LeftJoin(a => a.Id == b.RecordFileTypeId))
-                .Where((s, b) => s.RecordTypeId == entity.RecordType)
-                .ToListAsync((s, b) => new RecordFileTypeOutput() { RecordFileTypeId = s.Id, Name = s.FileTypeName, Remarks = b.Remarks, CheckedRecordFileTypeId = b.Id });
+            var entityList = await _checkedRecordFileTypeRepository.Select
+                .Where(i => i.RecordId == id)
+                .Include(i => i.RecordFileType)
+                .ToListAsync(i => new RecordFileTypeOutput() { RecordFileTypeId = i.RecordFileTypeId, Name = i.RecordFileType.FileTypeName, Remarks = i.Remarks, CheckedRecordFileTypeId = i.Id });
+
+            //var entityList = await _recordFileTypeRepository.Select.From<CheckedRecordFileTypeEntity>((s, b) => s.LeftJoin(a => a.Id == b.RecordFileTypeId))
+            //    .Where((s, b) => s.RecordTypeId == entity.RecordType)
+            //    .ToListAsync((s, b) => new RecordFileTypeOutput() { RecordFileTypeId = s.Id, Name = s.FileTypeName, Remarks = b.Remarks, CheckedRecordFileTypeId = b.Id });
 
             output.RecordFileTypeList = entityList;
 
             foreach (var item in output.RecordFileTypeList)
             {
-                var checkedRecordFileType = await _checkedRecordFileTypeRepository.Select
-                    .Where(i => i.RecordId == entity.Id && i.RecordFileTypeId == item.RecordFileTypeId && i.Id == item.CheckedRecordFileTypeId)
-                    .IncludeMany(i => i.CheckedRecordFileList, then => then.Include(a => a.RecordFile))
-                    .ToOneAsync();
+                var checkedRecordFileList = await _checkedRecordFileRepository.Select
+                    .Where(i => i.RecordId == entity.Id && i.CheckedRecordFileTypeId == item.CheckedRecordFileTypeId)
+                    .ToListAsync();
+                //var checkedRecordFileType = await _checkedRecordFileTypeRepository.Select
+                //    .Where(i => i.RecordId == entity.Id && i.RecordFileTypeId == item.RecordFileTypeId && i.Id == item.CheckedRecordFileTypeId)
+                //    .IncludeMany(i => i.CheckedRecordFileList, then => then.Include(a => a.RecordFile))
+                //    .ToOneAsync();
 
-                if (checkedRecordFileType != null)
-                {
-                    item.Children = _mapper.Map<List<CheckedRecordFileInput>>(checkedRecordFileType.CheckedRecordFileList);
-                }
+                //if (checkedRecordFileType != null)
+                //{
+                //    item.Children = _mapper.Map<List<CheckedRecordFileInput>>(checkedRecordFileType.CheckedRecordFileList);
+                //}
+                item.Children = _mapper.Map<List<CheckedRecordFileInput>>(checkedRecordFileList);
             }
 
             return ResponseOutput.Ok(output);
@@ -248,19 +265,37 @@ namespace Admin.Core.Service.Record.Record
         public async Task<IResponseOutput> AddAsync(RecordAddInput input, List<RecordFileTypeOutput> fileInput)
         {
             var entity = _mapper.Map<RecordEntity>(input);
+
+            var existEntity = await _recordRepository.Select
+                .Where(i => i.RecordUserCode == entity.RecordUserCode || i.RecordUserInCode == entity.RecordUserInCode)
+                .Where(i => i.ManagerDepartmentId == entity.ManagerDepartmentId)
+                .Count(out var count)
+                .ToOneAsync();
+
+            if(count != 0)
+            {
+                return ResponseOutput.NotOk("同个支行下存在相同客户内码或者客户号的客户，不允许重复添加!");
+            }
+
             var ins = new RecordIdEntity()
             {
                 msg = "获取id"
             };
-            var recordIdEntity = await _recordIdRepository.InsertAsync(ins);
-            var department = await _departmentRepository.Select.WhereDynamic(entity.ManagerDepartmentId).ToOneAsync();
-            var recordId = $"AAAA{department.DepartmentCode}{recordIdEntity.Id.ToString().PadLeft(5, '0')}";
+
+            var departmentEntity = await _departmentRepository.Select.WhereDynamic(input.ManagerDepartmentId).ToOneAsync();
+            var redisKey = Enum.GetName(typeof(DepartmentCode), departmentEntity.DepartmentCode);
+            var seedValue = _redisDataHelper.IncrIndex(redisKey);
+            var recordId = $"AAAA{departmentEntity.DepartmentCode}{seedValue.ToString().PadLeft(5, '0')}";
+
+            //var recordIdEntity = await _recordIdRepository.InsertAsync(ins);
+            //var department = await _departmentRepository.Select.WhereDynamic(entity.ManagerDepartmentId).ToOneAsync();
+            //var recordId = $"AAAA{department.DepartmentCode}{recordIdEntity.Id.ToString().PadLeft(5, '0')}";
             entity.RecordId = recordId;
             var record = await _recordRepository.InsertAsync(entity);
 
             if (!(record?.Id > 0))
             {
-                return ResponseOutput.NotOk();
+                return ResponseOutput.NotOk("发生错误，请刷新后重试");
             }
             else
             {
@@ -621,7 +656,7 @@ namespace Admin.Core.Service.Record.Record
                     foreach (var checkedRecordFile in count)
                     {
                         await _checkedRecordFileRepository.UpdateDiy.Set(i => i.HandOverSign, 1).WhereDynamic(checkedRecordFile.Id).ExecuteAffrowsAsync();
-                        if (checkedRecordFile.OtherSign == 0)
+                        if (checkedRecordFile.OtherSign == 1)
                         {
                             recordHistory.OperateInfo += $"<br> 自定义文件 {checkedRecordFile.Name} 过期时间:{checkedRecordFile.CreditDueDate} 份数:{checkedRecordFile.Num}";
                         }
@@ -630,7 +665,6 @@ namespace Admin.Core.Service.Record.Record
                             recordHistory.OperateInfo += $"<br> 预设文件 {checkedRecordFile.Name} 过期时间:{checkedRecordFile.CreditDueDate} 份数:{checkedRecordFile.Num}";
                         }
                     }
-                    await _recordHistoryRepository.InsertAsync(recordHistory);
                     await _recordRepository.UpdateDiy.Set(i => i.Status, 1).Where(i => i.Id == input.Record.Id && i.Status == 0).ExecuteAffrowsAsync();
                 }
                 else
@@ -638,6 +672,8 @@ namespace Admin.Core.Service.Record.Record
                     continue;
                 }
             }
+
+            await _recordHistoryRepository.InsertAsync(recordHistory);
 
             return ResponseOutput.Ok();
         }
@@ -675,6 +711,10 @@ namespace Admin.Core.Service.Record.Record
                 if (checkedRecordFileList != null)
                 {
                     item.Children = _mapper.Map<List<CheckedRecordFileInput>>(checkedRecordFileList);
+                    foreach(var recordFile in item.Children)
+                    {
+                        recordFile.Checked = true;
+                    }
                 }
             }
 
@@ -694,6 +734,7 @@ namespace Admin.Core.Service.Record.Record
         [Transaction]
         public async Task<IResponseOutput> RelationChangeAsync(List<RecordTransferInput> input)
         {
+            
             foreach(var item in input)
             {
                 var newUse = await _userRepository.Select.WhereDynamic(item.Value).ToOneAsync();
@@ -932,6 +973,180 @@ namespace Admin.Core.Service.Record.Record
             await _initiativeUpdateRepository.UpdateDiy.Set(i => i.Status, 2).Set(i => i.RefuseReason, refuseReason).WhereDynamic(id).ExecuteAffrowsAsync();
 
             return ResponseOutput.Ok();
+        }
+
+        public async Task<IResponseOutput> GetNeedCreateRecordList(int type, string userCode, long departmentCode, PageInput<NeedCreateRecordEntity> input)
+        {
+            var department = await _departmentRepository.Select.WhereDynamic(departmentCode).ToOneAsync();
+            string sqlStr;
+            string countStr;
+            var begin = input.CurrentPage - 1 == 0 ? 1 : (input.CurrentPage - 1) * input.PageSize;
+            var end = input.CurrentPage * input.PageSize - 1;
+            //type=0 管理员 type=1 会计主管 type=2 客户经理
+            if (type == 0)
+            {
+                sqlStr = $"select ContractNo, CustINNO, CustNO, Custname from" +
+                    $" (select a.ContractNo, a.CustINNO, a.CustNO, a.Custname, ROW_NUMBER() OVER(order by a.ContractNo) as idx" +
+                    $" from rightcontrol.dbo.ZH_XDLZ_LoanContractNeedCreate a" +
+                    $" inner join rightcontrol.dbo.ZH_XDLZ_LoanCustOfEmp b" +
+                    $" on a.ContractNo=b.ContractNo" +
+                    $" where b.Data_date='{DateTime.Now.AddDays(-1).ToShortDateString()}') as a" +
+                    $" where idx between {begin} and {end}";
+                countStr = $"select COUNT(*)" +
+                    $" from rightcontrol.dbo.ZH_XDLZ_LoanContractNeedCreate a" +
+                    $" inner join rightcontrol.dbo.ZH_XDLZ_LoanCustOfEmp b" +
+                    $" on a.ContractNo=b.ContractNo" +
+                    $" where b.Data_date='{DateTime.Now.AddDays(-1).ToShortDateString()}'";
+            }
+            else if (type == 1)
+            {
+                sqlStr = $"select ContractNo, CustINNO, CustNO, Custname from" +
+                    $" (select a.ContractNo, a.CustINNO, a.CustNO, a.Custname, ROW_NUMBER() OVER(order by a.ContractNo) as idx" +
+                    $" from rightcontrol.dbo.ZH_XDLZ_LoanContractNeedCreate a" +
+                    $" inner join rightcontrol.dbo.ZH_XDLZ_LoanCustOfEmp b" +
+                    $" on a.ContractNo=b.ContractNo" +
+                    $" where b.Data_date='{DateTime.Now.AddDays(-1).ToShortDateString()}' and b.Instcode='{department.DepartmentCode}') as a" +
+                    $" where idx between {begin} and {end}";
+                countStr = $"select COUNT(*)" +
+                    $" from rightcontrol.dbo.ZH_XDLZ_LoanContractNeedCreate a" +
+                    $" inner join rightcontrol.dbo.ZH_XDLZ_LoanCustOfEmp b" +
+                    $" on a.ContractNo=b.ContractNo" +
+                    $" where b.Data_date='{DateTime.Now.AddDays(-1).ToShortDateString()}' and b.Instcode='{department.DepartmentCode}'";
+            }
+            else
+            {
+                sqlStr = $"select ContractNo, CustINNO, CustNO, Custname from" +
+                    $" (select a.ContractNo, a.CustINNO, a.CustNO, a.Custname, ROW_NUMBER() OVER(order by a.ContractNo) as idx" +
+                    $" from rightcontrol.dbo.ZH_XDLZ_LoanContractNeedCreate a" +
+                    $" inner join rightcontrol.dbo.ZH_XDLZ_LoanCustOfEmp b" +
+                    $" on a.ContractNo=b.ContractNo" +
+                    $" where b.Data_date='{DateTime.Now.AddDays(-1).ToShortDateString()}' and (b.Tlrno1='{userCode}' or b.Tlrno2='{userCode}' or b.Tlrno3='{userCode}')) as a" +
+                    $" where idx between {begin} and {end}";
+                countStr = $"select COUNT(*)" +
+                    $" from rightcontrol.dbo.ZH_XDLZ_LoanContractNeedCreate a" +
+                    $" inner join rightcontrol.dbo.ZH_XDLZ_LoanCustOfEmp b" +
+                    $" on a.ContractNo=b.ContractNo" +
+                    $" where b.Data_date='{DateTime.Now.AddDays(-1).ToShortDateString()}' and (b.Tlrno1='{userCode}' or b.Tlrno2='{userCode}' or b.Tlrno3='{userCode}')";
+            }
+
+            var result = await _freeSql.Ado.QueryAsync<NeedCreateRecordEntity>(sqlStr);
+            var count = await _freeSql.Ado.QueryAsync<long>(countStr);
+            //var result = new List<NeedCreateRecordEntity>();
+            //result.Add(new NeedCreateRecordEntity()
+            //{
+            //    CustINNO = "82800000",
+            //    Custname = "方勇",
+            //    ContractNo = "828123456",
+            //    CustNO = "999999"
+            //});
+            //var count = 1;
+            //var count = await _freeSql.Ado.QueryAsync<long>($"select count(*) from rt_departmentseed");
+
+            var data = new PageOutput<NeedCreateRecordEntity>()
+            {
+                List = result,
+                Total = count.FirstOrDefault()
+            };
+
+            return ResponseOutput.Ok(data);
+        }
+
+        [Transaction]
+        public async Task<IResponseOutput> StockAddAsync(RecordAddInput input, List<RecordFileTypeOutput> fileInput)
+        {
+            var entity = _mapper.Map<RecordEntity>(input);
+
+            var existEntity = await _recordRepository.Select
+                .Where(i => i.RecordUserCode == entity.RecordUserCode || i.RecordUserInCode == entity.RecordUserInCode)
+                .Where(i => i.ManagerDepartmentId == entity.ManagerDepartmentId)
+                .Count(out var count)
+                .ToOneAsync();
+
+            if (count != 0)
+            {
+                return ResponseOutput.NotOk("同个支行下存在相同客户内码或者客户号的客户，不允许重复添加!");
+            }
+
+            var ins = new RecordIdEntity()
+            {
+                msg = "获取id"
+            };
+
+            var departmentEntity = await _departmentRepository.Select.WhereDynamic(input.ManagerDepartmentId).ToOneAsync();
+            var redisKey = Enum.GetName(typeof(DepartmentCode), departmentEntity.DepartmentCode);
+            var seedValue = _redisDataHelper.IncrIndex(redisKey);
+            var recordId = $"AAAA{departmentEntity.DepartmentCode}{seedValue.ToString().PadLeft(5, '0')}";
+
+            //var recordIdEntity = await _recordIdRepository.InsertAsync(ins);
+            //var department = await _departmentRepository.Select.WhereDynamic(entity.ManagerDepartmentId).ToOneAsync();
+            //var recordId = $"AAAA{department.DepartmentCode}{recordIdEntity.Id.ToString().PadLeft(5, '0')}";
+            entity.RecordId = recordId;
+            var record = await _recordRepository.InsertAsync(entity);
+
+            if (!(record?.Id > 0))
+            {
+                return ResponseOutput.NotOk("发生错误，请刷新后重试");
+            }
+            else
+            {
+                var recordHistory = new RecordHistoryEntity()
+                {
+                    RecordId = record.Id,
+                    OperateType = "新增",
+                    OperateInfo = $"创建了{record.RecordUserName}档案"
+                };
+                foreach (var recordFileTypeInput in fileInput)
+                {
+                    var recordFileList = recordFileTypeInput.Children.Where(i => i.Checked == true).ToList();
+                    if (recordFileList.Count == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        var checkedRecordFileTypeEntity = _mapper.Map<CheckedRecordFileTypeEntity>(recordFileTypeInput);
+                        checkedRecordFileTypeEntity.RecordId = record.Id;
+                        var checkedRecordFileType = await _checkedRecordFileTypeRepository.InsertAsync(checkedRecordFileTypeEntity);
+
+                        if (!(checkedRecordFileType.Id > 0))
+                        {
+                            return ResponseOutput.NotOk();
+                        }
+                        // 档案文件处理
+                        foreach (var checkedRecordFile in recordFileTypeInput.Children.Where(i => i.Checked == true).ToList())
+                        {
+                            var checkedRecordFileEntity = _mapper.Map<CheckedRecordFileEntity>(checkedRecordFile);
+                            checkedRecordFileEntity.RecordId = record.Id;
+                            checkedRecordFileEntity.CheckedRecordFileTypeId = checkedRecordFileType.Id;
+                            var returnModel = await _checkedRecordFileRepository.InsertAsync(checkedRecordFileEntity);
+                            var recordFile = await _recordFileRepository.GetAsync(returnModel.RecordFileId);
+                            if (checkedRecordFileEntity.OtherSign == 0)
+                            {
+                                recordHistory.OperateInfo += $"<br> 选中档案文件:{recordFileTypeInput.Name}-{recordFile.RecordFileName} 份数:{returnModel.Num}";
+                            }
+                            else if (checkedRecordFileEntity.OtherSign == 1)
+                            {
+                                recordHistory.OperateInfo += $"<br> 用户自定义文件:{checkedRecordFileEntity.Name} 份数:{returnModel.Num}";
+                            }
+                        }
+                    }
+                }
+                await _recordHistoryRepository.InsertAsync(recordHistory);
+            }
+
+            await _freeSql.Ado.ExecuteNonQueryAsync($"delete from rightcontrol.dbo.ZH_XDLZ_LoanContractNeedCreate where CustINNO='{record.RecordUserInCode}'");
+
+            return ResponseOutput.Ok();
+        }
+
+        public async Task<RecordEntity> GetRecordByIniId(long id)
+        {
+            var entity = await _initiativeUpdateRepository.Select
+                .WhereDynamic(id)
+                .Include(i => i.Record)
+                .ToOneAsync(i => i.Record);
+
+            return entity;
         }
     }
 }
