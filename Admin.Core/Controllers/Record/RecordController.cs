@@ -30,7 +30,6 @@ namespace Admin.Core.Controllers.Record
         private readonly IDepartmentService _departmentService;
         private readonly IUser _user;
         private readonly IHubContext<ChatHub> _hubContext;
-        private readonly SignalRDictionary _signalRDictionary;
         private readonly INotifyService _notifyService;
 
         public RecordController(IUser user
@@ -38,7 +37,6 @@ namespace Admin.Core.Controllers.Record
             , IUserService userService
             , IHubContext<ChatHub> hubContext
             , IDepartmentService departmentService
-            , SignalRDictionary signalRDictionary
             , INotifyService notifyService)
         {
             _user = user;
@@ -46,7 +44,6 @@ namespace Admin.Core.Controllers.Record
             _userService = userService;
             _hubContext = hubContext;
             _departmentService = departmentService;
-            _signalRDictionary = signalRDictionary;
             _notifyService = notifyService;
         }
 
@@ -182,9 +179,9 @@ namespace Admin.Core.Controllers.Record
 
             //_notifyService.Insert(input.Record.Id, $"{input.Record.RecordId}档案移交成功");
 
-            if (_signalRDictionary.connections.ContainsKey(input.Record.ManagerUserId.Value))
+            if (RedisHelper.HExists("signalR", input.Record.ManagerUserId.Value.ToString()))
             {
-                await _hubContext.Clients.Client(_signalRDictionary.connections[input.Record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您有一份档案移交成功");
+                await _hubContext.Clients.Client(RedisHelper.HGet("signalR", input.Record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"您有一份档案移交成功");
             }
             return data;
         }
@@ -307,10 +304,10 @@ namespace Admin.Core.Controllers.Record
         {
             var record = await _recordService.GetRecordByIniId(id);
             var data = await _recordService.AcceptApplyChangeAsync(id);
-          
-            if (_signalRDictionary.connections.ContainsKey(record.ManagerUserId.Value))
+
+            if (RedisHelper.HExists("signalR", record.ManagerUserId.Value.ToString()))
             {
-                await _hubContext.Clients.Client(_signalRDictionary.connections[record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您申请更新文件成功");
+                await _hubContext.Clients.Client(RedisHelper.HGet("signalR", record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"您申请更新文件成功");
             }
             return data;
         }
@@ -326,9 +323,9 @@ namespace Admin.Core.Controllers.Record
 
             await _notifyService.InsertAsync(record.ManagerUserId.Value, $"{record.RecordId}申请更新文件被拒绝,原因为: " + obj["refuseReason"].ToString());
 
-            if (_signalRDictionary.connections.ContainsKey(record.ManagerUserId.Value))
+            if (RedisHelper.HExists("signalR", record.ManagerUserId.Value.ToString()))
             {
-                await _hubContext.Clients.Client(_signalRDictionary.connections[record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您申请更新文件被拒绝，原因为:{obj["refuseReason"].ToString()}");
+                await _hubContext.Clients.Client(RedisHelper.HGet("signalR", record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"您申请更新文件被拒绝，原因为:{obj["refuseReason"]}");
             }
             return data;
         }
@@ -367,9 +364,9 @@ namespace Admin.Core.Controllers.Record
 
             await _notifyService.InsertAsync(record.ManagerUserId.Value, $"{record.RecordId}被退回,原因为: " + reason);
 
-            if (_signalRDictionary.connections.ContainsKey(record.ManagerUserId.Value))
+            if (RedisHelper.HExists("signalR", record.ManagerUserId.Value.ToString()))
             {
-                await _hubContext.Clients.Client(_signalRDictionary.connections[record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您有一份档案被退回，原因为:{reason}");
+                await _hubContext.Clients.Client(RedisHelper.HGet("signalR", record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"您有一份档案被退回，原因为:{reason}");
             }
 
             return ResponseOutput.Ok();

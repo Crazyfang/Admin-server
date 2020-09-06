@@ -21,6 +21,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BaseModel\**" />
+    <EmbeddedResource Remove="BaseModel\**" />
+    <None Remove="BaseModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CSRedisCore" Version="3.6.5" />
     <PackageReference Include="FreeSql" Version="1.5.0" />
     <PackageReference Include="FreeSql.Provider.MySql" Version="1.5.0" />

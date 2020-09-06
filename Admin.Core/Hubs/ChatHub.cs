@@ -1,10 +1,7 @@
 ﻿using Admin.Core.Common.Auth;
 using Admin.Core.Common.Helpers;
 using Admin.Core.Repository.Admin;
-using Admin.Core.Service.Admin.User;
 using Microsoft.AspNetCore.SignalR;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Admin.Core.Hubs
@@ -13,14 +10,12 @@ namespace Admin.Core.Hubs
     {
         private readonly IUser _user;
         private readonly IUserRepository _userRepository;
-        private readonly SignalRDictionary _signalRDictionary;
         //public static Dictionary<long, string> _connections = new Dictionary<long, string>();
 
-        public ChatHub(IUser user, IUserRepository userRepository, SignalRDictionary signalRDictionary)
+        public ChatHub(IUser user, IUserRepository userRepository)
         {
             _user = user;
             _userRepository = userRepository;
-            _signalRDictionary = signalRDictionary;
         }
 
         public override async Task OnConnectedAsync()
@@ -48,17 +43,7 @@ namespace Admin.Core.Hubs
                     await Groups.AddToGroupAsync(Context.ConnectionId, "Admin");
                 }
 
-                if (!_signalRDictionary.connections.ContainsKey(userId))
-                {
-                    _signalRDictionary.connections.Add(userId, Context.ConnectionId);
-                }
-                else
-                {
-                    if (Context.ConnectionId != _signalRDictionary.connections[userId])
-                    {
-                        _signalRDictionary.connections[userId] = Context.ConnectionId;
-                    }
-                }
+                RedisHelper.HSet("signalR", userId.ToString(), Context.ConnectionId);
             }
                        
             await base.OnConnectedAsync();
@@ -66,11 +51,17 @@ namespace Admin.Core.Hubs
 
         public override async Task OnDisconnectedAsync(System.Exception exception)
         {
-            var key = _signalRDictionary.connections.Where(i => i.Value == Context.ConnectionId).Select(i => i.Key).FirstOrDefault();
-            if (key != 0)
+            var id = Context.User?.FindFirst(ClaimAttributes.UserId);
+            long userId = 0;
+            if (id != null && id.Value.NotNull())
             {
-                _signalRDictionary.connections.Remove(key);
+                userId = id.Value.ToLong();
             }
+            if(userId != 0)
+            {
+                RedisHelper.HDel("signalR", userId.ToString());
+            }
+            
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, "Admin");
             ConsoleHelper.WriteInfoLine($"{Context.ConnectionId}下线");
             await base.OnDisconnectedAsync(exception);
