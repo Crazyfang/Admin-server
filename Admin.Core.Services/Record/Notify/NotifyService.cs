@@ -77,5 +77,18 @@ namespace Admin.Core.Service.Record.Notify
 
             return ResponseOutput.Ok();
         }
+
+        public IResponseOutput Insert(long id, string reason)
+        {
+            var entity = new NotifyEntity()
+            {
+                UserId = id,
+                Message = reason
+            };
+
+            _notifyRepository.Insert(entity);
+
+            return ResponseOutput.Ok();
+        }
     }
 }

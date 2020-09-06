@@ -53,7 +53,7 @@ namespace Admin.Core.Aop
                         {
                             AopHelper.CallGenericMethod(
                             invocation,
-                            res => 
+                            res =>
                             {
                                 if (res == null)
                                 {
@@ -74,7 +74,7 @@ namespace Admin.Core.Aop
                             {
                                 _unitOfWork.Rollback();
                             },
-                            ()=>
+                            () =>
                             {
                                 _unitOfWork.Dispose();
                             });

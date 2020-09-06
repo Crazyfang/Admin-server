@@ -16,6 +16,7 @@ using Admin.Core.Repository.Record.CheckedRecordFile;
 using Admin.Core.Repository.Record.CheckedRecordFileType;
 using Admin.Core.Repository.Record.InitiativeUpdate;
 using Admin.Core.Repository.Record.initiativeUpdateItem;
+using Admin.Core.Repository.Record.Notify;
 using Admin.Core.Repository.Record.Record;
 using Admin.Core.Repository.Record.RecordFile;
 using Admin.Core.Repository.Record.RecordFileType;
@@ -47,6 +48,7 @@ namespace Admin.Core.Service.Record.Record
         private readonly IInitiativeUpdateItemRepository _initiativeUpdateItemRepository;
         private readonly IFreeSql _freeSql;
         private readonly RedisDataHelper _redisDataHelper;
+        private readonly INotifyRepository _notifyRepository;
 
         public RecordService(IMapper mapper
             , IRecordRepository recordRepository
@@ -61,7 +63,8 @@ namespace Admin.Core.Service.Record.Record
             , IInitiativeUpdateRepository initiativeUpdateRepository
             , IInitiativeUpdateItemRepository initiativeUpdateItemRepository
             , IFreeSql freeSql
-            , RedisDataHelper redisDataHelper)
+            , RedisDataHelper redisDataHelper
+            , INotifyRepository notifyRepository)
         {
             _mapper = mapper;
             _recordRepository = recordRepository;
@@ -77,6 +80,7 @@ namespace Admin.Core.Service.Record.Record
             _initiativeUpdateItemRepository = initiativeUpdateItemRepository;
             _freeSql = freeSql;
             _redisDataHelper = redisDataHelper;
+            _notifyRepository = notifyRepository;
         }
 
         public async Task<IResponseOutput> GetAsync(long id)
@@ -579,6 +583,7 @@ namespace Admin.Core.Service.Record.Record
                     {
                         var fileType = await _recordFileTypeRepository.Select.WhereDynamic(recordFileType.RecordFileTypeId).ToOneAsync();
                         var obj = _mapper.Map<CheckedRecordFileTypeEntity>(recordFileType);
+                        obj.RecordId = record.Id;
                         var item = await _checkedRecordFileTypeRepository.InsertAsync(obj);
                         checkedRecordFileTypeId = item.Id;
                         recordHistory.OperateInfo += $"<br> 文件类型:{fileType.FileTypeName}";
@@ -617,15 +622,17 @@ namespace Admin.Core.Service.Record.Record
                 .Distinct()
                 .ToListAsync(i => i.RecordId);
 
+            var total = checkedRecordFileIdList.Count;
+            var list = checkedRecordFileIdList.Skip(input.CurrentPage == 1 ? 0 : (input.CurrentPage - 1) * input.PageSize).Take(input.PageSize);
+
             var entityList = await _recordRepository.Select
-                .Where(i => checkedRecordFileIdList.Contains(i.Id))
+                .Where(i => list.Contains(i.Id))
                 .Include(i => i.ManagerUser)
                 .Include(i => i.ManagerDepartment)
-                .Count(out var total)
+                //.Count(out var total)
                 .OrderByDescending(i => i.CreatedTime)
-                .Page(input.CurrentPage, input.PageSize)
+                //.Page(input.CurrentPage, input.PageSize)
                 .ToListAsync();
-
 
             var data = new PageOutput<HandOverRecordPageOutput>()
             {
@@ -645,6 +652,7 @@ namespace Admin.Core.Service.Record.Record
                 OperateType = "档案移交",
                 OperateInfo = $"档案 {input.Record.RecordUserName} - {input.Record.RecordUserInCode} 进行移交操作"
             };
+            var sign = false;
 
             foreach (var item in input.RecordFileTypeList)
             {
@@ -652,6 +660,7 @@ namespace Admin.Core.Service.Record.Record
 
                 if (count.Count() > 0)
                 {
+                    sign = true;
                     recordHistory.OperateInfo += $"<br> 档案类型 {item.Name}-{item.Remarks}";
                     foreach (var checkedRecordFile in count)
                     {
@@ -665,7 +674,6 @@ namespace Admin.Core.Service.Record.Record
                             recordHistory.OperateInfo += $"<br> 预设文件 {checkedRecordFile.Name} 过期时间:{checkedRecordFile.CreditDueDate} 份数:{checkedRecordFile.Num}";
                         }
                     }
-                    await _recordRepository.UpdateDiy.Set(i => i.Status, 1).Where(i => i.Id == input.Record.Id && i.Status == 0).ExecuteAffrowsAsync();
                 }
                 else
                 {
@@ -673,7 +681,20 @@ namespace Admin.Core.Service.Record.Record
                 }
             }
 
+            if (sign)
+            {
+                await _recordRepository.UpdateDiy.Set(i => i.Status, 1).Where(i => i.Id == input.Record.Id && i.Status == 0).ExecuteAffrowsAsync();
+            }
+
             await _recordHistoryRepository.InsertAsync(recordHistory);
+
+            //var entity = new NotifyEntity()
+            //{
+            //    UserId = input.Record.ManagerUserId.Value,
+            //    Message = $"{input.Record.RecordId}档案移交成功"
+            //};
+
+            //await _notifyRepository.InsertAsync(entity);
 
             return ResponseOutput.Ok();
         }
@@ -948,6 +969,11 @@ namespace Admin.Core.Service.Record.Record
         public async Task<IResponseOutput> AcceptApplyChangeAsync(long id)
         {
             await _initiativeUpdateRepository.UpdateDiy.Set(i => i.Status, 1).WhereDynamic(id).ExecuteAffrowsAsync();
+
+            var record = await _initiativeUpdateRepository.Select
+                .WhereDynamic(id)
+                .Include(i => i.Record)
+                .ToOneAsync(i => i.Record);
             var initiativeUpdateItemList = await _initiativeUpdateItemRepository.Select
                 .Where(i => i.InitiativeUpdateId == id)
                 .Include(i => i.CheckedRecordFile)
@@ -965,6 +991,14 @@ namespace Admin.Core.Service.Record.Record
                     await _checkedRecordFileRepository.UpdateAsync(item.CheckedRecordFile);
                 }
             }
+
+            var entity = new NotifyEntity()
+            {
+                UserId = record.ManagerUserId.Value,
+                Message = $"{record.RecordId}档案申请更换文件成功"
+            };
+
+            await _notifyRepository.InsertAsync(entity);
             return ResponseOutput.Ok();
         }
 

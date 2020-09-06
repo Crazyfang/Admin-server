@@ -17,5 +17,7 @@ namespace Admin.Core.Service.Record.Notify
         Task<IResponseOutput> ReadNotifyAsync(long id);
 
         Task<IResponseOutput> InsertAsync(long id, string reason);
+
+        IResponseOutput Insert(long id, string reason);
     }
 }

@@ -1423,6 +1423,57 @@
             说明
             </summary>
         </member>
+        <member name="M:Admin.Core.Service.Loan.LoanUser.ILoanUserService.AddLoanUserAsync(Admin.Core.Service.Loan.LoanUser.Input.LoanUserAddInput)">
+            <summary>
+            添加贷款压缩信息
+            </summary>
+            <param name="input">贷款压缩添加信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Loan.LoanUser.ILoanUserService.EditLoanUserAsync(Admin.Core.Service.Loan.LoanUser.Input.LoanUserEditInput)">
+            <summary>
+            编辑贷款压缩信息
+            </summary>
+            <param name="input">贷款压缩编辑信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Loan.LoanUser.ILoanUserService.GetLoanUserInfoAsync(System.Int64)">
+            <summary>
+            获取贷款压缩基础信息
+            </summary>
+            <param name="id">贷款压缩主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Loan.LoanUser.ILoanUserService.GetPageAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Loan.LoanUserEntity})">
+            <summary>
+            获取贷款压缩分页
+            </summary>
+            <param name="input">筛选条件，分页信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Loan.LoanUser.ILoanUserService.DeleteLoanUserAsync(System.Int64)">
+            <summary>
+            删除贷款压缩信息，包括条目
+            </summary>
+            <param name="id">贷款压缩主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Loan.LoanUser.ILoanUserService.VerifyLoanUserAsync(System.Int64,System.Int64)">
+            <summary>
+            审核通过贷款压缩信息
+            </summary>
+            <param name="id">贷款压缩主键</param>
+            <returns></returns>
+        </member>
+        <member name="P:Admin.Core.Service.Loan.LoanUser.Output.LoanUserInfoOutput.OverSign">
+            <summary>
+            完成标记
+            0-未完成
+            1-完成
+            2-审核通过
+            3-超期未完成
+            </summary>
+        </member>
         <member name="P:Admin.Core.Service.Record.Record.Input.RecordAddInput.RecordId">
             <summary>
             档案编号

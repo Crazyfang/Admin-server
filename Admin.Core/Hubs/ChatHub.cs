@@ -25,31 +25,39 @@ namespace Admin.Core.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            var userId = Context.User.FindFirst(ClaimAttributes.UserId).Value.ToLong();
-            //var test = Context.GetHttpContext().User.FindFirst(ClaimAttributes.UserId).Value.ToLong();
-            var data = _userRepository.Select.WhereDynamic(userId).IncludeMany(i => i.Roles).ToOne();
-            var sign = false;
-            foreach(var item in data.Roles)
+            var id = Context.User?.FindFirst(ClaimAttributes.UserId);
+            long userId = 0;
+            if (id != null && id.Value.NotNull())
             {
-                if(item.Name == "系统管理员" || item.Name == "文档管理员")
+                userId = id.Value.ToLong();
+            }
+            if(userId != 0)
+            {
+                //var test = Context.GetHttpContext().User.FindFirst(ClaimAttributes.UserId).Value.ToLong();
+                var data = _userRepository.Select.WhereDynamic(userId).IncludeMany(i => i.Roles).ToOne();
+                var sign = false;
+                foreach (var item in data.Roles)
                 {
-                    sign = true;
+                    if (item.Name == "系统管理员" || item.Name == "文档管理员")
+                    {
+                        sign = true;
+                    }
                 }
-            }
-            if (sign)
-            {
-                await Groups.AddToGroupAsync(Context.ConnectionId, "Admin");
-            }
-
-            if (!_signalRDictionary.connections.ContainsKey(userId))
-            {
-                _signalRDictionary.connections.Add(userId, Context.ConnectionId);
-            }
-            else
-            {
-                if(Context.ConnectionId != _signalRDictionary.connections[userId])
+                if (sign)
                 {
-                    _signalRDictionary.connections[userId] = Context.ConnectionId;
+                    await Groups.AddToGroupAsync(Context.ConnectionId, "Admin");
+                }
+
+                if (!_signalRDictionary.connections.ContainsKey(userId))
+                {
+                    _signalRDictionary.connections.Add(userId, Context.ConnectionId);
+                }
+                else
+                {
+                    if (Context.ConnectionId != _signalRDictionary.connections[userId])
+                    {
+                        _signalRDictionary.connections[userId] = Context.ConnectionId;
+                    }
                 }
             }
                        

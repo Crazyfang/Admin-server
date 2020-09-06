@@ -554,6 +554,11 @@
             压缩目标值
             </summary>
         </member>
+        <member name="P:Admin.Core.Model.Loan.CompressTypeEntity.PresentValue">
+            <summary>
+            目前值
+            </summary>
+        </member>
         <member name="P:Admin.Core.Model.Loan.CompressTypeEntity.OverSign">
             <summary>
             完成标记
@@ -566,6 +571,55 @@
             完成时间
             </summary>
         </member>
+        <member name="P:Admin.Core.Model.Loan.LoanMethodEntity.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanMethodEntity.UserName">
+            <summary>
+            客户姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanMethodEntity.UserCode">
+            <summary>
+            客户内码
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanMethodEntity.BeginTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanMethodEntity.OriginalType">
+            <summary>
+            初始方式
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanMethodEntity.AimedType">
+            <summary>
+            目标方式
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanMethodEntity.OverSign">
+            <summary>
+            完成标识
+            0-未完成
+            1-完成
+            2-审核完成
+            3-超期未完成
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanMethodEntity.CountDay">
+            <summary>
+            天数
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanMethodEntity.OverTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
         <member name="P:Admin.Core.Model.Loan.LoanUserEntity.UserName">
             <summary>
             客户姓名
@@ -574,6 +628,11 @@
         <member name="P:Admin.Core.Model.Loan.LoanUserEntity.UserCode">
             <summary>
             客户内码
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Loan.LoanUserEntity.BeginTime">
+            <summary>
+            起始时间
             </summary>
         </member>
         <member name="P:Admin.Core.Model.Loan.LoanUserEntity.VerifyUserId">

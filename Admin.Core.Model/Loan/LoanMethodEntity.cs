@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using Admin.Core.Model.Admin;
 using FreeSql.DataAnnotations;
 
 namespace Admin.Core.Model.Loan
 {
-    [Table(Name = "ln_loanuser")]
-    public class LoanUserEntity
+    [Table(Name = "lm_loanmethod")]
+    public class LoanMethodEntity
     {
+        /// <summary>
+        /// 主键
+        /// </summary>
         [Column(IsIdentity = true, IsPrimary = true)]
         public long Id { get; set; }
 
@@ -22,31 +24,43 @@ namespace Admin.Core.Model.Loan
         public string UserCode { get; set; }
 
         /// <summary>
-        /// 起始时间
+        /// 开始时间
         /// </summary>
-        public DateTime? BeginTime { get; set; }
+        public DateTime BeginTime { get; set; }
 
         /// <summary>
-        /// 审核用户
+        /// 初始方式
         /// </summary>
+        public string OriginalType { get; set; }
+
+        /// <summary>
+        /// 目标方式
+        /// </summary>
+        public string AimedType { get; set; }
+
         public long? VerifyUserId { get; set; }
 
         public UserEntity VerifyUser { get; set; }
 
-        /// <summary>
-        /// 审核时间
-        /// </summary>
         public DateTime? VerifyTime { get; set; }
 
         /// <summary>
-        /// 完成标记
+        /// 完成标识
         /// 0-未完成
         /// 1-完成
-        /// 2-审核通过
+        /// 2-审核完成
         /// 3-超期未完成
         /// </summary>
         public int OverSign { get; set; }
 
-        public List<CompressDeadlineEntity> Budget { get; set; }
+        /// <summary>
+        /// 天数
+        /// </summary>
+        public int CountDay { get; set; }
+
+        /// <summary>
+        /// 结束时间
+        /// </summary>
+        public DateTime OverTime { get; set; }
     }
 }

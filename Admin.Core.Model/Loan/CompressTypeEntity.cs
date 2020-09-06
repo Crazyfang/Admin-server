@@ -17,7 +17,12 @@ namespace Admin.Core.Model.Loan
         /// <summary>
         /// 压缩目标值
         /// </summary>
-        public int TargetValue { get; set; }
+        public double TargetValue { get; set; }
+
+        /// <summary>
+        /// 目前值
+        /// </summary>
+        public double? PresentValue { get; set; }
 
         public long CompressDeadlineId { get; set; }
 

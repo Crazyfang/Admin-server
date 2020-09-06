@@ -77,5 +77,9 @@
     <Folder Include="Loan\CompressDeadline\Input\" />
     <Folder Include="Loan\CompressType\Input\" />
     <Folder Include="Record\Notify\" />
+    <Folder Include="Loan\CompressType\Output\" />
+    <Folder Include="Loan\CompressDeadline\Output\" />
+    <Folder Include="Loan\LoanUser\Output\" />
+    <Folder Include="Loan\LoanMethod\" />
   </ItemGroup>
 </Project>

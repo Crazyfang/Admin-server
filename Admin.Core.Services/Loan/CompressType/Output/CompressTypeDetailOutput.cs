@@ -1,7 +1,7 @@
 ﻿using System;
-namespace Admin.Core.Service.Loan.CompressType.Input
+namespace Admin.Core.Service.Loan.CompressType.Output
 {
-    public class CompressTypeAddInput
+    public class CompressTypeDetailOutput
     {
         public string Name { get; set; }
 

@@ -49,5 +49,6 @@
     <Folder Include="Loan\CompressDeadline\" />
     <Folder Include="Loan\CompressType\" />
     <Folder Include="Record\Notify\" />
+    <Folder Include="Loan\LoanMethod\" />
   </ItemGroup>
 </Project>

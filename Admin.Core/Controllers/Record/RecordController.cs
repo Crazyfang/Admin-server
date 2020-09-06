@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Admin.Core.Attributes;
 using Admin.Core.Common.Auth;
 using Admin.Core.Common.Helpers;
 using Admin.Core.Common.Input;
@@ -173,16 +174,17 @@ namespace Admin.Core.Controllers.Record
 
         [HttpPost]
         [AllowAnonymous]
+        [NoOprationLog]
         public async Task<IResponseOutput> HandOverCheck(HandOverBasicInfoOutput input)
         {
             var data = await _recordService.HandOverCheckAsync(input);
-            var record = await _recordService.GetRecordAsync(input.Record.Id);
+            //var record = await _recordService.GetRecordAsync(input.Record.Id);
 
-            await _notifyService.InsertAsync(record.ManagerUserId.Value, $"{record.RecordId}档案移交成功");
+            //_notifyService.Insert(input.Record.Id, $"{input.Record.RecordId}档案移交成功");
 
-            if (_signalRDictionary.connections.ContainsKey(record.ManagerUserId.Value))
+            if (_signalRDictionary.connections.ContainsKey(input.Record.ManagerUserId.Value))
             {
-                await _hubContext.Clients.Client(_signalRDictionary.connections[record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您有一份档案移交成功");
+                await _hubContext.Clients.Client(_signalRDictionary.connections[input.Record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您有一份档案移交成功");
             }
             return data;
         }
@@ -299,15 +301,13 @@ namespace Admin.Core.Controllers.Record
             return await _recordService.GetApplyChangeDetailAsync(id);
         }
 
-        [HttpPost]
+        [HttpGet]
         [AllowAnonymous]
         public async Task<IResponseOutput> AcceptApplyChange(long id)
         {
-            var data = await _recordService.AcceptApplyChangeAsync(id);
             var record = await _recordService.GetRecordByIniId(id);
-
-            await _notifyService.InsertAsync(record.ManagerUserId.Value, $"{record.RecordId}申请更新文件成功");
-
+            var data = await _recordService.AcceptApplyChangeAsync(id);
+          
             if (_signalRDictionary.connections.ContainsKey(record.ManagerUserId.Value))
             {
                 await _hubContext.Clients.Client(_signalRDictionary.connections[record.ManagerUserId.Value]).SendAsync("Show", "信息刷新", $"您申请更新文件成功");

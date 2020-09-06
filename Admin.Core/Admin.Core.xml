@@ -692,6 +692,41 @@
             域控制器
             </summary>
         </member>
+        <member name="M:Admin.Core.Controllers.Loan.LoanUserController.AddLoanUser(Admin.Core.Service.Loan.LoanUser.Input.LoanUserAddInput)">
+            <summary>
+            添加贷款压缩
+            </summary>
+            <param name="input">贷款压缩添加信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Loan.LoanUserController.Get(System.Int64)">
+            <summary>
+            获取贷款压缩基本信息
+            </summary>
+            <param name="id">string的id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Loan.LoanUserController.Edit(Admin.Core.Service.Loan.LoanUser.Input.LoanUserEditInput)">
+            <summary>
+            编辑贷款压缩
+            </summary>
+            <param name="input">贷款压缩编辑信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Loan.LoanUserController.Delete(System.Int64)">
+            <summary>
+            删除贷款压缩
+            </summary>
+            <param name="id">贷款压缩主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Loan.LoanUserController.GetList(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Loan.LoanUserEntity})">
+            <summary>
+            获取分页信息
+            </summary>
+            <param name="input">筛选条件，分页信息</param>
+            <returns></returns>
+        </member>
         <member name="T:Admin.Core.Controllers.Record.AreaController">
             <summary>
             域控制器

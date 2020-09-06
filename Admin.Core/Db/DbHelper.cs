@@ -104,7 +104,8 @@ namespace Admin.Core.Db
                 typeof(LoanUserEntity),
                 typeof(CompressTypeEntity),
                 typeof(CompressDeadlineEntity),
-                typeof(NotifyEntity)
+                typeof(NotifyEntity),
+                typeof(LoanMethodEntity)
             });
             Console.WriteLine($"{(msg.NotNull() ? msg : $"sync {dbType} structure")} succeed\r\n");
         }
