@@ -182,7 +182,7 @@ namespace Admin.Core.Controllers.Record
             //    await _hubContext.Clients.Client(RedisHelper.HGet("signalR", input.Record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"您有一份档案移交成功");
             //}
             //return data;
-            return await _recordService.HandOverCheckAsync(input);
+            return _recordService.HandOverCheckAsync(input);
         }
 
         [HttpGet]

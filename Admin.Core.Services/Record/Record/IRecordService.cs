@@ -35,7 +35,12 @@ namespace Admin.Core.Service.Record.Record
 
         Task<IResponseOutput> HandOverPageAsync(PageInput<RecordEntity> input);
 
-        Task<IResponseOutput> HandOverCheckAsync(HandOverBasicInfoOutput input);
+        /// <summary>
+        /// 移交确认
+        /// </summary>
+        /// <param name="input">移交确认清单</param>
+        /// <returns></returns>
+        IResponseOutput HandOverCheckAsync(HandOverBasicInfoOutput input);
 
         Task<IResponseOutput> GetHandOverInfoAsync(long id);
 

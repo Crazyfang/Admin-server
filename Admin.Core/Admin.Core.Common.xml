@@ -11,7 +11,7 @@
         </member>
         <member name="T:Admin.Core.Common.Attributes.TransactionAttribute">
             <summary>
-            启用事物
+            启用事务
             </summary>
         </member>
         <member name="P:Admin.Core.Common.Attributes.TransactionAttribute.Propagation">

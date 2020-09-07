@@ -643,63 +643,78 @@ namespace Admin.Core.Service.Record.Record
             return ResponseOutput.Ok(data);
         }
 
-        [Transaction]
-        public async Task<IResponseOutput> HandOverCheckAsync(HandOverBasicInfoOutput input)
+        public IResponseOutput HandOverCheckAsync(HandOverBasicInfoOutput input)
         {
-            var recordHistory = new RecordHistoryEntity()
+            _freeSql.Transaction(() =>
             {
-                RecordId = input.Record.Id,
-                OperateType = "档案移交",
-                OperateInfo = $"档案 {input.Record.RecordUserName} - {input.Record.RecordUserInCode} 进行移交操作"
-            };
-            var sign = false;
-
-            foreach (var item in input.RecordFileTypeList)
-            {
-                var count = item.Children.Where(i => i.Checked == true);
-
-                if (count.Count() > 0)
+                try
                 {
-                    sign = true;
-                    recordHistory.OperateInfo += $"<br> 档案类型 {item.Name}-{item.Remarks}";
-                    foreach (var checkedRecordFile in count)
+                    var recordHistory = new RecordHistoryEntity()
                     {
-                        var checkedRecordFileEntity = await _checkedRecordFileRepository.Select.WhereDynamic(checkedRecordFile.Id).ToOneAsync();
-                        checkedRecordFileEntity.HandOverSign = 1;
-                        await _checkedRecordFileRepository.UpdateAsync(checkedRecordFileEntity);
-                        if (checkedRecordFile.OtherSign == 1)
+                        RecordId = input.Record.Id,
+                        OperateType = "档案移交",
+                        OperateInfo = $"档案 {input.Record.RecordUserName} - {input.Record.RecordUserInCode} 进行移交操作"
+                    };
+                    var sign = false;
+
+                    foreach (var item in input.RecordFileTypeList)
+                    {
+                        var count = item.Children.Where(i => i.Checked == true);
+
+                        if (count.Count() > 0)
                         {
-                            recordHistory.OperateInfo += $"<br> 自定义文件 {checkedRecordFile.Name} 过期时间:{checkedRecordFile.CreditDueDate} 份数:{checkedRecordFile.Num}";
+                            sign = true;
+                            recordHistory.OperateInfo += $"<br> 档案类型 {item.Name}-{item.Remarks}";
+                            foreach (var checkedRecordFile in count)
+                            {
+                                //var checkedRecordFileEntity = _checkedRecordFileRepository.Select.WhereDynamic(checkedRecordFile.Id).ToOne();
+                                //var checkedRecordFileEntity = _freeSql.Select<CheckedRecordFileEntity>().WhereDynamic(checkedRecordFile.Id).ToOne();
+                                // checkedRecordFileEntity.HandOverSign = 1;
+                                _freeSql.Update<CheckedRecordFileEntity>().Set(i => i.HandOverSign, 1).Where(i => i.Id == checkedRecordFile.Id).ExecuteAffrows();
+                                // _checkedRecordFileRepository.Update(checkedRecordFileEntity);
+                                if (checkedRecordFile.OtherSign == 1)
+                                {
+                                    recordHistory.OperateInfo += $"<br> 自定义文件 {checkedRecordFile.Name} 过期时间:{checkedRecordFile.CreditDueDate} 份数:{checkedRecordFile.Num}";
+                                }
+                                else
+                                {
+                                    recordHistory.OperateInfo += $"<br> 预设文件 {checkedRecordFile.Name} 过期时间:{checkedRecordFile.CreditDueDate} 份数:{checkedRecordFile.Num}";
+                                }
+                            }
                         }
                         else
                         {
-                            recordHistory.OperateInfo += $"<br> 预设文件 {checkedRecordFile.Name} 过期时间:{checkedRecordFile.CreditDueDate} 份数:{checkedRecordFile.Num}";
+                            continue;
                         }
                     }
+
+                    if (sign)
+                    {
+                        //var recordEntity = _recordRepository.Select.WhereDynamic(input.Record.Id).ToOne();
+                        //recordEntity.Status = 1;
+                        //_recordRepository.Update(recordEntity);
+
+                        //var recordEntity = _freeSql.Select<RecordEntity>().WhereDynamic(input.Record.Id).ToOne();
+                        //recordEntity.Status = 1;
+
+                        _freeSql.Update<RecordEntity>().Set(i => i.Status, 1).Where(i => i.Id == input.Record.Id).ExecuteAffrows();
+                    }
+
+                    _freeSql.Insert(recordHistory).ExecuteAffrows();
+
+                    //var entity = new NotifyEntity()
+                    //{
+                    //    UserId = input.Record.ManagerUserId.Value,
+                    //    Message = $"{input.Record.RecordId}档案移交成功"
+                    //};
+
+                    //await _notifyRepository.InsertAsync(entity);
                 }
-                else
+                catch (Exception ex)
                 {
-                    continue;
+                    throw new Exception(ex.Message);
                 }
-            }
-
-            if (sign)
-            {
-                var recordEntity = await _recordRepository.Select.WhereDynamic(input.Record.Id).ToOneAsync();
-                recordEntity.Status = 1;
-                await _recordRepository.UpdateAsync(recordEntity);
-            }
-
-            await _recordHistoryRepository.InsertAsync(recordHistory);
-
-            //var entity = new NotifyEntity()
-            //{
-            //    UserId = input.Record.ManagerUserId.Value,
-            //    Message = $"{input.Record.RecordId}档案移交成功"
-            //};
-
-            //await _notifyRepository.InsertAsync(entity);
-
+            });
             return ResponseOutput.Ok();
         }
 

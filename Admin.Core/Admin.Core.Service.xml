@@ -6,68 +6,68 @@
     <members>
         <member name="T:Admin.Core.Service.Admin.Api.IApiService">
             <summary>
-            �ӿڷ���
+            接口服务
             </summary>	
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.GetAsync(System.Int64)">
             <summary>
-            ���һ����¼
+            获得一条记录
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.ListAsync(System.String)">
             <summary>
-            ����б�
+            获得列表
             </summary>
             <param name="key"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.PageAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Admin.ApiEntity})">
             <summary>
-            ��÷�ҳ
+            获得分页
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.AddAsync(Admin.Core.Service.Admin.Api.Input.ApiAddInput)">
             <summary>
-            ���
+            添加
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.UpdateAsync(Admin.Core.Service.Admin.Api.Input.ApiUpdateInput)">
             <summary>
-            �޸�
+            修改
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.DeleteAsync(System.Int64)">
             <summary>
-            ɾ��
+            删除
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.SoftDeleteAsync(System.Int64)">
             <summary>
-            ��ɾ��
+            软删除
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.BatchSoftDeleteAsync(System.Int64[])">
             <summary>
-            ������ɾ��
+            批量软删除
             </summary>
             <param name="ids"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.SyncAsync(Admin.Core.Service.Admin.Api.Input.ApiSyncInput)">
             <summary>
-            ͬ��
+            同步
             </summary>
             <param name="input"></param>
             <returns></returns>
@@ -199,7 +199,7 @@
         </member>
         <member name="T:Admin.Core.Service.Admin.Auth.IAuthService">
             <summary>
-            Ȩ�޷���
+            权限服务
             </summary>	
         </member>
         <member name="T:Admin.Core.Service.Admin.Auth.Input.AuthLoginInput">
@@ -259,18 +259,18 @@
         </member>
         <member name="T:Admin.Core.Service.Admin.Cache.ICacheService">
             <summary>
-            �������
+            缓存服务
             </summary>	
         </member>
         <member name="M:Admin.Core.Service.Admin.Cache.ICacheService.List">
             <summary>
-            �����б�
+            缓存列表
             </summary>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Cache.ICacheService.ClearAsync(System.String)">
             <summary>
-            �������
+            清除缓存
             </summary>
             <param name="cacheKey"></param>
             <returns></returns>
@@ -377,77 +377,77 @@
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddGroupInput.ParentId">
             <summary>
-            �����ڵ�
+            父级节点
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddGroupInput.Type">
             <summary>
-            ����
+            类型
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddGroupInput.Label">
             <summary>
-            ����
+            名称
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddGroupInput.Name">
             <summary>
-            ����
+            命名
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddGroupInput.Opened">
             <summary>
-            ��
+            打开
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddImageInput.DocumentId">
             <summary>
-            �û�Id
+            用户Id
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddImageInput.Url">
             <summary>
-            ����·��
+            请求路径
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddMenuInput.ParentId">
             <summary>
-            �����ڵ�
+            父级节点
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddMenuInput.Type">
             <summary>
-            ����
+            类型
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddMenuInput.Name">
             <summary>
-            ����
+            命名
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddMenuInput.Label">
             <summary>
-            ����
+            名称
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddMenuInput.Description">
             <summary>
-            ˵��
+            说明
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateContentInput.Id">
             <summary>
-            ���
+            编号
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateContentInput.Label">
             <summary>
-            ����
+            名称
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateContentInput.Content">
             <summary>
-            ����
+            内容
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateContentInput.Html">
@@ -457,57 +457,57 @@
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateContentInput.Version">
             <summary>
-            �汾
+            版本
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateGroupInput.Id">
             <summary>
-            ���
+            编号
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateGroupInput.Version">
             <summary>
-            �汾
+            版本
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateMenuInput.Id">
             <summary>
-            ���
+            编号
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateMenuInput.Version">
             <summary>
-            �汾
+            版本
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUploadImageInput.File">
             <summary>
-            �ϴ��ļ�
+            上传文件
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUploadImageInput.Id">
             <summary>
-            �ĵ����
+            文档编号
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Output.DocumentGetContentOutput.Id">
             <summary>
-            ���
+            编号
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Output.DocumentGetContentOutput.Label">
             <summary>
-            ����
+            名称
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Output.DocumentGetContentOutput.Content">
             <summary>
-            ����
+            内容
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Output.DocumentGetContentOutput.Version">
             <summary>
-            �汾
+            版本
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Output.DocumentListOutput.Id">
@@ -827,152 +827,152 @@
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.Type">
             <summary>
-            Ȩ������
+            权限类型
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.ParentId">
             <summary>
-            �����ڵ�
+            父级节点
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.ApiId">
             <summary>
-            �ӿ�
+            接口
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.Label">
             <summary>
-            Ȩ������
+            权限名称
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.Description">
             <summary>
-            ˵��
+            说明
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.Hidden">
             <summary>
-            ����
+            隐藏
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.Icon">
             <summary>
-            ͼ��
+            图标
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.Type">
             <summary>
-            Ȩ������
+            权限类型
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.ParentId">
             <summary>
-            �����ڵ�
+            父级节点
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.Label">
             <summary>
-            Ȩ������
+            权限名称
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.Hidden">
             <summary>
-            ����
+            隐藏
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.Icon">
             <summary>
-            ͼ��
+            图标
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.Opened">
             <summary>
-            ��
+            打开
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Type">
             <summary>
-            Ȩ������
+            权限类型
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.ParentId">
             <summary>
-            �����ڵ�
+            父级节点
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.ViewId">
             <summary>
-            ��ͼ
+            视图
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Path">
             <summary>
-            ���ʵ�ַ
+            访问地址
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Label">
             <summary>
-            Ȩ������
+            权限名称
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Description">
             <summary>
-            ˵��
+            说明
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Hidden">
             <summary>
-            ����
+            隐藏
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Icon">
             <summary>
-            ͼ��
+            图标
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Closable">
             <summary>
-            �ɹر�
+            可关闭
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.NewWindow">
             <summary>
-            ���´���
+            打开新窗口
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.External">
             <summary>
-            ��������
+            链接外显
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateApiInput.Id">
             <summary>
-            Ȩ��Id
+            权限Id
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateApiInput.Version">
             <summary>
-            �汾
+            版本
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateGroupInput.Id">
             <summary>
-            Ȩ��Id
+            权限Id
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateGroupInput.Version">
             <summary>
-            �汾
+            版本
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateMenuInput.Id">
             <summary>
-            Ȩ��Id
+            权限Id
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateMenuInput.Version">
             <summary>
-            �汾
+            版本
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Output.PermissionListOutput.Id">
@@ -1378,12 +1378,12 @@
         </member>
         <member name="T:Admin.Core.Service.Admin.View.IViewService">
             <summary>
-            ��ͼ����
+            视图服务
             </summary>
         </member>
         <member name="M:Admin.Core.Service.Admin.View.IViewService.GetAsync(System.Int64)">
             <summary>
-            ���һ����¼
+            获得一条记录
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -1569,6 +1569,13 @@
             <summary>
             档案状态
             </summary>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.HandOverCheckAsync(Admin.Core.Service.Record.Record.Output.HandOverBasicInfoOutput)">
+            <summary>
+            移交确认
+            </summary>
+            <param name="input">移交确认清单</param>
+            <returns></returns>
         </member>
         <member name="P:Admin.Core.Service.Record.Record.Output.RecordGetOutput.RecordId">
             <summary>
