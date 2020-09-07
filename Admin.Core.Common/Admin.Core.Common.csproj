@@ -20,11 +20,11 @@
     <OutputPath></OutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
+<!--  <ItemGroup>
     <Compile Remove="BaseModel\**" />
     <EmbeddedResource Remove="BaseModel\**" />
     <None Remove="BaseModel\**" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <PackageReference Include="CSRedisCore" Version="3.6.5" />

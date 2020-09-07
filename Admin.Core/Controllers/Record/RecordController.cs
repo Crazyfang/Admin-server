@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Admin.Core.Attributes;
 using Admin.Core.Common.Auth;
-using Admin.Core.Common.Helpers;
 using Admin.Core.Common.Input;
 using Admin.Core.Common.Output;
 using Admin.Core.Hubs;
@@ -174,16 +172,17 @@ namespace Admin.Core.Controllers.Record
         [NoOprationLog]
         public async Task<IResponseOutput> HandOverCheck(HandOverBasicInfoOutput input)
         {
-            var data = await _recordService.HandOverCheckAsync(input);
+            //var data = await _recordService.HandOverCheckAsync(input);
             //var record = await _recordService.GetRecordAsync(input.Record.Id);
 
             //_notifyService.Insert(input.Record.Id, $"{input.Record.RecordId}档案移交成功");
 
-            if (RedisHelper.HExists("signalR", input.Record.ManagerUserId.Value.ToString()))
-            {
-                await _hubContext.Clients.Client(RedisHelper.HGet("signalR", input.Record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"您有一份档案移交成功");
-            }
-            return data;
+            //if (RedisHelper.HExists("signalR", input.Record.ManagerUserId.Value.ToString()))
+            //{
+            //    await _hubContext.Clients.Client(RedisHelper.HGet("signalR", input.Record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"您有一份档案移交成功");
+            //}
+            //return data;
+            return await _recordService.HandOverCheckAsync(input);
         }
 
         [HttpGet]

@@ -18,16 +18,13 @@ namespace Admin.Core.Controllers.Record
         private readonly INotifyService _notifyService;
         private readonly IUser _user;
         private readonly IHubContext<ChatHub> _hubContext;
-        private SignalRDictionary _signalRDictionary;
         public NotifyController(INotifyService notifyService
             , IUser user
-            , IHubContext<ChatHub> hubContext
-            , SignalRDictionary signalRDictionary)
+            , IHubContext<ChatHub> hubContext)
         {
             _user = user;
             _notifyService = notifyService;
             _hubContext = hubContext;
-            _signalRDictionary = signalRDictionary;
         }
 
         /// <summary>
@@ -63,9 +60,9 @@ namespace Admin.Core.Controllers.Record
         public async Task<IResponseOutput> ReadNotify(long id)
         {
             var data = await _notifyService.ReadNotifyAsync(id);
-            if (_signalRDictionary.connections.ContainsKey(_user.Id))
+            if (RedisHelper.HExists("signalR", _user.Id.ToString()))
             {
-                await _hubContext.Clients.Client(_signalRDictionary.connections[_user.Id]).SendAsync("Show", "信息刷新", "");
+                await _hubContext.Clients.Client(RedisHelper.HGet("signalR", _user.Id.ToString())).SendAsync("Show", "信息刷新", "");
             }
             return data;
         }
@@ -74,7 +71,7 @@ namespace Admin.Core.Controllers.Record
         [AllowAnonymous]
         public IResponseOutput GetDictionary()
         {
-            var data = new { count = _signalRDictionary.connections.Count, str = _signalRDictionary.connections.Keys.ToString() + _signalRDictionary.connections.Values.ToString() };
+            var data = new { count = RedisHelper.HLen("signalR"), str = RedisHelper.HKeys("signalR").ToString() + RedisHelper.HVals("signalR").ToString() };
             return ResponseOutput.Ok(data);
         }
     }

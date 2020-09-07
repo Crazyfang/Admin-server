@@ -48,6 +48,7 @@ namespace Admin.Core.Service.Loan.LoanUser
         /// 审核通过贷款压缩信息
         /// </summary>
         /// <param name="id">贷款压缩主键</param>
+        /// <param name="userId">用户主键</param>
         /// <returns></returns>
         Task<IResponseOutput> VerifyLoanUserAsync(long id, long userId);
     }

@@ -664,7 +664,9 @@ namespace Admin.Core.Service.Record.Record
                     recordHistory.OperateInfo += $"<br> 档案类型 {item.Name}-{item.Remarks}";
                     foreach (var checkedRecordFile in count)
                     {
-                        await _checkedRecordFileRepository.UpdateDiy.Set(i => i.HandOverSign, 1).WhereDynamic(checkedRecordFile.Id).ExecuteAffrowsAsync();
+                        var checkedRecordFileEntity = await _checkedRecordFileRepository.Select.WhereDynamic(checkedRecordFile.Id).ToOneAsync();
+                        checkedRecordFileEntity.HandOverSign = 1;
+                        await _checkedRecordFileRepository.UpdateAsync(checkedRecordFileEntity);
                         if (checkedRecordFile.OtherSign == 1)
                         {
                             recordHistory.OperateInfo += $"<br> 自定义文件 {checkedRecordFile.Name} 过期时间:{checkedRecordFile.CreditDueDate} 份数:{checkedRecordFile.Num}";
@@ -683,7 +685,9 @@ namespace Admin.Core.Service.Record.Record
 
             if (sign)
             {
-                await _recordRepository.UpdateDiy.Set(i => i.Status, 1).Where(i => i.Id == input.Record.Id && i.Status == 0).ExecuteAffrowsAsync();
+                var recordEntity = await _recordRepository.Select.WhereDynamic(input.Record.Id).ToOneAsync();
+                recordEntity.Status = 1;
+                await _recordRepository.UpdateAsync(recordEntity);
             }
 
             await _recordHistoryRepository.InsertAsync(recordHistory);

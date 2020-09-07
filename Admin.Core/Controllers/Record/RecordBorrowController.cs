@@ -19,16 +19,13 @@ namespace Admin.Core.Controllers.Record
     {
         private readonly IRecordBorrowService _recordBorrowService;
         private readonly INotifyService _notifyService;
-        private readonly SignalRDictionary _signalRDictionary;
         private readonly IHubContext<ChatHub> _hubContext;
         public RecordBorrowController(IRecordBorrowService recordBorrowService
             , INotifyService notifyService
-            , SignalRDictionary signalRDictionary
             , IHubContext<ChatHub> hubContext)
         {
             _recordBorrowService = recordBorrowService;
             _notifyService = notifyService;
-            _signalRDictionary = signalRDictionary;
             _hubContext = hubContext;
         }
 
@@ -77,16 +74,16 @@ namespace Admin.Core.Controllers.Record
 
             if(input.VerifyType == 0)
             {
-                if (_signalRDictionary.connections.ContainsKey(user.Id))
+                if (RedisHelper.HExists("signalR", user.Id.ToString()))
                 {
-                    await _hubContext.Clients.Client(_signalRDictionary.connections[user.Id]).SendAsync("Show", "信息刷新", $"您有一份借调阅审核被拒绝");
+                    await _hubContext.Clients.Client(RedisHelper.HGet("signalR", user.Id.ToString())).SendAsync("Show", "信息刷新", $"您有一份借调阅审核被拒绝");
                 }
             }
             else
             {
-                if (_signalRDictionary.connections.ContainsKey(user.Id))
+                if (RedisHelper.HExists("signalR", user.Id.ToString()))
                 {
-                    await _hubContext.Clients.Client(_signalRDictionary.connections[user.Id]).SendAsync("Show", "信息刷新", $"您有一份借调阅审核通过");
+                    await _hubContext.Clients.Client(RedisHelper.HGet("signalR", user.Id.ToString())).SendAsync("Show", "信息刷新", $"您有一份借调阅审核通过");
                 }
             }
             
