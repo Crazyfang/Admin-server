@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Admin.Core.Common.Output;
 using Admin.Core.Service.Record.RecordFile;
 using Admin.Core.Service.Record.RecordFile.Input;
@@ -40,6 +39,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordFileService.GetRecordFileListAsync(id);
         }
 
+        /// <summary>
+        /// 档案文件类别下属文件添加
+        /// </summary>
+        /// <param name="input">档案文件添加类</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IResponseOutput> Add(RecordFileAddInput input)
@@ -47,6 +51,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordFileService.AddAsync(input);
         }
 
+        /// <summary>
+        /// 档案文件类别下属文件更新
+        /// </summary>
+        /// <param name="input">档案文件更新类</param>
+        /// <returns></returns>
         [HttpPut]
         [AllowAnonymous]
         public async Task<IResponseOutput> Update(RecordFileUpdateInput input)
@@ -54,6 +63,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordFileService.UpdateAsync(input);
         }
 
+        /// <summary>
+        /// 档案文件类别下属文件删除
+        /// </summary>
+        /// <param name="id">档案文件删除类</param>
+        /// <returns></returns>
         [HttpDelete]
         [AllowAnonymous]
         public async Task<IResponseOutput> Delete(long id)

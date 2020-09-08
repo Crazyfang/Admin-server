@@ -16,6 +16,11 @@ namespace Admin.Core.Controllers.Record
             _recordTypeService = recordTypeService;
         }
 
+        /// <summary>
+        /// 档案类别获取
+        /// </summary>
+        /// <param name="id">档案类别主键</param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IResponseOutput> Get(long id)
@@ -23,6 +28,10 @@ namespace Admin.Core.Controllers.Record
             return await _recordTypeService.GetAsync(id);
         }
 
+        /// <summary>
+        /// 档案类别全部获取
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IResponseOutput> GetAll()
@@ -30,6 +39,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordTypeService.GetAllRecordTypeAsync();
         }
 
+        /// <summary>
+        /// 档案类别添加
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IResponseOutput> Add(RecordTypeAddInput input)

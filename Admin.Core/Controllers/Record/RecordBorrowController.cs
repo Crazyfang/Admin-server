@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Admin.Core.Common.Helpers;
+﻿using System.Threading.Tasks;
 using Admin.Core.Common.Input;
 using Admin.Core.Common.Output;
 using Admin.Core.Hubs;
@@ -11,7 +9,6 @@ using Admin.Core.Service.Record.RecordBorrow.Input;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json.Linq;
 
 namespace Admin.Core.Controllers.Record
 {
@@ -29,6 +26,11 @@ namespace Admin.Core.Controllers.Record
             _hubContext = hubContext;
         }
 
+        /// <summary>
+        /// 添加档案借调阅
+        /// </summary>
+        /// <param name="input">申请档案借阅基本信息</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IResponseOutput> AddRecordBorrow(RecordBorrowAddInput input)
@@ -36,6 +38,11 @@ namespace Admin.Core.Controllers.Record
            return await _recordBorrowService.BorrowOrReadAsync(input);
         }
 
+        /// <summary>
+        /// 取消档案借调阅
+        /// </summary>
+        /// <param name="id">借调阅主键</param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IResponseOutput> CancelRecordBorrow(long id)
@@ -43,6 +50,10 @@ namespace Admin.Core.Controllers.Record
             return await _recordBorrowService.CancelBorrowOrReadAsync(id);
         }
 
+        /// <summary>
+        /// 获取当前登录用户的借调阅列表
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IResponseOutput> GetBorrowList()
@@ -50,6 +61,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordBorrowService.GetBorrowListAsync();
         }
 
+        /// <summary>
+        /// 获取借调阅审核分页
+        /// </summary>
+        /// <param name="input">分页参数及筛选条件</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IResponseOutput> GetVerifyList(PageInput<RecordBorrowEntity> input)
@@ -57,6 +73,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordBorrowService.GetVerifyListAsync(input);
         }
 
+        /// <summary>
+        /// 获取借调阅具体信息
+        /// </summary>
+        /// <param name="id">借调阅主键</param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IResponseOutput> GetBorrowDetail(long id)
@@ -64,6 +85,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordBorrowService.GetBorrowDetailAsync(id);
         }
 
+        /// <summary>
+        /// 借调阅审核
+        /// </summary>
+        /// <param name="input">借调阅信息</param>
+        /// <returns></returns>
         [HttpPut]
         [AllowAnonymous]
         public async Task<IResponseOutput> VerifyBorrow(RecordBorrowVerifyInput input)
@@ -90,6 +116,11 @@ namespace Admin.Core.Controllers.Record
             return data;
         }
 
+        /// <summary>
+        /// 获取借调阅归还分页
+        /// </summary>
+        /// <param name="input">分页信息及筛选条件</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IResponseOutput> GetReturnPage(PageInput<RecordBorrowEntity> input)
@@ -97,6 +128,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordBorrowService.GetReturnPageAsync(input);
         }
 
+        /// <summary>
+        /// 借调阅归还
+        /// </summary>
+        /// <param name="id">借调阅主键</param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IResponseOutput> ReturnRecord(long id)

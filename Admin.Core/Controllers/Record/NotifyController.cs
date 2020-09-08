@@ -67,6 +67,10 @@ namespace Admin.Core.Controllers.Record
             return data;
         }
 
+        /// <summary>
+        /// signalR服务端测试函数
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IResponseOutput GetDictionary()

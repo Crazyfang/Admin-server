@@ -169,7 +169,6 @@ namespace Admin.Core.Controllers.Record
 
         [HttpPost]
         [AllowAnonymous]
-        [NoOprationLog]
         public async Task<IResponseOutput> HandOverCheck(HandOverBasicInfoOutput input)
         {
             //var data = await _recordService.HandOverCheckAsync(input);
@@ -182,7 +181,13 @@ namespace Admin.Core.Controllers.Record
             //    await _hubContext.Clients.Client(RedisHelper.HGet("signalR", input.Record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"您有一份档案移交成功");
             //}
             //return data;
-            return _recordService.HandOverCheckAsync(input);
+            var data =  _recordService.HandOverCheckAsync(input);
+            await _notifyService.InsertAsync(input.Record.ManagerUserId.Value, $"{input.Record.RecordId}移交成功!");
+            if (RedisHelper.HExists("signalR", input.Record.ManagerUserId.Value.ToString()))
+            {
+                await _hubContext.Clients.Client(RedisHelper.HGet("signalR", input.Record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"您有一份档案移交成功");
+            }
+            return data;
         }
 
         [HttpGet]
