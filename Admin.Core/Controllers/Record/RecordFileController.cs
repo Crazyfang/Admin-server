@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Core.Controllers.Record
 {
+    /// <summary>
+    /// 信贷档案文件
+    /// </summary>
     public class RecordFileController:AreaController
     {
         private readonly IRecordFileService _recordFileService;

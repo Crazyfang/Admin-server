@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Core.Controllers.Record
 {
+    /// <summary>
+    /// 信贷档案历史
+    /// </summary>
     public class RecordHistoryController:AreaController
     {
         private readonly IRecordHistoryService _recordHistoryService;

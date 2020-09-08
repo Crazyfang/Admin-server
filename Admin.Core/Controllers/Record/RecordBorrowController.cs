@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Admin.Core.Controllers.Record
 {
+    /// <summary>
+    /// 档案借调阅
+    /// </summary>
     public class RecordBorrowController:AreaController
     {
         private readonly IRecordBorrowService _recordBorrowService;

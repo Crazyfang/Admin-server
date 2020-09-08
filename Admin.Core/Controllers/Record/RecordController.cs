@@ -21,6 +21,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Admin.Core.Controllers.Record
 {
+    /// <summary>
+    /// 信贷档案
+    /// </summary>
     public class RecordController:AreaController
     {
         private readonly IUserService _userService;

@@ -35,13 +35,6 @@ namespace Admin.Core.Service.Record.Notify
             return ResponseOutput.Ok(data);
         }
 
-        public async Task<IResponseOutput> ReadAsync(long id)
-        {
-            var res = await _notifyRepository.UpdateDiy.Set(i => i.Sign, true).WhereDynamic(id).ExecuteAffrowsAsync();
-
-            return ResponseOutput.Ok();
-        }
-
         public async Task<IResponseOutput> GetCountAsync(long id)
         {
             var res = await _notifyRepository.Select
@@ -74,19 +67,6 @@ namespace Admin.Core.Service.Record.Notify
             };
 
             await _notifyRepository.InsertAsync(entity);
-
-            return ResponseOutput.Ok();
-        }
-
-        public IResponseOutput Insert(long id, string reason)
-        {
-            var entity = new NotifyEntity()
-            {
-                UserId = id,
-                Message = reason
-            };
-
-            _notifyRepository.Insert(entity);
 
             return ResponseOutput.Ok();
         }

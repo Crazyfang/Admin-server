@@ -752,6 +752,67 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:Admin.Core.Controllers.Record.NotifyController.GetDictionary">
+            <summary>
+            signalR服务端测试函数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordBorrowController.AddRecordBorrow(Admin.Core.Service.Record.RecordBorrow.Input.RecordBorrowAddInput)">
+            <summary>
+            添加档案借调阅
+            </summary>
+            <param name="input">申请档案借阅基本信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordBorrowController.CancelRecordBorrow(System.Int64)">
+            <summary>
+            取消档案借调阅
+            </summary>
+            <param name="id">借调阅主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordBorrowController.GetBorrowList">
+            <summary>
+            获取当前登录用户的借调阅列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordBorrowController.GetVerifyList(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.RecordBorrowEntity})">
+            <summary>
+            获取借调阅审核分页
+            </summary>
+            <param name="input">分页参数及筛选条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordBorrowController.GetBorrowDetail(System.Int64)">
+            <summary>
+            获取借调阅具体信息
+            </summary>
+            <param name="id">借调阅主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordBorrowController.VerifyBorrow(Admin.Core.Service.Record.RecordBorrow.Input.RecordBorrowVerifyInput)">
+            <summary>
+            借调阅审核
+            </summary>
+            <param name="input">借调阅信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordBorrowController.GetReturnPage(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.RecordBorrowEntity})">
+            <summary>
+            获取借调阅归还分页
+            </summary>
+            <param name="input">分页信息及筛选条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordBorrowController.ReturnRecord(System.Int64)">
+            <summary>
+            借调阅归还
+            </summary>
+            <param name="id">借调阅主键</param>
+            <returns></returns>
+        </member>
         <member name="M:Admin.Core.Controllers.Record.RecordFileController.Get(System.Int64)">
             <summary>
             根据id获取特定的档案文件条目
@@ -765,6 +826,104 @@
             </summary>
             <param name="id">档案文件类型Id</param>
             <returns>档案文件列表</returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileController.Add(Admin.Core.Service.Record.RecordFile.Input.RecordFileAddInput)">
+            <summary>
+            档案文件类别下属文件添加
+            </summary>
+            <param name="input">档案文件添加类</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileController.Update(Admin.Core.Service.Record.RecordFile.Input.RecordFileUpdateInput)">
+            <summary>
+            档案文件类别下属文件更新
+            </summary>
+            <param name="input">档案文件更新类</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileController.Delete(System.Int64)">
+            <summary>
+            档案文件类别下属文件删除
+            </summary>
+            <param name="id">档案文件删除类</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileTypeController.Get(System.Int64)">
+            <summary>
+            档案文件类别获取
+            </summary>
+            <param name="id">档案文件类别主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileTypeController.GetListByRecTypeId(System.Int64)">
+            <summary>
+            获取档案文件类别下属的档案文件
+            </summary>
+            <param name="id">档案类别主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileTypeController.Add(Admin.Core.Service.Record.RecordFileType.Input.RecordFileTypeAddInput)">
+            <summary>
+            档案文件类别添加
+            </summary>
+            <param name="input">档案文件类别添加类</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileTypeController.Update(Admin.Core.Service.Record.RecordFileType.Input.RecordFileTypeUpdateInput)">
+            <summary>
+            档案文件类别更新
+            </summary>
+            <param name="input">档案文件类别更新类</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileTypeController.Delete(System.Int64)">
+            <summary>
+            档案文件类别删除
+            </summary>
+            <param name="id">档案文件类别主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileTypeController.UpdateRecordPageList(System.Int64,System.Int64)">
+            <summary>
+            档案编辑界面原有文件信息返回
+            </summary>
+            <param name="id">档案类型</param>
+            <param name="recordId">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordFileTypeController.AddRecordPageList(System.Int64)">
+            <summary>
+            档案添加界面返回文件类别及归属文件
+            </summary>
+            <param name="id">档案类别</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordHistoryController.Get(System.Int64)">
+            <summary>
+            档案历史查询
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordTypeController.Get(System.Int64)">
+            <summary>
+            档案类别获取
+            </summary>
+            <param name="id">档案类别主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordTypeController.GetAll">
+            <summary>
+            档案类别全部获取
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordTypeController.Add(Admin.Core.Service.Record.RecordType.Input.RecordTypeAddInput)">
+            <summary>
+            档案类别添加
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
         </member>
         <member name="T:Admin.Core.Db.Data">
             <summary>

@@ -42,7 +42,7 @@ namespace Admin.Core.Controllers.Record
         /// <summary>
         /// 档案类别添加
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="input">档案类别添加类</param>
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
@@ -51,6 +51,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordTypeService.AddRecordTypeAsync(input);
         }
 
+        /// <summary>
+        /// 档案类别编辑
+        /// </summary>
+        /// <param name="input">档案类别编辑类</param>
+        /// <returns></returns>
         [HttpPut]
         [AllowAnonymous]
         public async Task<IResponseOutput> Update(RecordTypeUpdateInput input)
@@ -58,6 +63,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordTypeService.UpdateRecordTypeAsync(input);
         }
 
+        /// <summary>
+        /// 档案类别删除
+        /// </summary>
+        /// <param name="id">档案类别主键</param>
+        /// <returns></returns>
         [HttpDelete]
         [AllowAnonymous]
         public async Task<IResponseOutput> Delete(long id)
@@ -65,6 +75,11 @@ namespace Admin.Core.Controllers.Record
             return await _recordTypeService.DeleteAsync(id);
         }
 
+        /// <summary>
+        /// 档案类别软删除
+        /// </summary>
+        /// <param name="id">档案主键</param>
+        /// <returns></returns>
         [HttpDelete]
         [AllowAnonymous]
         public async Task<IResponseOutput> SoftDelete(long id)

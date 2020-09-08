@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Core.Controllers.Record
 {
+    /// <summary>
+    /// 信贷档案文件类别
+    /// </summary>
     public class RecordFileTypeController:AreaController
     {
         private readonly IRecordFileTypeService _recordFileTypeService;

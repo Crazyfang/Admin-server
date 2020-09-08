@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Admin.Core.Controllers.Record
 {
+    /// <summary>
+    /// 消息通知
+    /// </summary>
     public class NotifyController:AreaController
     {
         private readonly INotifyService _notifyService;
