@@ -617,22 +617,42 @@ namespace Admin.Core.Service.Record.Record
 
         public async Task<IResponseOutput> HandOverPageAsync(PageInput<RecordEntity> input)
         {
-            var checkedRecordFileIdList = await _checkedRecordFileRepository.Select
-                .Where(i => i.HandOverSign == 0)
-                .Distinct()
-                .ToListAsync(i => i.RecordId);
-
-            var total = checkedRecordFileIdList.Count;
-            var list = checkedRecordFileIdList.Skip(input.CurrentPage == 1 ? 0 : (input.CurrentPage - 1) * input.PageSize).Take(input.PageSize);
+            //var entityList = _freeSql.Select<RecordEntity>().From<CheckedRecordFileEntity>((s, b) => s
+            //    .LeftJoin(a => a.Id == b.RecordId))
+            //    .Where((a, b) => b.HandOverSign == 0)
+            //    .WhereIf(input.Filter.ManagerUserId.HasValue, (a, b) => a.ManagerUserId == input.Filter.ManagerUserId)
+            //    .WhereIf(input.Filter.ManagerDepartmentId.HasValue, (a, b) => a.ManagerDepartmentId == input.Filter.ManagerDepartmentId)
+            //    .Distinct()
+            //    .Count(out var total)
+            //    .Page(input.CurrentPage, input.PageSize)
+            //    .ToList((a, b) => a);
 
             var entityList = await _recordRepository.Select
-                .Where(i => list.Contains(i.Id))
+                .WhereIf(input.Filter.ManagerUserId.HasValue, a => a.ManagerUserId == input.Filter.ManagerUserId)
+                .WhereIf(input.Filter.ManagerDepartmentId.HasValue, a => a.ManagerDepartmentId == input.Filter.ManagerDepartmentId)
+                .Where(a => a.CheckedRecordFileList.AsSelect().Any(t => t.HandOverSign == 0))
                 .Include(i => i.ManagerUser)
                 .Include(i => i.ManagerDepartment)
-                //.Count(out var total)
-                .OrderByDescending(i => i.CreatedTime)
-                //.Page(input.CurrentPage, input.PageSize)
+                .Count(out var total)
+                .Page(input.CurrentPage, input.PageSize)
                 .ToListAsync();
+
+            //var checkedRecordFileIdList = await _checkedRecordFileRepository.Select
+            //    .Where(i => i.HandOverSign == 0)
+            //    .Distinct()
+            //    .ToListAsync(i => i.RecordId);
+
+            //var total = checkedRecordFileIdList.Count;
+            //var list = checkedRecordFileIdList.Skip(input.CurrentPage == 1 ? 0 : (input.CurrentPage - 1) * input.PageSize).Take(input.PageSize);
+
+            //var entityList = await _recordRepository.Select
+            //    .Where(i => list.Contains(i.Id))
+            //    .Include(i => i.ManagerUser)
+            //    .Include(i => i.ManagerDepartment)
+            //    //.Count(out var total)
+            //    .OrderByDescending(i => i.CreatedTime)
+            //    //.Page(input.CurrentPage, input.PageSize)
+            //    .ToListAsync();
 
             var data = new PageOutput<HandOverRecordPageOutput>()
             {

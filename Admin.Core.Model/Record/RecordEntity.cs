@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Admin.Core.Common.BaseModel;
 using Admin.Core.Model.Admin;
 using FreeSql.DataAnnotations;
@@ -57,5 +58,8 @@ namespace Admin.Core.Model.Record
         /// 2-借阅中
         /// </summary>
         public int Status { get; set; }
+
+        [Navigate(nameof(CheckedRecordFileEntity.RecordId))]
+        public List<CheckedRecordFileEntity> CheckedRecordFileList { get; set; }
     }
 }

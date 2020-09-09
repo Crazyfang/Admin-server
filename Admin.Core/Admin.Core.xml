@@ -732,6 +732,11 @@
             域控制器
             </summary>
         </member>
+        <member name="T:Admin.Core.Controllers.Record.NotifyController">
+            <summary>
+            消息通知
+            </summary>
+        </member>
         <member name="M:Admin.Core.Controllers.Record.NotifyController.GetCount">
             <summary>
             根据用户主键获取用户消息
@@ -757,6 +762,11 @@
             signalR服务端测试函数
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:Admin.Core.Controllers.Record.RecordBorrowController">
+            <summary>
+            档案借调阅
+            </summary>
         </member>
         <member name="M:Admin.Core.Controllers.Record.RecordBorrowController.AddRecordBorrow(Admin.Core.Service.Record.RecordBorrow.Input.RecordBorrowAddInput)">
             <summary>
@@ -813,6 +823,197 @@
             <param name="id">借调阅主键</param>
             <returns></returns>
         </member>
+        <member name="T:Admin.Core.Controllers.Record.RecordController">
+            <summary>
+            信贷档案
+            </summary>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.Get(System.Int64)">
+            <summary>
+            根据档案主键获取档案信息
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.GetPage(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.RecordEntity})">
+            <summary>
+            档案列表分页
+            </summary>
+            <param name="input">分页参数及筛选条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.Delete(System.Int64)">
+            <summary>
+            根据档案主键删除档案
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.Add(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            添加档案信息
+            </summary>
+            <param name="obj">档案信息(包括档案基本信息和文件信息)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.Update(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            更新档案信息
+            </summary>
+            <param name="obj">档案信息(包括档案基本信息和文件信息)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.GetBasicInfo(System.Int64)">
+            <summary>
+            获取档案基础信息
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.GetAdditionalInfo(System.Int64)">
+            <summary>
+            获取档案补充提交基础信息(只包含文件类别，不包含文件)
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.EditPageReturn(System.Int64)">
+            <summary>
+            根据权限判断是返回编辑界面还是补充提交界面
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.AddAdditionalRecordInfo(Admin.Core.Service.Record.Record.Output.RecordAdditionalInfoOutput)">
+            <summary>
+            提交档案补充提交信息
+            </summary>
+            <param name="input">补充提交文件信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.HandOverPage(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.RecordEntity})">
+            <summary>
+            移交档案分页
+            </summary>
+            <param name="input">分页信息及筛选条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.HandOverCheck(Admin.Core.Service.Record.Record.Output.HandOverBasicInfoOutput)">
+            <summary>
+            移交确认
+            </summary>
+            <param name="input">需要移交的档案及其归属文件信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.HandOverBasicInfo(System.Int64)">
+            <summary>
+            移交基本信息
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.GetListByUser(System.Int64)">
+            <summary>
+            根据用户返回归管的档案ID及一些信息
+            </summary>
+            <param name="id">用户主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.RelationChange(System.Collections.Generic.List{Admin.Core.Service.Record.Record.Input.RecordTransferInput})">
+            <summary>
+            档案归属关系变更提交
+            </summary>
+            <param name="input">档案归属关系变更信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.RelationPagePermissions">
+            <summary>
+            档案转让权限返回
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.GetPrintInfo(System.Int64)">
+            <summary>
+            获取档案打印基本信息
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.GetExpiredRecordList(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.RecordEntity})">
+            <summary>
+            过期档案分页查询(有权限限制)
+            </summary>
+            <param name="input">分页信息及筛选条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.ApplyChangeFile(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            申请更改档案文件
+            </summary>
+            <param name="obj">type-类型(主动更新还是过期更新),fileList-文件列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.GetChangeDetail(System.Int64)">
+            <summary>
+            获取更换的档案文件具体信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.GetApplyChangeList(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.InitiativeUpdateEntity})">
+            <summary>
+            申请更换档案文件分页
+            </summary>
+            <param name="input">分页信息及筛选条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.GetApplyChangeDetail(System.Int64)">
+            <summary>
+            获取申请更换的档案文件具体信息
+            </summary>
+            <param name="id">申请更换主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.AcceptApplyChange(System.Int64)">
+            <summary>
+            接受申请更换档案文件
+            </summary>
+            <param name="id">申请更换主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.RefuseApplyChange(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            拒绝申请更换档案文件
+            </summary>
+            <param name="obj">id-申请更换主键,refuseReason-拒绝原因</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.GetNeedCreateRecordList(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.NeedCreateRecordEntity})">
+            <summary>
+            获取待创建档案分页
+            </summary>
+            <param name="input">分页信息及筛选条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.RefuseHandOver(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            拒绝移交
+            </summary>
+            <param name="obj">id-档案主键,reason-拒绝原因</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordController.StockAdd(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            存量档案添加
+            </summary>
+            <param name="obj">档案信息</param>
+            <returns></returns>
+        </member>
+        <member name="T:Admin.Core.Controllers.Record.RecordFileController">
+            <summary>
+            信贷档案文件
+            </summary>
+        </member>
         <member name="M:Admin.Core.Controllers.Record.RecordFileController.Get(System.Int64)">
             <summary>
             根据id获取特定的档案文件条目
@@ -847,6 +1048,11 @@
             </summary>
             <param name="id">档案文件删除类</param>
             <returns></returns>
+        </member>
+        <member name="T:Admin.Core.Controllers.Record.RecordFileTypeController">
+            <summary>
+            信贷档案文件类别
+            </summary>
         </member>
         <member name="M:Admin.Core.Controllers.Record.RecordFileTypeController.Get(System.Int64)">
             <summary>
@@ -898,6 +1104,11 @@
             <param name="id">档案类别</param>
             <returns></returns>
         </member>
+        <member name="T:Admin.Core.Controllers.Record.RecordHistoryController">
+            <summary>
+            信贷档案历史
+            </summary>
+        </member>
         <member name="M:Admin.Core.Controllers.Record.RecordHistoryController.Get(System.Int64)">
             <summary>
             档案历史查询
@@ -922,7 +1133,28 @@
             <summary>
             档案类别添加
             </summary>
-            <param name="input"></param>
+            <param name="input">档案类别添加类</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordTypeController.Update(Admin.Core.Service.Record.RecordType.Input.RecordTypeUpdateInput)">
+            <summary>
+            档案类别编辑
+            </summary>
+            <param name="input">档案类别编辑类</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordTypeController.Delete(System.Int64)">
+            <summary>
+            档案类别删除
+            </summary>
+            <param name="id">档案类别主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Record.RecordTypeController.SoftDelete(System.Int64)">
+            <summary>
+            档案类别软删除
+            </summary>
+            <param name="id">档案主键</param>
             <returns></returns>
         </member>
         <member name="T:Admin.Core.Db.Data">
