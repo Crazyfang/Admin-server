@@ -6,68 +6,68 @@
     <members>
         <member name="T:Admin.Core.Service.Admin.Api.IApiService">
             <summary>
-            接口服务
+            �ӿڷ���
             </summary>	
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.GetAsync(System.Int64)">
             <summary>
-            获得一条记录
+            ���һ����¼
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.ListAsync(System.String)">
             <summary>
-            获得列表
+            ����б�
             </summary>
             <param name="key"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.PageAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Admin.ApiEntity})">
             <summary>
-            获得分页
+            ��÷�ҳ
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.AddAsync(Admin.Core.Service.Admin.Api.Input.ApiAddInput)">
             <summary>
-            添加
+            ���
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.UpdateAsync(Admin.Core.Service.Admin.Api.Input.ApiUpdateInput)">
             <summary>
-            修改
+            �޸�
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.DeleteAsync(System.Int64)">
             <summary>
-            删除
+            ɾ��
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.SoftDeleteAsync(System.Int64)">
             <summary>
-            软删除
+            ��ɾ��
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.BatchSoftDeleteAsync(System.Int64[])">
             <summary>
-            批量软删除
+            ������ɾ��
             </summary>
             <param name="ids"></param>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.SyncAsync(Admin.Core.Service.Admin.Api.Input.ApiSyncInput)">
             <summary>
-            同步
+            ͬ��
             </summary>
             <param name="input"></param>
             <returns></returns>
@@ -199,7 +199,7 @@
         </member>
         <member name="T:Admin.Core.Service.Admin.Auth.IAuthService">
             <summary>
-            权限服务
+            Ȩ�޷���
             </summary>	
         </member>
         <member name="T:Admin.Core.Service.Admin.Auth.Input.AuthLoginInput">
@@ -259,18 +259,18 @@
         </member>
         <member name="T:Admin.Core.Service.Admin.Cache.ICacheService">
             <summary>
-            缓存服务
+            �������
             </summary>	
         </member>
         <member name="M:Admin.Core.Service.Admin.Cache.ICacheService.List">
             <summary>
-            缓存列表
+            �����б�
             </summary>
             <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Admin.Cache.ICacheService.ClearAsync(System.String)">
             <summary>
-            清除缓存
+            �������
             </summary>
             <param name="cacheKey"></param>
             <returns></returns>
@@ -377,77 +377,77 @@
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddGroupInput.ParentId">
             <summary>
-            父级节点
+            �����ڵ�
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddGroupInput.Type">
             <summary>
-            类型
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddGroupInput.Label">
             <summary>
-            名称
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddGroupInput.Name">
             <summary>
-            命名
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddGroupInput.Opened">
             <summary>
-            打开
+            ��
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddImageInput.DocumentId">
             <summary>
-            用户Id
+            �û�Id
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddImageInput.Url">
             <summary>
-            请求路径
+            ����·��
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddMenuInput.ParentId">
             <summary>
-            父级节点
+            �����ڵ�
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddMenuInput.Type">
             <summary>
-            类型
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddMenuInput.Name">
             <summary>
-            命名
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddMenuInput.Label">
             <summary>
-            名称
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentAddMenuInput.Description">
             <summary>
-            说明
+            ˵��
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateContentInput.Id">
             <summary>
-            编号
+            ���
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateContentInput.Label">
             <summary>
-            名称
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateContentInput.Content">
             <summary>
-            内容
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateContentInput.Html">
@@ -457,57 +457,57 @@
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateContentInput.Version">
             <summary>
-            版本
+            �汾
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateGroupInput.Id">
             <summary>
-            编号
+            ���
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateGroupInput.Version">
             <summary>
-            版本
+            �汾
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateMenuInput.Id">
             <summary>
-            编号
+            ���
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUpdateMenuInput.Version">
             <summary>
-            版本
+            �汾
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUploadImageInput.File">
             <summary>
-            上传文件
+            �ϴ��ļ�
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Input.DocumentUploadImageInput.Id">
             <summary>
-            文档编号
+            �ĵ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Output.DocumentGetContentOutput.Id">
             <summary>
-            编号
+            ���
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Output.DocumentGetContentOutput.Label">
             <summary>
-            名称
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Output.DocumentGetContentOutput.Content">
             <summary>
-            内容
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Output.DocumentGetContentOutput.Version">
             <summary>
-            版本
+            �汾
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Document.Output.DocumentListOutput.Id">
@@ -827,152 +827,152 @@
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.Type">
             <summary>
-            权限类型
+            Ȩ������
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.ParentId">
             <summary>
-            父级节点
+            �����ڵ�
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.ApiId">
             <summary>
-            接口
+            �ӿ�
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.Label">
             <summary>
-            权限名称
+            Ȩ������
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.Description">
             <summary>
-            说明
+            ˵��
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.Hidden">
             <summary>
-            隐藏
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddApiInput.Icon">
             <summary>
-            图标
+            ͼ��
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.Type">
             <summary>
-            权限类型
+            Ȩ������
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.ParentId">
             <summary>
-            父级节点
+            �����ڵ�
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.Label">
             <summary>
-            权限名称
+            Ȩ������
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.Hidden">
             <summary>
-            隐藏
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.Icon">
             <summary>
-            图标
+            ͼ��
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddGroupInput.Opened">
             <summary>
-            打开
+            ��
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Type">
             <summary>
-            权限类型
+            Ȩ������
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.ParentId">
             <summary>
-            父级节点
+            �����ڵ�
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.ViewId">
             <summary>
-            视图
+            ��ͼ
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Path">
             <summary>
-            访问地址
+            ���ʵ�ַ
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Label">
             <summary>
-            权限名称
+            Ȩ������
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Description">
             <summary>
-            说明
+            ˵��
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Hidden">
             <summary>
-            隐藏
+            ����
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Icon">
             <summary>
-            图标
+            ͼ��
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.Closable">
             <summary>
-            可关闭
+            �ɹر�
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.NewWindow">
             <summary>
-            打开新窗口
+            ���´���
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionAddMenuInput.External">
             <summary>
-            链接外显
+            ��������
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateApiInput.Id">
             <summary>
-            权限Id
+            Ȩ��Id
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateApiInput.Version">
             <summary>
-            版本
+            �汾
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateGroupInput.Id">
             <summary>
-            权限Id
+            Ȩ��Id
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateGroupInput.Version">
             <summary>
-            版本
+            �汾
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateMenuInput.Id">
             <summary>
-            权限Id
+            Ȩ��Id
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Input.PermissionUpdateMenuInput.Version">
             <summary>
-            版本
+            �汾
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Admin.Permission.Output.PermissionListOutput.Id">
@@ -1378,12 +1378,12 @@
         </member>
         <member name="T:Admin.Core.Service.Admin.View.IViewService">
             <summary>
-            视图服务
+            ��ͼ����
             </summary>
         </member>
         <member name="M:Admin.Core.Service.Admin.View.IViewService.GetAsync(System.Int64)">
             <summary>
-            获得一条记录
+            ���һ����¼
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -1474,6 +1474,545 @@
             2-审核通过
             3-超期未完成
             </summary>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.Appraise.IAppraiseService.AddInfoReturnAsync(System.String)">
+            <summary>
+            获取评价界面列表
+            </summary>
+            <param name="id">户口主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.Appraise.IAppraiseService.AddAsync(Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput,System.Int64)">
+            <summary>
+            添加评价
+            </summary>
+            <param name="input">评价添加类</param>
+            <param name="userId">评价人主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.Appraise.IAppraiseService.PageAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Questionnaire.AppraiseEntity},System.Int64)">
+            <summary>
+            已评价分页
+            </summary>
+            <param name="input">分页参数</param>
+            <param name="userId">用户主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.Appraise.IAppraiseService.DetailAsync(System.Int64)">
+            <summary>
+            评价详情返回
+            </summary>
+            <param name="id">评价主键</param>
+            <returns></returns>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.AppraiserId">
+            <summary>
+            评价人主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.HouseHoldId">
+            <summary>
+            关联户主表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Instability">
+            <summary>
+            家庭是否有无固定收入情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Repudiate">
+            <summary>
+            家庭成员欠债不还或有赖账
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Reputation">
+            <summary>
+            家庭成员品德较差
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Gamble">
+            <summary>
+            家庭成员涉嫌赌博行为
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Lending">
+            <summary>
+            家庭成员存在民间借贷
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.SelfBuilding">
+            <summary>
+            自建房情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Bungalow">
+            <summary>
+            平房
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Building">
+            <summary>
+            楼房
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Cottage">
+            <summary>
+            别墅
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.BungalowCount">
+            <summary>
+            平房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.BuildingCount">
+            <summary>
+            楼房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.CottageCount">
+            <summary>
+            别墅数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.GoodsBuilding">
+            <summary>
+            商品房持有
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.GoodsBuildingCount">
+            <summary>
+            商品房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.CarHold">
+            <summary>
+            汽车持有
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.CarHoldCount">
+            <summary>
+            汽车持有数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.DebtCondition">
+            <summary>
+            负债情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.HomeEarning">
+            <summary>
+            家庭收入
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.HomePay">
+            <summary>
+            家庭支出
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Condition1">
+            <summary>
+            存在家庭收入不稳定的情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Condition2">
+            <summary>
+            家庭存在严重疾病等重大负担
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Condition3">
+            <summary>
+            存在家庭关系不和睦、邻里关系紧张、与村民关系不融洽等情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Condition4">
+            <summary>
+            存在不遵守村规民约、不配合村组织工作开展的情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Condition5">
+            <summary>
+            存在不守信、恶意拖欠水电气费等不诚信行为
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput.Remarks">
+            <summary>
+            存在其他工作及生活情况需要重点说明的
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.AppraiserId">
+            <summary>
+            评价人主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.HouseHoldId">
+            <summary>
+            关联户主表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Instability">
+            <summary>
+            家庭是否有无固定收入情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Repudiate">
+            <summary>
+            家庭成员欠债不还或有赖账
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Reputation">
+            <summary>
+            家庭成员品德较差
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Gamble">
+            <summary>
+            家庭成员涉嫌赌博行为
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Lending">
+            <summary>
+            家庭成员存在民间借贷
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.SelfBuilding">
+            <summary>
+            自建房情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Bungalow">
+            <summary>
+            平房
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Building">
+            <summary>
+            楼房
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Cottage">
+            <summary>
+            别墅
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.BungalowCount">
+            <summary>
+            平房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.BuildingCount">
+            <summary>
+            楼房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.CottageCount">
+            <summary>
+            别墅数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.GoodsBuilding">
+            <summary>
+            商品房持有
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.GoodsBuildingCount">
+            <summary>
+            商品房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.CarHold">
+            <summary>
+            汽车持有
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.CarHoldCount">
+            <summary>
+            汽车持有数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.DebtCondition">
+            <summary>
+            负债情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.HomeEarning">
+            <summary>
+            家庭收入
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.HomePay">
+            <summary>
+            家庭支出
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Condition1">
+            <summary>
+            存在家庭收入不稳定的情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Condition2">
+            <summary>
+            家庭存在严重疾病等重大负担
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Condition3">
+            <summary>
+            存在家庭关系不和睦、邻里关系紧张、与村民关系不融洽等情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Condition4">
+            <summary>
+            存在不遵守村规民约、不配合村组织工作开展的情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Condition5">
+            <summary>
+            存在不守信、恶意拖欠水电气费等不诚信行为
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseAddOutput.Remarks">
+            <summary>
+            存在其他工作及生活情况需要重点说明的
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.AppraiserId">
+            <summary>
+            评价人主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.HouseHoldId">
+            <summary>
+            关联户主表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Instability">
+            <summary>
+            家庭是否有无固定收入情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Repudiate">
+            <summary>
+            家庭成员欠债不还或有赖账
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Reputation">
+            <summary>
+            家庭成员品德较差
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Gamble">
+            <summary>
+            家庭成员涉嫌赌博行为
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Lending">
+            <summary>
+            家庭成员存在民间借贷
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.SelfBuilding">
+            <summary>
+            自建房情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Bungalow">
+            <summary>
+            平房
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Building">
+            <summary>
+            楼房
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Cottage">
+            <summary>
+            别墅
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.BungalowCount">
+            <summary>
+            平房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.BuildingCount">
+            <summary>
+            楼房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.CottageCount">
+            <summary>
+            别墅数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.GoodsBuilding">
+            <summary>
+            商品房持有
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.GoodsBuildingCount">
+            <summary>
+            商品房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.CarHold">
+            <summary>
+            汽车持有
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.CarHoldCount">
+            <summary>
+            汽车持有数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.DebtCondition">
+            <summary>
+            负债情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.HomeEarning">
+            <summary>
+            家庭收入
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.HomePay">
+            <summary>
+            家庭支出
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Condition1">
+            <summary>
+            存在家庭收入不稳定的情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Condition2">
+            <summary>
+            家庭存在严重疾病等重大负担
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Condition3">
+            <summary>
+            存在家庭关系不和睦、邻里关系紧张、与村民关系不融洽等情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Condition4">
+            <summary>
+            存在不遵守村规民约、不配合村组织工作开展的情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Condition5">
+            <summary>
+            存在不守信、恶意拖欠水电气费等不诚信行为
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.Appraise.Output.AppraiseDetailOutput.Remarks">
+            <summary>
+            存在其他工作及生活情况需要重点说明的
+            </summary>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.HouseHold.IHouseHoldService.PageAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Questionnaire.HouseHoldEntity},System.Collections.Generic.List{System.String},System.Int64)">
+            <summary>
+            未答公议分页
+            </summary>
+            <param name="input">分页信息</param>
+            <param name="belongedStreet">所属街道列表</param>
+            <param name="userId">用户主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.HouseHold.IHouseHoldService.CalculatePageAsync(System.String)">
+            <summary>
+            获取计算结果
+            </summary>
+            <param name="code">行政村代码</param>
+            <returns></returns>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHold.Output.HouseHoldCalculateOutput.DeviationMark">
+            <summary>
+            偏离度过大告警标记
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHold.Output.HouseHoldCalculateOutput.RefuseMark">
+            <summary>
+            风险客户，不予授信标识
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHoldMember.Input.HouseHoldMemberAddInput.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHoldMember.Input.HouseHoldMemberAddInput.UserName">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHoldMember.Input.HouseHoldMemberAddInput.IdNumber">
+            <summary>
+            身份证号
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHoldMember.Input.HouseHoldMemberAddInput.Relation">
+            <summary>
+            与户主关系
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHoldMember.Input.HouseHoldMemberAddInput.LongStay">
+            <summary>
+            是否常住
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHoldMember.Output.HouseHoldMemberAddOutput.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHoldMember.Output.HouseHoldMemberAddOutput.UserName">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHoldMember.Output.HouseHoldMemberAddOutput.IdNumber">
+            <summary>
+            身份证号
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHoldMember.Output.HouseHoldMemberAddOutput.Relation">
+            <summary>
+            与户主关系
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHoldMember.Output.HouseHoldMemberAddOutput.LongStay">
+            <summary>
+            是否常住
+            </summary>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.SectionCode.ISectionCodeService.GetListAsync">
+            <summary>
+            获取行政村代码列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.UserPower.IUserPowerService.GetPowerListAsync(System.Int64)">
+            <summary>
+            获取可以访问的公议列表归属地
+            </summary>
+            <param name="userId">用户主键</param>
+            <returns></returns>
         </member>
         <member name="M:Admin.Core.Service.Record.CheckedRecordFile.ICheckedRecordFileService.GetAsync(System.Int64)">
             <summary>

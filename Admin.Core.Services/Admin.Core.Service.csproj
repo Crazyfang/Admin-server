@@ -81,5 +81,19 @@
     <Folder Include="Loan\CompressDeadline\Output\" />
     <Folder Include="Loan\LoanUser\Output\" />
     <Folder Include="Loan\LoanMethod\" />
+    <Folder Include="Questionnaire\" />
+    <Folder Include="Questionnaire\Appraise\" />
+    <Folder Include="Questionnaire\Appraise\Input\" />
+    <Folder Include="Questionnaire\HouseHoldMember\" />
+    <Folder Include="Questionnaire\HouseHoldMember\Input\" />
+    <Folder Include="Questionnaire\HouseHoldMember\Output\" />
+    <Folder Include="Questionnaire\Appraise\Output\" />
+    <Folder Include="Questionnaire\MemberResidence\" />
+    <Folder Include="Questionnaire\HouseHold\" />
+    <Folder Include="Questionnaire\HouseHold\Output\" />
+    <Folder Include="Questionnaire\MemberResidence\Output\" />
+    <Folder Include="Questionnaire\UserPower\" />
+    <Folder Include="Questionnaire\SectionCode\" />
+    <Folder Include="Questionnaire\SectionCode\Output\" />
   </ItemGroup>
 </Project>

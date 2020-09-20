@@ -50,5 +50,13 @@
     <Folder Include="Loan\CompressType\" />
     <Folder Include="Record\Notify\" />
     <Folder Include="Loan\LoanMethod\" />
+    <Folder Include="Questionnaire\" />
+    <Folder Include="Questionnaire\HouseHold\" />
+    <Folder Include="Questionnaire\HouseHoldMember\" />
+    <Folder Include="Questionnaire\MemberResidence\" />
+    <Folder Include="Questionnaire\Appraise\" />
+    <Folder Include="Questionnaire\Calculate\" />
+    <Folder Include="Questionnaire\UserPower\" />
+    <Folder Include="Questionnaire\SectionCode\" />
   </ItemGroup>
 </Project>

@@ -654,6 +654,356 @@
             3-超期未完成
             </summary>
         </member>
+        <member name="T:Admin.Core.Model.Questionnaire.AppraiseEntity">
+            <summary>
+            评价表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.AppraiserId">
+            <summary>
+            评价人主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.HouseHoldId">
+            <summary>
+            关联户主表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Members">
+            <summary>
+            关联户口人员常住表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Instability">
+            <summary>
+            家庭是否有无固定收入情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Repudiate">
+            <summary>
+            家庭成员欠债不还或有赖账
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Reputation">
+            <summary>
+            家庭成员品德较差
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Gamble">
+            <summary>
+            家庭成员涉嫌赌博行为
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Lending">
+            <summary>
+            家庭成员存在民间借贷
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.SelfBuilding">
+            <summary>
+            自建房情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Bungalow">
+            <summary>
+            平房
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Building">
+            <summary>
+            楼房
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Cottage">
+            <summary>
+            别墅
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.BungalowCount">
+            <summary>
+            平房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.BuildingCount">
+            <summary>
+            楼房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.CottageCount">
+            <summary>
+            别墅数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.GoodsBuilding">
+            <summary>
+            商品房持有
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.GoodsBuildingCount">
+            <summary>
+            商品房数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.CarHold">
+            <summary>
+            汽车持有
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.CarHoldCount">
+            <summary>
+            汽车持有数量
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.DebtCondition">
+            <summary>
+            负债情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.HomeEarning">
+            <summary>
+            家庭收入
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.HomePay">
+            <summary>
+            家庭支出
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Condition1">
+            <summary>
+            存在家庭收入不稳定的情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Condition2">
+            <summary>
+            家庭存在严重疾病等重大负担
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Condition3">
+            <summary>
+            存在家庭关系不和睦、邻里关系紧张、与村民关系不融洽等情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Condition4">
+            <summary>
+            存在不遵守村规民约、不配合村组织工作开展的情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Condition5">
+            <summary>
+            存在不守信、恶意拖欠水电气费等不诚信行为
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.AppraiseEntity.Remarks">
+            <summary>
+            存在其他工作及生活情况需要重点说明的
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.CalculateEntity.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.CalculateEntity.HouseHoldId">
+            <summary>
+            关联户主表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.CalculateEntity.SuggestValue">
+            <summary>
+            建议授信额
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.CalculateEntity.HouseHoldMemberId">
+            <summary>
+            建议授信人
+            </summary>
+        </member>
+        <member name="T:Admin.Core.Model.Questionnaire.HouseHoldEntity">
+            <summary>
+            户口表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.Id">
+            <summary>
+            主键(行政代码+四位序号)
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.HeadUserName">
+            <summary>
+            户主姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.HeadUserAddress">
+            <summary>
+            户主居住地址
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.HeadUserIdNumber">
+            <summary>
+            户主身份证号
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.BelongedStreet">
+            <summary>
+            所属乡镇
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.SuggestCreditLimit">
+            <summary>
+            建议授信额
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.SuggestCreditorId">
+            <summary>
+            建议授信人
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.DeviationMark">
+            <summary>
+            偏离度过大告警标记
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.RefuseMark">
+            <summary>
+            风险客户，不予授信标识
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.Members">
+            <summary>
+            户口归属人员
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldEntity.Appraises">
+            <summary>
+            评价列表
+            </summary>
+        </member>
+        <member name="T:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity">
+            <summary>
+            户口成员表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.MemberName">
+            <summary>
+            成员姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.Address">
+            <summary>
+            居住地址
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.IdNumber">
+            <summary>
+            身份证号
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.BirthDate">
+            <summary>
+            出生日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.Relationship">
+            <summary>
+            与户主关系
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.HouseHoldId">
+            <summary>
+            关联户口
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.NativePlace">
+            <summary>
+            籍贯
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.MaritaStatus">
+            <summary>
+            婚姻状况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.Nationality">
+            <summary>
+            民族
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.Education">
+            <summary>
+            受教育程度
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.Profession">
+            <summary>
+            职业
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.WorkUnit">
+            <summary>
+            工作单位
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.OwnedDebitCard">
+            <summary>
+            是否有借记卡
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.OwnedHarvestInternet">
+            <summary>
+            是否有丰收互联
+            </summary>
+        </member>
+        <member name="T:Admin.Core.Model.Questionnaire.MemberResidenceEntity">
+            <summary>
+            评价户主成员常住表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.MemberResidenceEntity.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.MemberResidenceEntity.AppraiseId">
+            <summary>
+            关联评价表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.MemberResidenceEntity.HouseHoldMemberId">
+            <summary>
+            关联成员表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.MemberResidenceEntity.Residence">
+            <summary>
+            是否常住
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.SectionCodeEntity.VillageName">
+            <summary>
+            行政村名称
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.SectionCodeEntity.StreetCode">
+            <summary>
+            街道代码
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.SectionCodeEntity.VillageCode">
+            <summary>
+            行政村代码
+            </summary>
+        </member>
         <member name="P:Admin.Core.Model.Record.CheckedRecordFileEntity.RecordId">
             <summary>
             档案主键

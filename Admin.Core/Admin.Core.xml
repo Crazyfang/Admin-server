@@ -727,6 +727,54 @@
             <param name="input">筛选条件，分页信息</param>
             <returns></returns>
         </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.AppraiseController.Page(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Questionnaire.AppraiseEntity})">
+            <summary>
+            获取已评价分页
+            </summary>
+            <param name="input">分页参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.AppraiseController.Detail(System.Int64)">
+            <summary>
+            获取评价详情
+            </summary>
+            <param name="id">评级详情主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.AppraiseController.Add(Admin.Core.Service.Questionnaire.Appraise.Input.AppraiseAddInput)">
+            <summary>
+            添加评价
+            </summary>
+            <param name="input">评价详情</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.AppraiseController.AddInfoReturn(System.String)">
+            <summary>
+            评价列表返回
+            </summary>
+            <param name="id">户口表主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.HouseHoldController.Page(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Questionnaire.HouseHoldEntity})">
+            <summary>
+            获取未评价分页
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.HouseHoldController.CalculatePage(System.String)">
+            <summary>
+            获取计算结果
+            </summary>
+            <param name="code">行政村编码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.HouseHoldController.GetSectionCodeList">
+            <summary>
+            获取行政村代码列表
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Admin.Core.Controllers.Record.AreaController">
             <summary>
             域控制器

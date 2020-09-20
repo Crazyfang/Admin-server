@@ -14,6 +14,7 @@ using System.Reflection;
 using Admin.Core.Model.Record;
 using Admin.Core.Controllers.Record;
 using Admin.Core.Model.Loan;
+using Admin.Core.Model.Questionnaire;
 
 namespace Admin.Core.Db
 {
@@ -105,7 +106,14 @@ namespace Admin.Core.Db
                 typeof(CompressTypeEntity),
                 typeof(CompressDeadlineEntity),
                 typeof(NotifyEntity),
-                typeof(LoanMethodEntity)
+                typeof(LoanMethodEntity),
+                typeof(HouseHoldEntity),
+                typeof(HouseHoldMemberEntity),
+                typeof(AppraiseEntity),
+                typeof(MemberResidenceEntity),
+                typeof(CalculateEntity),
+                typeof(UserPowerEntity),
+                typeof(SectionCodeEntity)
             });
             Console.WriteLine($"{(msg.NotNull() ? msg : $"sync {dbType} structure")} succeed\r\n");
         }
