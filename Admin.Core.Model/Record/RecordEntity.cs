@@ -56,6 +56,7 @@ namespace Admin.Core.Model.Record
         /// 0-待移交
         /// 1-在库
         /// 2-借阅中
+        /// 3-移交被拒绝
         /// </summary>
         public int Status { get; set; }
 

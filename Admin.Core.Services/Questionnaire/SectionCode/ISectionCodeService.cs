@@ -10,6 +10,6 @@ namespace Admin.Core.Service.Questionnaire.SectionCode
         /// 获取行政村代码列表
         /// </summary>
         /// <returns></returns>
-        Task<IResponseOutput> GetListAsync();
+        Task<IResponseOutput> GetListAsync(long userId);
     }
 }

@@ -53,6 +53,7 @@ namespace Admin.Core.Model.Record
         /// 移交标识
         /// 0-未移交
         /// 1-移交
+        /// 2-待更改
         /// </summary>
         public int HandOverSign { get; set; }
     }

@@ -7,6 +7,8 @@ namespace Admin.Core.Service.Record.RecordFile.Output
 
         public long RecordFileId { get; set; }
 
+        public long Id { get; set; }
+
         public long CheckedRecordFileId { get; set; }
 
         public string Name { get; set; }

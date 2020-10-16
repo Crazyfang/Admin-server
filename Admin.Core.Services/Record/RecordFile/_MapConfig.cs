@@ -35,6 +35,9 @@ namespace Admin.Core.Service.Record.RecordFile
             ).ForMember(
                 i => i.Name,
                 m => m.MapFrom(n => n.RecordFileName)
+            ).ForMember(
+                i => i.Id,
+                m => m.Ignore()
             );
             CreateMap<RecordFileAdditionalOuput, CheckedRecordFileEntity>();
         }

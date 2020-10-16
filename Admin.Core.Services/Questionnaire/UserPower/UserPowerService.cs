@@ -19,9 +19,17 @@ namespace Admin.Core.Service.Questionnaire.UserPower
                 .Where(i => i.UserId == userId)
                 .ToOneAsync();
 
-            var list = entity.Power.Split(',');
+            if(entity == null)
+            {
+                return new List<string>();
+            }
+            else
+            {
+                var list = entity.Power.Split(',');
 
-            return new List<string>(list);
+                return new List<string>(list);
+            }
+            
         }
     }
 }

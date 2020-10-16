@@ -48,5 +48,25 @@ namespace Admin.Core.Service.Record.CheckedRecordFile
 
             return output.Union(output1).OrderBy(i => i.Id).ToList();
         }
+
+        public async Task<IResponseOutput> ChangeFileStatusAsync(int status, long recordId)
+        {
+            if(status == 0)
+            {
+                await _checkedRecordFileRepository.UpdateDiy
+                .Set(i => i.HandOverSign, status)
+                .Where(i => i.RecordId == recordId && i.HandOverSign == 2)
+                .ExecuteAffrowsAsync();
+            }
+            else if(status == 2)
+            {
+                await _checkedRecordFileRepository.UpdateDiy
+                .Set(i => i.HandOverSign, status)
+                .Where(i => i.RecordId == recordId && i.HandOverSign == 0)
+                .ExecuteAffrowsAsync();
+            }
+
+            return ResponseOutput.Ok();
+        }
     }
 }

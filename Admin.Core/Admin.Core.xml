@@ -775,6 +775,41 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.HouseHoldController.GenerateDetailCollectXlsx(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            生成评价明细表
+            </summary>
+            <param name="obj">行政村代码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.HouseHoldController.DownloadFile(System.String)">
+            <summary>
+            评价明细汇总Excel下载
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.HouseHoldController.GenerateCreditDetailXlsx(System.String)">
+            <summary>
+            授信明细表生成
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.HouseHoldController.DownloadCreditCollectFile(System.String)">
+            <summary>
+            授信明细Excel下载
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Questionnaire.HouseHoldController.GetUserPowerSelect(System.String)">
+            <summary>
+            获取行政村下的公议人列表
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
         <member name="T:Admin.Core.Controllers.Record.AreaController">
             <summary>
             域控制器

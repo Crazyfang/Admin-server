@@ -1,4 +1,5 @@
 ﻿using System;
+using Admin.Core.Model.Admin;
 using FreeSql.DataAnnotations;
 
 namespace Admin.Core.Model.Questionnaire
@@ -10,6 +11,8 @@ namespace Admin.Core.Model.Questionnaire
         public long Id { get; set; }
 
         public long UserId { get; set; }
+
+        public UserEntity User { get; set; }
 
         public string Power { get; set; }
     }

@@ -20,16 +20,39 @@ namespace Admin.Core.Model.Questionnaire
         public HouseHoldEntity HouseHold { get; set; }
 
         /// <summary>
-        /// 建议授信额
+        /// 授信平均值
         /// </summary>
-        public float SuggestValue { get; set; }
+        public double Average { get; set; }
 
         /// <summary>
-        /// 建议授信人
+        /// 方差之和
         /// </summary>
-        public long HouseHoldMemberId { get; set; }
+        public double VarianceSum { get; set; }
 
-        public HouseHoldMemberEntity HouseHoldMember { get; set; }
+        /// <summary>
+        /// 标准差
+        /// </summary>
+        public double StandardDeviation { get; set; }
+
+        /// <summary>
+        /// 偏离度
+        /// </summary>
+        public double Deviation { get; set; }
+
+        /// <summary>
+        /// 偏离度过大告警标记
+        /// </summary>
+        public bool DeviationMark { get; set; }
+
+        /// <summary>
+        /// 出现一户风险情况认定
+        /// </summary>
+        public bool DangerUserMark { get; set; }
+
+        /// <summary>
+        /// 风险客户，不予授信标识
+        /// </summary>
+        public bool RefuseMark { get; set; }
     }
 }
 

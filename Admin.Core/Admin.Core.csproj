@@ -83,6 +83,7 @@
     <Folder Include="Helpers\" />
     <Folder Include="Controllers\Loan\" />
     <Folder Include="Controllers\Questionnaire\" />
+    <Folder Include="Files\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -23,6 +23,11 @@ namespace Admin.Core.Service.Questionnaire.HouseHold.Output
         public bool DeviationMark { get; set; }
 
         /// <summary>
+        /// 出现一户风险情况标记
+        /// </summary>
+        public bool DangerUserMark { get; set; }
+
+        /// <summary>
         /// 风险客户，不予授信标识
         /// </summary>
         public bool RefuseMark { get; set; }

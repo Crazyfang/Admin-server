@@ -1423,6 +1423,49 @@
             说明
             </summary>
         </member>
+        <member name="M:Admin.Core.Service.Loan.LoanMethod.ILoanMethodService.AddLoanMethodAsync(Admin.Core.Model.Loan.LoanMethodEntity)">
+            <summary>
+            添加贷款方式变更
+            </summary>
+            <param name="input">贷款方式变更类</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Loan.LoanMethod.ILoanMethodService.EditLoanMethodAsync(Admin.Core.Model.Loan.LoanMethodEntity)">
+            <summary>
+            编辑贷款方式变更
+            </summary>
+            <param name="input">贷款方式变更类</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Loan.LoanMethod.ILoanMethodService.DelLoanMethodAsync(System.Int64)">
+            <summary>
+            删除贷款方式变更
+            </summary>
+            <param name="id">主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Loan.LoanMethod.ILoanMethodService.GetLoanMethodAsync(System.Int64)">
+            <summary>
+            获取贷款方式变更
+            </summary>
+            <param name="id">主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Loan.LoanMethod.ILoanMethodService.GetLoanMethodPageAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Loan.LoanMethodEntity})">
+            <summary>
+            获取贷款方式变更分页
+            </summary>
+            <param name="input">分页参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Loan.LoanMethod.ILoanMethodService.VerifyLoanMethodAsync(System.Int64,System.Int64)">
+            <summary>
+            审核贷款方式变更
+            </summary>
+            <param name="id">贷款方式主键</param>
+            <param name="userId">用户主键</param>
+            <returns></returns>
+        </member>
         <member name="M:Admin.Core.Service.Loan.LoanUser.ILoanUserService.AddLoanUserAsync(Admin.Core.Service.Loan.LoanUser.Input.LoanUserAddInput)">
             <summary>
             添加贷款压缩信息
@@ -1934,9 +1977,32 @@
             <param name="userId">用户主键</param>
             <returns></returns>
         </member>
-        <member name="M:Admin.Core.Service.Questionnaire.HouseHold.IHouseHoldService.CalculatePageAsync(System.String)">
+        <member name="M:Admin.Core.Service.Questionnaire.HouseHold.IHouseHoldService.CalculatePageAsync(System.String,System.Int64)">
             <summary>
             获取计算结果
+            </summary>
+            <param name="code">行政村代码</param>
+            <param name="userId">用户主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.HouseHold.IHouseHoldService.DetailExcelAsync(System.String,System.Int64)">
+            <summary>
+            用户评价明细数据表导出
+            </summary>
+            <param name="code">行政村代码</param>
+            <param name="userId">用户主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.HouseHold.IHouseHoldService.ResultCollectAsync(System.String)">
+            <summary>
+            授信明细导出
+            </summary>
+            <param name="code">行政村代码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Questionnaire.HouseHold.IHouseHoldService.UserPowerSelectAsync(System.String)">
+            <summary>
+            获取行政村公议用户
             </summary>
             <param name="code">行政村代码</param>
             <returns></returns>
@@ -1944,6 +2010,11 @@
         <member name="P:Admin.Core.Service.Questionnaire.HouseHold.Output.HouseHoldCalculateOutput.DeviationMark">
             <summary>
             偏离度过大告警标记
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Questionnaire.HouseHold.Output.HouseHoldCalculateOutput.DangerUserMark">
+            <summary>
+            出现一户风险情况标记
             </summary>
         </member>
         <member name="P:Admin.Core.Service.Questionnaire.HouseHold.Output.HouseHoldCalculateOutput.RefuseMark">
@@ -2001,7 +2072,7 @@
             是否常住
             </summary>
         </member>
-        <member name="M:Admin.Core.Service.Questionnaire.SectionCode.ISectionCodeService.GetListAsync">
+        <member name="M:Admin.Core.Service.Questionnaire.SectionCode.ISectionCodeService.GetListAsync(System.Int64)">
             <summary>
             获取行政村代码列表
             </summary>
@@ -2026,6 +2097,14 @@
             获取指定档案和档案文件类别归属的选中文件
             </summary>
             <param name="id">选中档案类别</param>
+            <param name="recordId">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.CheckedRecordFile.ICheckedRecordFileService.ChangeFileStatusAsync(System.Int32,System.Int64)">
+            <summary>
+            修改档案文件的状态
+            </summary>
+            <param name="status">状态字</param>
             <param name="recordId">档案主键</param>
             <returns></returns>
         </member>
@@ -2197,11 +2276,130 @@
             <param name="input">补充提交的档案类别</param>
             <returns></returns>
         </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.HandOverPageAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.RecordEntity})">
+            <summary>
+            移交档案清单分页
+            </summary>
+            <param name="input">分页参数</param>
+            <returns></returns>
+        </member>
         <member name="M:Admin.Core.Service.Record.Record.IRecordService.HandOverCheckAsync(Admin.Core.Service.Record.Record.Output.HandOverBasicInfoOutput)">
             <summary>
             移交确认
             </summary>
             <param name="input">移交确认清单</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetHandOverInfoAsync(System.Int64)">
+            <summary>
+            获取移交基本信息
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetListByUserAsync(System.Int64)">
+            <summary>
+            根据用户获取所管理的档案
+            </summary>
+            <param name="id">用户主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.RelationChangeAsync(System.Collections.Generic.List{Admin.Core.Service.Record.Record.Input.RecordTransferInput})">
+            <summary>
+            档案关系转让
+            </summary>
+            <param name="input">转让清单</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetPrintInfoAsync(System.Int64)">
+            <summary>
+            获取档案移交清单打印信息
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetExpiredRecordListAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.RecordEntity})">
+            <summary>
+            获取过期档案文件的档案分页
+            </summary>
+            <param name="input">分页参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetChangeDetailAsync(System.Int64)">
+            <summary>
+            获取申请档案文件变更信息
+            </summary>
+            <param name="id">档案主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.AppleChangeFileAsync(System.Int32,System.Collections.Generic.List{Admin.Core.Service.Record.RecordFileType.Output.RecordFileTypeOutput})">
+            <summary>
+            申请更换档案文件
+            </summary>
+            <param name="type">申请类型(0-过期,1-主动)</param>
+            <param name="input">申请更换的档案文件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetApplyChangeListAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.InitiativeUpdateEntity})">
+            <summary>
+            获取申请更换档案文件的列表
+            </summary>
+            <param name="input">分页参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetApplyChangeDetailAsync(System.Int64)">
+            <summary>
+            获取申请档案文件更换的具体细节
+            </summary>
+            <param name="id">申请主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.AcceptApplyChangeAsync(System.Int64)">
+            <summary>
+            同意档案文件更换申请
+            </summary>
+            <param name="id">申请主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.RefuseApplyChangeAsync(System.Int64,System.String)">
+            <summary>
+            拒绝档案文件更换申请
+            </summary>
+            <param name="id">申请主键</param>
+            <param name="refuseReason">拒绝原因</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetNeedCreateRecordList(System.Int32,System.String,System.Int64,Admin.Core.Common.Input.PageInput{Admin.Core.Model.Record.NeedCreateRecordEntity})">
+            <summary>
+            获取名下待创建的档案清单
+            </summary>
+            <param name="type">人员类型</param>
+            <param name="userCode">用户主键</param>
+            <param name="departmentCode">部门主键</param>
+            <param name="input">分页参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.StockAddAsync(Admin.Core.Service.Record.Record.Input.RecordAddInput,System.Collections.Generic.List{Admin.Core.Service.Record.RecordFileType.Output.RecordFileTypeOutput})">
+            <summary>
+            存量档案添加
+            </summary>
+            <param name="input">档案添加基本信息</param>
+            <param name="fileInput">档案文件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetRecordByIniId(System.Int64)">
+            <summary>
+            根据申请主键获取更改的档案
+            </summary>
+            <param name="id">申请更换主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.ChangeRecordStatusAsync(System.Int32,System.Int64)">
+            <summary>
+            变更档案状态
+            </summary>
+            <param name="id">档案主键</param>
+            <param name="status">状态字</param>
             <returns></returns>
         </member>
         <member name="P:Admin.Core.Service.Record.Record.Output.RecordGetOutput.RecordId">

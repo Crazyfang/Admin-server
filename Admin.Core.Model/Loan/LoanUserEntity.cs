@@ -43,7 +43,7 @@ namespace Admin.Core.Model.Loan
         /// 0-未完成
         /// 1-完成
         /// 2-审核通过
-        /// 3-超期未完成
+        /// 3-超期审核通过
         /// </summary>
         public int OverSign { get; set; }
 

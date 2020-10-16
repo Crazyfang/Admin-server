@@ -22,7 +22,30 @@ namespace Admin.Core.Service.Questionnaire.HouseHold
         /// 获取计算结果
         /// </summary>
         /// <param name="code">行政村代码</param>
+        /// <param name="userId">用户主键</param>
         /// <returns></returns>
-        Task<IResponseOutput> CalculatePageAsync(string code);
+        Task<IResponseOutput> CalculatePageAsync(string code, long userId);
+
+        /// <summary>
+        /// 用户评价明细数据表导出
+        /// </summary>
+        /// <param name="code">行政村代码</param>
+        /// <param name="userId">用户主键</param>
+        /// <returns></returns>
+        Task<IResponseOutput> DetailExcelAsync(string code, long userId);
+
+        /// <summary>
+        /// 授信明细导出
+        /// </summary>
+        /// <param name="code">行政村代码</param>
+        /// <returns></returns>
+        Task<IResponseOutput> ResultCollectAsync(string code);
+
+        /// <summary>
+        /// 获取行政村公议用户
+        /// </summary>
+        /// <param name="code">行政村代码</param>
+        /// <returns></returns>
+        Task<IResponseOutput> UserPowerSelectAsync(string code);
     }
 }

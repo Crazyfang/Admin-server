@@ -55,6 +55,16 @@ namespace Admin.Core.Model.Questionnaire
         public bool DeviationMark { get; set; }
 
         /// <summary>
+        /// 出现一户风险情况认定
+        /// </summary>
+        public bool DangerUserMark { get; set; }
+
+        /// <summary>
+        /// 承包土地亩数
+        /// </summary>
+        public float? Acres { get; set; }
+
+        /// <summary>
         /// 风险客户，不予授信标识
         /// </summary>
         public bool RefuseMark { get; set; }

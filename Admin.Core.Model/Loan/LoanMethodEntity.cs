@@ -28,16 +28,6 @@ namespace Admin.Core.Model.Loan
         /// </summary>
         public DateTime BeginTime { get; set; }
 
-        /// <summary>
-        /// 初始方式
-        /// </summary>
-        public string OriginalType { get; set; }
-
-        /// <summary>
-        /// 目标方式
-        /// </summary>
-        public string AimedType { get; set; }
-
         public long? VerifyUserId { get; set; }
 
         public UserEntity VerifyUser { get; set; }
@@ -49,7 +39,8 @@ namespace Admin.Core.Model.Loan
         /// 0-未完成
         /// 1-完成
         /// 2-审核完成
-        /// 3-超期未完成
+        /// 3-超期完成
+        /// 4-超期审核完成
         /// </summary>
         public int OverSign { get; set; }
 
@@ -62,5 +53,22 @@ namespace Admin.Core.Model.Loan
         /// 结束时间
         /// </summary>
         public DateTime OverTime { get; set; }
+
+        /// <summary>
+        /// 合同号
+        /// </summary>
+        public string ContractNo { get; set; }
+
+        /// <summary>
+        /// 合同总金额
+        /// </summary>
+        [Column(DbType = "decimal(18,2)")]
+        public decimal SumValue { get; set; }
+
+        /// <summary>
+        /// 需要抵押替换的金额
+        /// </summary>
+        [Column(DbType = "decimal(18,2)")]
+        public decimal PartialValue { get; set; }
     }
 }

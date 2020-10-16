@@ -77,7 +77,14 @@ namespace Admin.Core.Service.Loan.LoanMethod
                 .ToOneAsync();
 
             entity.VerifyUserId = userId;
-            entity.OverSign = 2;
+            if(entity.OverTime >= DateTime.Now)
+            {
+                entity.OverSign = 2;
+            }
+            else
+            {
+                entity.OverSign = 4;
+            }
             entity.VerifyTime = DateTime.Now;
 
             await _loanMethodRepository.UpdateAsync(entity);

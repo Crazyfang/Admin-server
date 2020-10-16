@@ -200,8 +200,48 @@ namespace Admin.Core.Service.Record.Record
                         }
                     }
                 }
-                var recordFileList = await _recordFileRepository.Select.Where(a => a.RecordFileTypeId == entityList[i].RecordFileTypeId).ToListAsync();
-                entityList[i].Children = _mapper.Map<List<RecordFileAdditionalOuput>>(recordFileList);
+            }
+            foreach(var item in entityList)
+            {
+                var recordFileList = await _recordFileRepository.Select.Where(a => a.RecordFileTypeId == item.RecordFileTypeId).ToListAsync();
+                var checkedRecordFileList = await _checkedRecordFileRepository.Select
+                    .Where(i => i.HandOverSign == 0)
+                    .Where(i => i.RecordId == id)
+                    .Where(i => i.CheckedRecordFileTypeId == item.CheckedRecordFileTypeId)
+                    .ToListAsync();
+                var addtionalRecordFileList = _mapper.Map<List<RecordFileAdditionalOuput>>(recordFileList);
+
+                foreach(var file in addtionalRecordFileList)
+                {
+                    foreach(var checkedFile in checkedRecordFileList)
+                    {
+                        if(file.RecordFileId == checkedFile.RecordFileId)
+                        {
+                            file.Checked = true;
+                            file.Num = checkedFile.Num;
+                            file.CreditDueDate = checkedFile.CreditDueDate;
+                            file.Id = checkedFile.Id;
+                        }
+                    }
+                }
+
+                foreach(var otherFile in checkedRecordFileList.Where(i => i.OtherSign == 1))
+                {
+                    var otherEntity = new RecordFileAdditionalOuput()
+                    {
+                        Id = otherFile.Id,
+                        Num = otherFile.Num,
+                        Name = otherFile.Name,
+                        CreditDueDate = otherFile.CreditDueDate,
+                        Checked = true,
+                        OtherSign = otherFile.OtherSign,
+                        CheckedRecordFileId = otherFile.Id,
+                        HandOverSign = otherFile.HandOverSign
+                    };
+                    addtionalRecordFileList.Add(otherEntity);
+                }
+
+                item.Children = addtionalRecordFileList;
             }
 
             output.RecordFileTypeList = entityList;
@@ -556,10 +596,13 @@ namespace Admin.Core.Service.Record.Record
                     await _recordHistoryRepository.InsertAsync(recordHistory);
                 }
 
+                await _checkedRecordFileRepository.UpdateDiy.Set(i => i.HandOverSign, 0).Where(i => i.RecordId == input.Id && i.HandOverSign == 2).ExecuteAffrowsAsync();
+
             }
             return ResponseOutput.Ok();
         }
 
+        [Transaction]
         public async Task<IResponseOutput> AddAdditionalRecordInfoAsync(RecordGetOutput record, List<RecordFileTypeAdditionalOutput> input)
         {
             var recordHistory = new RecordHistoryEntity()
@@ -593,23 +636,85 @@ namespace Admin.Core.Service.Record.Record
                         }
                     }
                     var checkedRecordFileList = _mapper.Map<List<CheckedRecordFileEntity>>(child);
+                    //var checkedRecordFileIdList = checkedRecordFileList.Select(i => i.Id).ToList();
+                    //var dataBaseIdList = await _checkedRecordFileRepository.Select
+                    //    .Where(i => i.RecordId == )
                     foreach (var checkedRecordFile in checkedRecordFileList)
                     {
-                        checkedRecordFile.RecordId = record.Id;
-                        checkedRecordFile.CheckedRecordFileTypeId = checkedRecordFileTypeId;
-                        await _checkedRecordFileRepository.InsertAsync(checkedRecordFile);
                         if (checkedRecordFile.OtherSign == 0)
                         {
+                            // 未移交
+                            if(checkedRecordFile.Id != 0)
+                            {
+                                var entity = await _checkedRecordFileRepository.Select.WhereDynamic(checkedRecordFile.Id).ToOneAsync();
+                                entity.Num = checkedRecordFile.Num;
+                                entity.CreditDueDate = checkedRecordFile.CreditDueDate;
+                                await _checkedRecordFileRepository.UpdateAsync(entity);
+                            }
+                            else
+                            {
+                                // 查询是否有相同文件类型的未移交档案文件
+                                var handsCheckedRecordFile = await _checkedRecordFileRepository.Select
+                                    .Where(i => i.CheckedRecordFileTypeId == checkedRecordFileTypeId)
+                                    .Where(i => i.RecordId == record.Id)
+                                    .Where(i => i.RecordFileId == checkedRecordFile.RecordFileId)
+                                    .Where(i => i.HandOverSign == 0)
+                                    .ToOneAsync();
+                                if (handsCheckedRecordFile != null)
+                                {
+                                    // 不为空则更新数目
+                                    handsCheckedRecordFile.Num += checkedRecordFile.Num;
+                                    await _checkedRecordFileRepository.UpdateAsync(handsCheckedRecordFile);
+                                }
+                                else
+                                {
+                                    // 为空则新插入
+                                    checkedRecordFile.RecordId = record.Id;
+                                    checkedRecordFile.CheckedRecordFileTypeId = checkedRecordFileTypeId;
+                                    await _checkedRecordFileRepository.InsertAsync(checkedRecordFile);
+                                }
+                            }
+                            
                             recordHistory.OperateInfo += $"<br> 选中预设文件:{checkedRecordFile.Name} 份数:{checkedRecordFile.Num} 过期时间:{checkedRecordFile.CreditDueDate}";
                         }
                         else
                         {
+                            if (checkedRecordFile.Id != 0)
+                            {
+                                var entity = await _checkedRecordFileRepository.Select.WhereDynamic(checkedRecordFile.Id).ToOneAsync();
+                                entity.Num = checkedRecordFile.Num;
+                                entity.CreditDueDate = checkedRecordFile.CreditDueDate;
+                                await _checkedRecordFileRepository.UpdateAsync(entity);
+                            }
+                            else
+                            {
+                                // 查询是否有相同文件类型的未移交档案文件
+                                var handsCheckedRecordFile = await _checkedRecordFileRepository.Select
+                                    .Where(i => i.CheckedRecordFileTypeId == checkedRecordFileTypeId)
+                                    .Where(i => i.RecordFileId == 0 && i.HandOverSign == 0)
+                                    .ToOneAsync();
+                                if (handsCheckedRecordFile != null)
+                                {
+                                    // 不为空则更新数目
+                                    handsCheckedRecordFile.Num += checkedRecordFile.Num;
+                                    await _checkedRecordFileRepository.UpdateAsync(handsCheckedRecordFile);
+                                }
+                                else
+                                {
+                                    // 为空则新插入
+                                    checkedRecordFile.RecordId = record.Id;
+                                    checkedRecordFile.CheckedRecordFileTypeId = checkedRecordFileTypeId;
+                                    await _checkedRecordFileRepository.InsertAsync(checkedRecordFile);
+                                }
+                            }
+                            
                             recordHistory.OperateInfo += $"<br> 用户自定义文件:{checkedRecordFile.Name} 份数:{checkedRecordFile.Num} 过期时间:{checkedRecordFile.CreditDueDate}";
                         }
                     }
                 }
             }
 
+            await _checkedRecordFileRepository.UpdateDiy.Set(i => i.HandOverSign, 0).Where(i => i.RecordId == record.Id && i.HandOverSign == 2).ExecuteAffrowsAsync();
             await _recordHistoryRepository.InsertAsync(recordHistory);
 
             return ResponseOutput.Ok();
@@ -690,14 +795,44 @@ namespace Admin.Core.Service.Record.Record
                                 //var checkedRecordFileEntity = _checkedRecordFileRepository.Select.WhereDynamic(checkedRecordFile.Id).ToOne();
                                 //var checkedRecordFileEntity = _freeSql.Select<CheckedRecordFileEntity>().WhereDynamic(checkedRecordFile.Id).ToOne();
                                 // checkedRecordFileEntity.HandOverSign = 1;
-                                _freeSql.Update<CheckedRecordFileEntity>().Set(i => i.HandOverSign, 1).Where(i => i.Id == checkedRecordFile.Id).ExecuteAffrows();
+                                
                                 // _checkedRecordFileRepository.Update(checkedRecordFileEntity);
                                 if (checkedRecordFile.OtherSign == 1)
                                 {
+                                    var entity = _freeSql.Select<CheckedRecordFileEntity>().Where(i => i.Id == checkedRecordFile.Id).ToOne();
+                                    var handOverEntity = _freeSql.Select<CheckedRecordFileEntity>()
+                                        .Where(i => i.RecordFileId == 0)
+                                        .Where(i => i.Name == entity.Name)
+                                        .Where(i => i.HandOverSign == 1).ToOne();
+                                    if (handOverEntity != null)
+                                    {
+                                        handOverEntity.Num += checkedRecordFile.Num;
+                                        _freeSql.Update<CheckedRecordFileEntity>().Set(i => i.Num, handOverEntity.Num).Where(i => i.Id == handOverEntity.Id).ExecuteAffrows();
+                                        _freeSql.Delete<CheckedRecordFileEntity>().Where(i => i.Id == checkedRecordFile.Id).ExecuteAffrows();
+                                    }
+                                    else
+                                    {
+                                        _freeSql.Update<CheckedRecordFileEntity>().Set(i => i.HandOverSign, 1).Where(i => i.Id == checkedRecordFile.Id).ExecuteAffrows();
+                                    }
                                     recordHistory.OperateInfo += $"<br> 自定义文件 {checkedRecordFile.Name} 过期时间:{checkedRecordFile.CreditDueDate} 份数:{checkedRecordFile.Num}";
                                 }
                                 else
                                 {
+                                    var entity = _freeSql.Select<CheckedRecordFileEntity>().Where(i => i.Id == checkedRecordFile.Id).ToOne();
+                                    var handOverEntity = _freeSql.Select<CheckedRecordFileEntity>()
+                                    .Where(i => i.CheckedRecordFileTypeId == entity.CheckedRecordFileTypeId)
+                                    .Where(i => i.RecordFileId == entity.RecordFileId)
+                                    .Where(i => i.HandOverSign == 1).ToOne();
+                                    if (handOverEntity != null)
+                                    {
+                                        handOverEntity.Num += checkedRecordFile.Num;
+                                        _freeSql.Update<CheckedRecordFileEntity>().Set(i => i.Num, handOverEntity.Num).Where(i => i.Id == handOverEntity.Id).ExecuteAffrows();
+                                        _freeSql.Delete<CheckedRecordFileEntity>().Where(i => i.Id == checkedRecordFile.Id).ExecuteAffrows();
+                                    }
+                                    else
+                                    {
+                                        _freeSql.Update<CheckedRecordFileEntity>().Set(i => i.HandOverSign, 1).Where(i => i.Id == checkedRecordFile.Id).ExecuteAffrows();
+                                    }
                                     recordHistory.OperateInfo += $"<br> 预设文件 {checkedRecordFile.Name} 过期时间:{checkedRecordFile.CreditDueDate} 份数:{checkedRecordFile.Num}";
                                 }
                             }
@@ -829,10 +964,17 @@ namespace Admin.Core.Service.Record.Record
 
             output.Record = _mapper.Map<RecordGetOutput>(entity);
 
-            var entityList = await _checkedRecordFileTypeRepository.Select
+            // 未移交打印版
+            var entityList = await _checkedRecordFileTypeRepository.Select.As("k")
+                .Where(i => i.CheckedRecordFileList.AsSelect().Any(a => a.HandOverSign == 0))
                 .Where(i => i.RecordId == id)
-                .Include(i => i.RecordFileType)
                 .ToListAsync(i => new RecordFileTypeOutput() { RecordFileTypeId = i.RecordFileTypeId, Name = i.RecordFileType.FileTypeName, Remarks = i.Remarks, CheckedRecordFileTypeId = i.Id });
+
+            // 打印完整版
+            //var entityList = await _checkedRecordFileTypeRepository.Select
+            //    .Where(i => i.RecordId == id)
+            //    .Include(i => i.RecordFileType)
+            //    .ToListAsync(i => new RecordFileTypeOutput() { RecordFileTypeId = i.RecordFileTypeId, Name = i.RecordFileType.FileTypeName, Remarks = i.Remarks, CheckedRecordFileTypeId = i.Id });
 
             //var entityList = await _recordFileTypeRepository.Select.From<CheckedRecordFileTypeEntity>((s, b) => s.LeftJoin(a => a.Id == b.RecordFileTypeId))
             //    .Where((s, b) => s.RecordTypeId == entity.RecordType)
@@ -840,24 +982,24 @@ namespace Admin.Core.Service.Record.Record
 
             output.RecordFileTypeList = entityList;
 
+            // 未移交打印版
             foreach (var item in output.RecordFileTypeList)
             {
                 var recordFileList = await _recordFileRepository.Select
                     .Where(i => i.RecordFileTypeId == item.RecordFileTypeId)
                     .ToListAsync(i => new CheckedRecordFileInput() { Id = i.Id, Name = i.RecordFileName, RecordFileId = i.Id });
 
-                var checkedRecordFileType = await _checkedRecordFileTypeRepository.Select
-                    .Where(i => i.RecordId == entity.Id && i.RecordFileTypeId == item.RecordFileTypeId && i.Id == item.CheckedRecordFileTypeId)
-                    .IncludeMany(i => i.CheckedRecordFileList, then => then.Include(a => a.RecordFile))
-                    .ToOneAsync();
+                var checkedRecordFileList = await _checkedRecordFileRepository.Select
+                    .Where(i => i.CheckedRecordFileTypeId == item.CheckedRecordFileTypeId && i.HandOverSign == 0)
+                    .ToListAsync();
 
-                var res = _mapper.Map<List<CheckedRecordFileInput>>(checkedRecordFileType.CheckedRecordFileList);
+                var res = _mapper.Map<List<CheckedRecordFileInput>>(checkedRecordFileList);
 
-                foreach(var recordFile in recordFileList)
+                foreach (var recordFile in recordFileList)
                 {
-                    foreach(var checkedRecordFile in res)
+                    foreach (var checkedRecordFile in res)
                     {
-                        if(recordFile.Id == checkedRecordFile.RecordFileId)
+                        if (recordFile.Id == checkedRecordFile.RecordFileId)
                         {
                             recordFile.Checked = true;
                             recordFile.Num = checkedRecordFile.Num;
@@ -865,8 +1007,8 @@ namespace Admin.Core.Service.Record.Record
                     }
                 }
 
-                var other = res.Where(i => i.OtherSign == 1);
-                foreach(var oth in other)
+                var other = res.Where(i => i.OtherSign == 1 && i.HandOverSign == 0);
+                foreach (var oth in other)
                 {
                     var obj = new CheckedRecordFileInput()
                     {
@@ -880,6 +1022,48 @@ namespace Admin.Core.Service.Record.Record
 
                 item.Children = recordFileList;
             }
+
+            // 打印完整版
+            //foreach (var item in output.RecordFileTypeList)
+            //{
+            //    var recordFileList = await _recordFileRepository.Select
+            //        .Where(i => i.RecordFileTypeId == item.RecordFileTypeId)
+            //        .ToListAsync(i => new CheckedRecordFileInput() { Id = i.Id, Name = i.RecordFileName, RecordFileId = i.Id });
+
+            //    var checkedRecordFileType = await _checkedRecordFileTypeRepository.Select
+            //        .Where(i => i.RecordId == entity.Id && i.RecordFileTypeId == item.RecordFileTypeId && i.Id == item.CheckedRecordFileTypeId)
+            //        .IncludeMany(i => i.CheckedRecordFileList, then => then.Include(a => a.RecordFile))
+            //        .ToOneAsync();
+
+            //    var res = _mapper.Map<List<CheckedRecordFileInput>>(checkedRecordFileType.CheckedRecordFileList);
+
+            //    foreach(var recordFile in recordFileList)
+            //    {
+            //        foreach(var checkedRecordFile in res)
+            //        {
+            //            if(recordFile.Id == checkedRecordFile.RecordFileId)
+            //            {
+            //                recordFile.Checked = true;
+            //                recordFile.Num = checkedRecordFile.Num;
+            //            }
+            //        }
+            //    }
+
+            //    var other = res.Where(i => i.OtherSign == 1);
+            //    foreach(var oth in other)
+            //    {
+            //        var obj = new CheckedRecordFileInput()
+            //        {
+            //            Id = oth.Id,
+            //            Name = oth.Name,
+            //            Num = oth.Num,
+            //            Checked = true
+            //        };
+            //        recordFileList.Add(obj);
+            //    }
+
+            //    item.Children = recordFileList;
+            //}
 
             return ResponseOutput.Ok(output);
         }
@@ -1220,6 +1404,13 @@ namespace Admin.Core.Service.Record.Record
                 .ToOneAsync(i => i.Record);
 
             return entity;
+        }
+
+        public async Task<IResponseOutput> ChangeRecordStatusAsync(int status, long id)
+        {
+            await _recordRepository.UpdateDiy.Set(i => i.Status, status).Where(i => i.Id == id).ExecuteAffrowsAsync();
+
+            return ResponseOutput.Ok();
         }
     }
 }

@@ -23,5 +23,13 @@ namespace Admin.Core.Service.Record.CheckedRecordFile
         /// <param name="recordId">档案主键</param>
         /// <returns></returns>
         Task<List<CheckedRecordFileInput>> GetCheckedRecordFileAsync(long id, long recordId);
+
+        /// <summary>
+        /// 修改档案文件的状态
+        /// </summary>
+        /// <param name="status">状态字</param>
+        /// <param name="recordId">档案主键</param>
+        /// <returns></returns>
+        Task<IResponseOutput> ChangeFileStatusAsync(int status, long recordId);
     }
 }

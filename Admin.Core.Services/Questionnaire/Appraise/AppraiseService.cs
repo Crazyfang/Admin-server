@@ -6,9 +6,11 @@ using Admin.Core.Common.Input;
 using Admin.Core.Common.Output;
 using Admin.Core.Model.Questionnaire;
 using Admin.Core.Repository.Questionnaire.Appraise;
+using Admin.Core.Repository.Questionnaire.Calculate;
 using Admin.Core.Repository.Questionnaire.HouseHold;
 using Admin.Core.Repository.Questionnaire.HouseHoldMember;
 using Admin.Core.Repository.Questionnaire.MemberResidence;
+using Admin.Core.Repository.Questionnaire.UserPower;
 using Admin.Core.Service.Questionnaire.Appraise.Input;
 using Admin.Core.Service.Questionnaire.Appraise.Output;
 using Admin.Core.Service.Questionnaire.HouseHoldMember.Output;
@@ -23,17 +25,23 @@ namespace Admin.Core.Service.Questionnaire.Appraise
         private readonly IHouseHoldMemberRepository _houseHoldMemberRepository;
         private readonly IMemberResidenceRepository _memberResidenceRepository;
         private readonly IHouseHoldRepository _houseHoldRepository;
+        private readonly ICalculateRepository _calculateRepository;
+        private readonly IUserPowerRepository _userPowerRepository;
         public AppraiseService(IMapper mapper
             , IAppraiseRepository appraiseRepository
             , IMemberResidenceRepository memberResidenceRepository
             , IHouseHoldMemberRepository houseHoldMemberRepository
-            , IHouseHoldRepository houseHoldRepository)
+            , IHouseHoldRepository houseHoldRepository
+            , ICalculateRepository calculateRepository
+            , IUserPowerRepository userPowerRepository)
         {
             _mapper = mapper;
             _appraiseRepository = appraiseRepository;
             _houseHoldMemberRepository = houseHoldMemberRepository;
             _memberResidenceRepository = memberResidenceRepository;
             _houseHoldRepository = houseHoldRepository;
+            _calculateRepository = calculateRepository;
+            _userPowerRepository = userPowerRepository;
         }
 
         public async Task<IResponseOutput> AddInfoReturnAsync(string id)
@@ -90,31 +98,34 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                     {
                         grade += 30;
                     }
-                    // 计算年龄
-                    int age = DateTime.Now.Year - item.BirthDate.Year;
-                    if (DateTime.Now.Month < item.BirthDate.Month || (DateTime.Now.Month == item.BirthDate.Month && DateTime.Now.Day < item.BirthDate.Day))
+                    if (item.BirthDate.HasValue)
                     {
-                        age--;
-                    }
-                    if(18 <= age && age <= 25)
-                    {
-                        grade += 10;
-                    }
-                    else if(26 <= age && age <= 35)
-                    {
-                        grade += 20;
-                    }
-                    else if(36 <= age && age <= 45)
-                    {
-                        grade += 30;
-                    }
-                    else if(46 <= age && age <= 55)
-                    {
-                        grade += 20;
-                    }
-                    else if(56 <= age && age <= 65)
-                    {
-                        grade += 10;
+                        // 计算年龄
+                        int age = DateTime.Now.Year - item.BirthDate.Value.Year;
+                        if (DateTime.Now.Month < item.BirthDate.Value.Month || (DateTime.Now.Month == item.BirthDate.Value.Month && DateTime.Now.Day < item.BirthDate.Value.Day))
+                        {
+                            age--;
+                        }
+                        if (18 <= age && age <= 25)
+                        {
+                            grade += 10;
+                        }
+                        else if (26 <= age && age <= 35)
+                        {
+                            grade += 20;
+                        }
+                        else if (36 <= age && age <= 45)
+                        {
+                            grade += 30;
+                        }
+                        else if (46 <= age && age <= 55)
+                        {
+                            grade += 20;
+                        }
+                        else if (56 <= age && age <= 65)
+                        {
+                            grade += 10;
+                        }
                     }
 
                     // 有丰收互联
@@ -140,9 +151,14 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                 float basicQuota = 0.00F;
                 float familyNetIncome = 0.00F;
                 float familyNetWorthy = 0.00F;
-                var Coefficient = 80;
+                var Coefficient = 70;
                 var dangerCount = 0;
                 var quotaList = new List<float>();
+                // 承包亩数
+                var houseHoldEntity = await _houseHoldRepository.Select
+                    .Where(i => i.Id == input.HouseHoldId)
+                    .ToOneAsync();
+                var acres = houseHoldEntity.Acres.HasValue ? houseHoldEntity.Acres.Value : 0;  
 
                 var appraiseList = await _appraiseRepository.Select
                     .Where(i => i.HouseHoldId == input.HouseHoldId)
@@ -151,18 +167,23 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                 foreach(var item in appraiseList)
                 {
                     basicQuota = 0.00F;
-                    Coefficient = 80;
+                    Coefficient = 70;
                     familyNetWorthy = 0.00F;
 
                     if(item.Instability || item.Repudiate || item.Reputation || item.Lending || item.Gamble)
                     {
                         dangerCount += 1;
+                        continue;
                     }
 
                     if(dangerCount >= 2)
                     {
                         break;
                     }
+
+                    // 承包土地价值计算
+                    familyNetWorthy += (float)(acres * 0.72);
+
                     // 自有房产价值计算
                     if (item.SelfBuilding)
                     {
@@ -240,6 +261,12 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                 if(dangerCount >= 2)
                 {
                     await _houseHoldRepository.UpdateDiy.Set(i => i.RefuseMark, true).Where(i => i.Id == input.HouseHoldId).ExecuteAffrowsAsync();
+                    var calEntity = new CalculateEntity()
+                    {
+                        HouseHoldId = input.HouseHoldId,
+                        RefuseMark = true
+                    };
+                    await _calculateRepository.InsertAsync(calEntity);
                 }
                 else
                 {
@@ -247,6 +274,8 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                     //var maxValue = quotaList.Max();
                     //var minValue = quotaList.Min();
                     var sign = false;
+                    // 风险情况判定
+                    var riskSign = false;
 
                     //quotaList.Remove(maxValue);
                     //quotaList.Remove(minValue);
@@ -263,12 +292,9 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                     {
                         sign = true;
                     }
-                    else
+                    if (dangerCount == 1)
                     {
-                        if (dangerCount == 1)
-                        {
-                            sign = true;
-                        }
+                        riskSign = true;
                     }
 
                     // 授信额度大于30万设置30万封顶
@@ -279,7 +305,7 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                     else
                     {
                         // 取整,四舍六入
-                        avg = Math.Round(avg, 0);
+                        avg = Math.Floor(avg);
                     }
 
                     //float total = 0.00F;
@@ -289,7 +315,20 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                     await _houseHoldRepository.UpdateDiy
                         .Set(i => i.SuggestCreditLimit, (float)avg)
                         .Set(i => i.DeviationMark, sign)
+                        .Set(i => i.DangerUserMark, riskSign)
                         .Where(i => i.Id == input.HouseHoldId).ExecuteAffrowsAsync();
+
+                    var calEntity = new CalculateEntity()
+                    {
+                        HouseHoldId = input.HouseHoldId,
+                        Average = avg,
+                        StandardDeviation = ret,
+                        Deviation = ret / avg,
+                        VarianceSum = sum,
+                        DangerUserMark = riskSign,
+                        DeviationMark = sign
+                    };
+                    await _calculateRepository.InsertAsync(calEntity);
                 }
             }
 

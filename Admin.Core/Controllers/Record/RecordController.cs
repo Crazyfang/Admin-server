@@ -9,6 +9,7 @@ using Admin.Core.Hubs;
 using Admin.Core.Model.Record;
 using Admin.Core.Service.Admin.Department;
 using Admin.Core.Service.Admin.User;
+using Admin.Core.Service.Record.CheckedRecordFile;
 using Admin.Core.Service.Record.Notify;
 using Admin.Core.Service.Record.Record;
 using Admin.Core.Service.Record.Record.Input;
@@ -32,13 +33,15 @@ namespace Admin.Core.Controllers.Record
         private readonly IUser _user;
         private readonly IHubContext<ChatHub> _hubContext;
         private readonly INotifyService _notifyService;
+        private readonly ICheckedRecordFileService _checkedRecordFileService;
 
         public RecordController(IUser user
             , IRecordService recordService
             , IUserService userService
             , IHubContext<ChatHub> hubContext
             , IDepartmentService departmentService
-            , INotifyService notifyService)
+            , INotifyService notifyService
+            , ICheckedRecordFileService checkedRecordFileService)
         {
             _user = user;
             _recordService = recordService;
@@ -46,6 +49,7 @@ namespace Admin.Core.Controllers.Record
             _hubContext = hubContext;
             _departmentService = departmentService;
             _notifyService = notifyService;
+            _checkedRecordFileService = checkedRecordFileService;
         }
 
         [HttpGet]
@@ -493,11 +497,13 @@ namespace Admin.Core.Controllers.Record
             var reason = obj["reason"].ToString();
             var record = await _recordService.GetRecordAsync(id);
 
+            // 更改未移交档案文件的状态为待更改
+            await _checkedRecordFileService.ChangeFileStatusAsync(2, id);
             await _notifyService.InsertAsync(record.ManagerUserId.Value, $"{record.RecordId}被退回,原因为: " + reason);
 
             if (RedisHelper.HExists("signalR", record.ManagerUserId.Value.ToString()))
             {
-                await _hubContext.Clients.Client(RedisHelper.HGet("signalR", record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"您有一份档案被退回，原因为:{reason}");
+                await _hubContext.Clients.Client(RedisHelper.HGet("signalR", record.ManagerUserId.Value.ToString())).SendAsync("Show", "信息刷新", $"{record.RecordId}档案被退回，原因为:{reason}");
             }
 
             return ResponseOutput.Ok();

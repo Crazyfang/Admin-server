@@ -32,6 +32,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.2" />
   </ItemGroup>
 
   <ItemGroup>

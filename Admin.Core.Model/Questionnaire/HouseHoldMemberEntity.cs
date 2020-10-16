@@ -34,7 +34,7 @@ namespace Admin.Core.Model.Questionnaire
         /// <summary>
         /// 出生日期
         /// </summary>
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         /// <summary>
         /// 与户主关系
