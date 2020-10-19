@@ -1089,6 +1089,7 @@
             0-未移交
             1-移交
             2-待更改
+            3-借阅中
             </summary>
         </member>
         <member name="P:Admin.Core.Model.Record.CheckedRecordFileTypeEntity.RecordFileTypeId">

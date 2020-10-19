@@ -499,6 +499,7 @@ namespace Admin.Core.Controllers.Record
 
             // 更改未移交档案文件的状态为待更改
             await _checkedRecordFileService.ChangeFileStatusAsync(2, id);
+            await _recordService.ChangeRecordStatusAsync(3, id);
             await _notifyService.InsertAsync(record.ManagerUserId.Value, $"{record.RecordId}被退回,原因为: " + reason);
 
             if (RedisHelper.HExists("signalR", record.ManagerUserId.Value.ToString()))

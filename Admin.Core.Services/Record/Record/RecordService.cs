@@ -205,7 +205,7 @@ namespace Admin.Core.Service.Record.Record
             {
                 var recordFileList = await _recordFileRepository.Select.Where(a => a.RecordFileTypeId == item.RecordFileTypeId).ToListAsync();
                 var checkedRecordFileList = await _checkedRecordFileRepository.Select
-                    .Where(i => i.HandOverSign == 0)
+                    .Where(i => i.HandOverSign == 0 || i.HandOverSign == 2)
                     .Where(i => i.RecordId == id)
                     .Where(i => i.CheckedRecordFileTypeId == item.CheckedRecordFileTypeId)
                     .ToListAsync();
@@ -596,7 +596,35 @@ namespace Admin.Core.Service.Record.Record
                     await _recordHistoryRepository.InsertAsync(recordHistory);
                 }
 
-                await _checkedRecordFileRepository.UpdateDiy.Set(i => i.HandOverSign, 0).Where(i => i.RecordId == input.Id && i.HandOverSign == 2).ExecuteAffrowsAsync();
+                var noHandCount = await _checkedRecordFileRepository.Select
+                    .Where(i => i.HandOverSign == 2 && i.RecordId == recordEntity.Id)
+                    .CountAsync();
+                if (noHandCount > 0)
+                {
+                    var handCount = await _checkedRecordFileRepository.Select
+                        .Where(i => i.HandOverSign == 1 && i.RecordId == recordEntity.Id)
+                        .CountAsync();
+                    var borrowCount = await _checkedRecordFileRepository.Select
+                        .Where(i => i.HandOverSign == 3 && i.RecordId == recordEntity.Id)
+                        .CountAsync();
+                    if (borrowCount > 0)
+                    {
+                        await _recordRepository.UpdateDiy.Set(i => i.Status, 2).ExecuteAffrowsAsync();
+                    }
+                    else
+                    {
+                        if (handCount > 0)
+                        {
+                            await _recordRepository.UpdateDiy.Set(i => i.Status, 1).ExecuteAffrowsAsync();
+                        }
+                        else
+                        {
+                            await _recordRepository.UpdateDiy.Set(i => i.Status, 0).ExecuteAffrowsAsync();
+                        }
+                    }
+                    await _checkedRecordFileRepository.UpdateDiy.Set(i => i.HandOverSign, 0).Where(i => i.RecordId == input.Id && i.HandOverSign == 2).ExecuteAffrowsAsync();
+                }
+                // await _checkedRecordFileRepository.UpdateDiy.Set(i => i.HandOverSign, 0).Where(i => i.RecordId == input.Id && i.HandOverSign == 2).ExecuteAffrowsAsync();
 
             }
             return ResponseOutput.Ok();
@@ -714,7 +742,35 @@ namespace Admin.Core.Service.Record.Record
                 }
             }
 
-            await _checkedRecordFileRepository.UpdateDiy.Set(i => i.HandOverSign, 0).Where(i => i.RecordId == record.Id && i.HandOverSign == 2).ExecuteAffrowsAsync();
+            var noHandCount = await _checkedRecordFileRepository.Select
+                .Where(i => i.HandOverSign == 2 && i.RecordId == record.Id)
+                .CountAsync();
+            if(noHandCount > 0)
+            {
+                var handCount = await _checkedRecordFileRepository.Select
+                    .Where(i => i.HandOverSign == 1 && i.RecordId == record.Id)
+                    .CountAsync();
+                var borrowCount = await _checkedRecordFileRepository.Select
+                    .Where(i => i.HandOverSign == 3 && i.RecordId == record.Id)
+                    .CountAsync();
+                if (borrowCount > 0)
+                {
+                    await _recordRepository.UpdateDiy.Set(i => i.Status, 2).ExecuteAffrowsAsync();
+                }
+                else
+                {
+                    if(handCount > 0)
+                    {
+                        await _recordRepository.UpdateDiy.Set(i => i.Status, 1).ExecuteAffrowsAsync();
+                    }
+                    else
+                    {
+                        await _recordRepository.UpdateDiy.Set(i => i.Status, 0).ExecuteAffrowsAsync();
+                    }
+                }
+                await _checkedRecordFileRepository.UpdateDiy.Set(i => i.HandOverSign, 0).Where(i => i.RecordId == record.Id && i.HandOverSign == 2).ExecuteAffrowsAsync();
+            }
+            
             await _recordHistoryRepository.InsertAsync(recordHistory);
 
             return ResponseOutput.Ok();
@@ -852,7 +908,11 @@ namespace Admin.Core.Service.Record.Record
                         //var recordEntity = _freeSql.Select<RecordEntity>().WhereDynamic(input.Record.Id).ToOne();
                         //recordEntity.Status = 1;
 
-                        _freeSql.Update<RecordEntity>().Set(i => i.Status, 1).Where(i => i.Id == input.Record.Id).ExecuteAffrows();
+                        var record = _freeSql.Select<RecordEntity>().Where(i => i.Id == input.Record.Id).ToOne();
+                        if(record.Status != 2)
+                        {
+                            _freeSql.Update<RecordEntity>().Set(i => i.Status, 1).Where(i => i.Id == input.Record.Id).ExecuteAffrows();
+                        }
                     }
 
                     _freeSql.Insert(recordHistory).ExecuteAffrows();

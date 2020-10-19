@@ -7,6 +7,7 @@ using Admin.Core.Common.Input;
 using Admin.Core.Common.Output;
 using Admin.Core.Model.Admin;
 using Admin.Core.Model.Record;
+using Admin.Core.Repository.Record.CheckedRecordFile;
 using Admin.Core.Repository.Record.Record;
 using Admin.Core.Repository.Record.RecordBorroItem;
 using Admin.Core.Repository.Record.RecordBorrow;
@@ -25,12 +26,14 @@ namespace Admin.Core.Service.Record.RecordBorrow
         private readonly IRecordBorrowRepository _recordBorrowRepository;
         private readonly IRecordHistoryRepository _recordHistoryRepository;
         private readonly IRecordBorrowItemRepository _recordBorrowItemRepository;
+        private readonly ICheckedRecordFileRepository _checkedRecordFileRepostiory;
         public RecordBorrowService(IMapper mapper
             , IUser user
             , IRecordBorrowRepository recordBorrowRepository
             , IRecordHistoryRepository recordHistoryRepository
             , IRecordRepository recordRepository
-            , IRecordBorrowItemRepository recordBorrowItemRepository)
+            , IRecordBorrowItemRepository recordBorrowItemRepository
+            , ICheckedRecordFileRepository checkedRecordFileRepository)
         {
             _mapper = mapper;
             _user = user;
@@ -38,6 +41,7 @@ namespace Admin.Core.Service.Record.RecordBorrow
             _recordHistoryRepository = recordHistoryRepository;
             _recordRepository = recordRepository;
             _recordBorrowItemRepository = recordBorrowItemRepository;
+            _checkedRecordFileRepostiory = checkedRecordFileRepository;
         }
 
         [Transaction]
@@ -199,7 +203,7 @@ namespace Admin.Core.Service.Record.RecordBorrow
                     foreach (var item in recordBorrow.RecordBorrowItemList)
                     {
                         //确定借调阅档案是在库状态
-                        if(item.Record.Status != 1)
+                        if(item.Record.Status != 1 && item.Record.Status != 3)
                         {
                             sign = true;
                             break;
@@ -218,8 +222,17 @@ namespace Admin.Core.Service.Record.RecordBorrow
                             };
 
                             await _recordHistoryRepository.InsertAsync(recordHistory);
-                            item.Record.Status = 2;
-                            await _recordRepository.UpdateAsync(item.Record);
+                            if(item.Record.Status != 3)
+                            {
+                                item.Record.Status = 2;
+                                await _recordRepository.UpdateAsync(item.Record);
+                            }
+
+                            // 更改选中文件的状态为借阅状态
+                            if (recordBorrow.BorrowType == 0)
+                            {
+                                await _checkedRecordFileRepostiory.UpdateDiy.Set(i => i.HandOverSign, 3).Where(i => i.RecordId == item.RecordId && i.HandOverSign == 1).ExecuteAffrowsAsync();
+                            }
                         }
 
                         await _recordBorrowRepository.UpdateAsync(recordBorrow);
@@ -281,9 +294,22 @@ namespace Admin.Core.Service.Record.RecordBorrow
                     OperateType = "借阅归还",
                     OperateInfo = $" 档案{item.Record.RecordUserName}-{item.Record.RecordUserInCode}归还接收"
                 };
-                item.Record.Status = 1;
+                var count = await _checkedRecordFileRepostiory.Select
+                    .Where(i => i.RecordId == item.Record.Id && i.HandOverSign == 2)
+                    .CountAsync();
+                if(count > 0)
+                {
+                    item.Record.Status = 3;
+                }
+                else
+                {
+                    item.Record.Status = 1;
+                }
+                
                 await _recordRepository.UpdateAsync(item.Record);
                 await _recordHistoryRepository.InsertAsync(recordHistory);
+                // 更改选中档案文件状态从借阅中为已移交状态
+                await _checkedRecordFileRepostiory.UpdateDiy.Set(i => i.HandOverSign, 1).Where(i => i.RecordId == item.RecordId && i.HandOverSign == 3).ExecuteAffrowsAsync();
             }
 
             recordBorrowEntity.ReturnSign = 4;

@@ -54,6 +54,7 @@ namespace Admin.Core.Model.Record
         /// 0-未移交
         /// 1-移交
         /// 2-待更改
+        /// 3-借阅中
         /// </summary>
         public int HandOverSign { get; set; }
     }
