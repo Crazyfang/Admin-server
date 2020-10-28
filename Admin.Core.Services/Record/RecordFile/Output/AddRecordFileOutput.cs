@@ -23,6 +23,8 @@ namespace Admin.Core.Service.Record.RecordFile.Output
 
         public int HandOverSign { get; set; }
 
+        public bool? HasCreditDueDate { get; set; }
+
         public AddRecordFileOutput()
         {
             Uid = Guid.NewGuid();

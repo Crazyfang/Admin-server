@@ -1245,6 +1245,11 @@
             档案文件名称
             </summary>
         </member>
+        <member name="P:Admin.Core.Model.Record.RecordFileEntity.HasCreditDueDate">
+            <summary>
+            是否到期日
+            </summary>
+        </member>
         <member name="P:Admin.Core.Model.Record.RecordFileEntity.RecordFileTypeId">
             <summary>
             档案文件类型
@@ -1258,6 +1263,11 @@
         <member name="P:Admin.Core.Model.Record.RecordFileTypeEntity.RecordTypeId">
             <summary>
             档案类型
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Record.RecordFileTypeEntity.HasContractNo">
+            <summary>
+            是否必须输入合同号
             </summary>
         </member>
         <member name="P:Admin.Core.Model.Record.RecordTypeEntity.RecordTypeName">

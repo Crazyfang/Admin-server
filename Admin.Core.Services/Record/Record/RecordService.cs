@@ -170,10 +170,11 @@ namespace Admin.Core.Service.Record.Record
 
             var entityList = await _recordFileTypeRepository.Select
                 .Where(a => a.RecordTypeId == entity.RecordType)
-                .ToListAsync(a => new RecordFileTypeAdditionalOutput() { RecordFileTypeId = a.Id, Name = a.FileTypeName });
+                .ToListAsync(a => new RecordFileTypeAdditionalOutput() { RecordFileTypeId = a.Id, Name = a.FileTypeName, HasContractNo = a.HasContractNo });
 
             var checkedRecordFileTypeList = await _checkedRecordFileTypeRepository.Select
                 .Where(a => a.RecordId == entity.Id)
+                .Include(i => i.RecordFileType)
                 .ToListAsync();
 
             for (var i = entityList.Count - 1; i >= 0; i--)
@@ -194,7 +195,8 @@ namespace Admin.Core.Service.Record.Record
                                 RecordFileTypeId = entityList[i].RecordFileTypeId,
                                 Name = entityList[i].Name,
                                 CheckedRecordFileTypeId = item.Id,
-                                Remarks = item.Remarks
+                                Remarks = item.Remarks,
+                                HasContractNo = item.RecordFileType.HasContractNo
                             };
                             entityList.Insert(i + 1, obj);
                         }

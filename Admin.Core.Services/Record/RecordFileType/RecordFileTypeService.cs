@@ -101,7 +101,7 @@ namespace Admin.Core.Service.Record.RecordFileType
 
             var entityList = await _recordFileTypeRepository.Select
                 .Where(a => a.RecordTypeId == entity.RecordType)
-                .ToListAsync(a => new RecordFileTypeUpdateOutput() { RecordFileTypeId = a.Id, Name = a.FileTypeName });
+                .ToListAsync(a => new RecordFileTypeUpdateOutput() { RecordFileTypeId = a.Id, Name = a.FileTypeName, HasContractNo = a.HasContractNo });
 
             var checkedRecordFileTypeList = await _checkedRecordFileTypeRepository.Select
                 .Where(a => a.RecordId == recordId)
@@ -125,7 +125,8 @@ namespace Admin.Core.Service.Record.RecordFileType
                                 RecordFileTypeId = entityList[i].RecordFileTypeId,
                                 Name = entityList[i].Name,
                                 CheckedRecordFileTypeId = item.Id,
-                                Remarks = item.Remarks
+                                Remarks = item.Remarks,
+                                HasContractNo = entityList[i].HasContractNo
                             };
                             entityList.Insert(i + 1, obj);
                         }
@@ -137,7 +138,7 @@ namespace Admin.Core.Service.Record.RecordFileType
             {
                 var recordFileList = await _recordFileRepository.Select
                     .Where(i => i.RecordFileTypeId == item.RecordFileTypeId)
-                    .ToListAsync(i => new RecordFileUpdateOutput { Name = i.RecordFileName, RecordFileId = i.Id });
+                    .ToListAsync(i => new RecordFileUpdateOutput { Name = i.RecordFileName, RecordFileId = i.Id, HasCreditDueDate = i.HasCreditDueDate });
 
                 //var recordFileList = await _recordFileRepository.Select
                 //    .From<CheckedRecordFileEntity>((s, b) => s.LeftJoin(a => a.Id == b.RecordFileId))

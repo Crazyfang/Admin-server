@@ -23,5 +23,7 @@ namespace Admin.Core.Service.Record.CheckedRecordFile.Input
         public int OtherSign { get; set; }
 
         public int HandOverSign { get; set; }
+
+        public bool? HasCreditDueDate { get; set; }
     }
 }

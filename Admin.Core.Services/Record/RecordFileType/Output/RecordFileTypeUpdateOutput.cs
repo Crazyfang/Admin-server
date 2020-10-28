@@ -16,6 +16,8 @@ namespace Admin.Core.Service.Record.RecordFileType.Output
 
         public long CheckedRecordFileTypeId { get; set; }
 
+        public bool? HasContractNo { get; set; }
+
         public List<RecordFileUpdateOutput> Children { get; set; }
 
         public RecordFileTypeUpdateOutput()

@@ -19,6 +19,11 @@ namespace Admin.Core.Model.Record
         public long? RecordTypeId { get; set; }
         public RecordTypeEntity RecordType { get; set; }
 
+        /// <summary>
+        /// 是否必须输入合同号
+        /// </summary>
+        public bool? HasContractNo { get; set; }
+
         [Navigate(nameof(RecordFileEntity.RecordFileTypeId))]
         public List<RecordFileEntity> RecordFileList { get; set; }
 

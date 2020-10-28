@@ -62,195 +62,196 @@ namespace Admin.Core.Service.Questionnaire.HouseHold
 
         public async Task<IResponseOutput> CalculatePageAsync(string code, long userId)
         {
-            //if(code == "TYC")
-            //{
-            //    var count = await _calculateRepository.Select.CountAsync();
-            //    if(count == 0)
-            //    {
-            //        var houseHoldIdList = await _houseHoldRepository.Select.Where(i => i.BelongedStreet == code).ToListAsync(i => i.Id);
-            //        foreach(var id in houseHoldIdList)
-            //        {
-            //            // 建议授信额度测算
-            //            float basicQuota = 0.00F;
-            //            float familyNetIncome = 0.00F;
-            //            float familyNetWorthy = 0.00F;
-            //            var Coefficient = 70;
-            //            var dangerCount = 0;
-            //            var quotaList = new List<float>();
-            //            // 承包亩数
-            //            var houseHoldEntity = await _houseHoldRepository.Select
-            //                .Where(i => i.Id == id)
-            //                .ToOneAsync();
-            //            var acres = houseHoldEntity.Acres.HasValue ? houseHoldEntity.Acres.Value : 0;
+            if (code == "测试")
+            {
+                var count = await _calculateRepository.Select.CountAsync();
+                if (count == 0)
+                {
+                    var houseHoldIdList = await _houseHoldRepository.Select.ToListAsync(i => i.Id);
+                    foreach (var id in houseHoldIdList)
+                    {
+                        // 建议授信额度测算
+                        float basicQuota = 0.00F;
+                        float familyNetIncome = 0.00F;
+                        float familyNetWorthy = 0.00F;
+                        var Coefficient = 70;
+                        var dangerCount = 0;
+                        var quotaList = new List<float>();
+                        // 承包亩数
+                        var houseHoldEntity = await _houseHoldRepository.Select
+                            .Where(i => i.Id == id)
+                            .ToOneAsync();
+                        var acres = houseHoldEntity.Acres.HasValue ? houseHoldEntity.Acres.Value : 0;
 
-            //            var appraiseList = await _appraiseRepository.Select
-            //                .Where(i => i.HouseHoldId == id)
-            //                .ToListAsync();
-            //            if(appraiseList.Count == 5)
-            //            {
-            //                foreach (var item in appraiseList)
-            //                {
-            //                    basicQuota = 0.00F;
-            //                    Coefficient = 70;
-            //                    familyNetWorthy = 0.00F;
+                        var appraiseList = await _appraiseRepository.Select
+                            .Where(i => i.HouseHoldId == id)
+                            .ToListAsync();
+                        if (appraiseList.Count == 5)
+                        {
+                            foreach (var item in appraiseList)
+                            {
+                                basicQuota = 0.00F;
+                                Coefficient = 70;
+                                familyNetWorthy = 0.00F;
 
-            //                    if (item.Instability || item.Repudiate || item.Reputation || item.Lending || item.Gamble)
-            //                    {
-            //                        dangerCount += 1;
-            //                        continue;
-            //                    }
+                                if (item.Instability || item.Repudiate || item.Reputation || item.Lending || item.Gamble)
+                                {
+                                    dangerCount += 1;
+                                    continue;
+                                }
 
-            //                    if (dangerCount >= 2)
-            //                    {
-            //                        break;
-            //                    }
+                                if (dangerCount >= 2)
+                                {
+                                    break;
+                                }
 
-            //                    // 承包土地价值计算
-            //                    familyNetWorthy += (float)(acres * 0.72);
+                                // 承包土地价值计算
+                                familyNetWorthy += (float)(acres * 0.72);
 
-            //                    // 自有房产价值计算
-            //                    if (item.SelfBuilding)
-            //                    {
-            //                        if (item.Bungalow)
-            //                        {
-            //                            familyNetWorthy += item.BungalowCount * 20;
-            //                        }
-            //                        if (item.Building)
-            //                        {
-            //                            familyNetWorthy += item.BuildingCount * 40;
-            //                        }
-            //                        if (item.Cottage)
-            //                        {
-            //                            familyNetWorthy += item.CottageCount * 60;
-            //                        }
-            //                    }
-            //                    // 商品房价值计算
-            //                    if (item.GoodsBuilding)
-            //                    {
-            //                        familyNetWorthy += item.GoodsBuildingCount * 60;
-            //                    }
-            //                    // 车辆价值计算
-            //                    if (item.CarHold)
-            //                    {
-            //                        familyNetWorthy += item.CarHoldCount * 5;
-            //                    }
+                                // 自有房产价值计算
+                                if (item.SelfBuilding)
+                                {
+                                    if (item.Bungalow)
+                                    {
+                                        familyNetWorthy += item.BungalowCount * 20;
+                                    }
+                                    if (item.Building)
+                                    {
+                                        familyNetWorthy += item.BuildingCount * 40;
+                                    }
+                                    if (item.Cottage)
+                                    {
+                                        familyNetWorthy += item.CottageCount * 60;
+                                    }
+                                }
+                                // 商品房价值计算
+                                if (item.GoodsBuilding)
+                                {
+                                    familyNetWorthy += item.GoodsBuildingCount * 60;
+                                }
+                                // 车辆价值计算
+                                if (item.CarHold)
+                                {
+                                    familyNetWorthy += item.CarHoldCount * 5;
+                                }
 
-            //                    // 家庭净资产计算
-            //                    if (item.DebtCondition.HasValue)
-            //                    {
-            //                        familyNetWorthy -= item.DebtCondition.Value;
-            //                    }
+                                // 家庭净资产计算
+                                if (item.DebtCondition.HasValue)
+                                {
+                                    familyNetWorthy -= item.DebtCondition.Value;
+                                }
 
-            //                    // 家庭年净收入
-            //                    if (item.HomeEarning.HasValue && item.HomePay.HasValue)
-            //                    {
-            //                        familyNetIncome = item.HomeEarning.Value - item.HomePay.Value;
-            //                    }
+                                // 家庭年净收入
+                                if (item.HomeEarning.HasValue && item.HomePay.HasValue)
+                                {
+                                    familyNetIncome = item.HomeEarning.Value - item.HomePay.Value;
+                                }
 
-            //                    // 取高值
-            //                    basicQuota = (float)(familyNetIncome * 1.5 < familyNetWorthy * 0.3 ? familyNetWorthy * 0.3 : familyNetIncome * 1.5);
+                                // 取高值
+                                basicQuota = (float)(familyNetIncome * 1.5 < familyNetWorthy * 0.3 ? familyNetWorthy * 0.3 : familyNetIncome * 1.5);
 
-            //                    // 负值判断
-            //                    if (basicQuota < 0)
-            //                    {
-            //                        basicQuota = 0;
-            //                    }
+                                // 负值判断
+                                if (basicQuota < 0)
+                                {
+                                    basicQuota = 0;
+                                }
 
-            //                    // 计算评价系数
-            //                    if (item.Condition1)
-            //                    {
-            //                        Coefficient -= 20;
-            //                    }
-            //                    if (item.Condition2)
-            //                    {
-            //                        Coefficient -= 20;
-            //                    }
-            //                    if (item.Condition3)
-            //                    {
-            //                        Coefficient -= 10;
-            //                    }
-            //                    if (item.Condition4)
-            //                    {
-            //                        Coefficient -= 10;
-            //                    }
-            //                    if (item.Condition5)
-            //                    {
-            //                        Coefficient -= 10;
-            //                    }
+                                // 计算评价系数
+                                if (item.Condition1)
+                                {
+                                    Coefficient -= 20;
+                                }
+                                if (item.Condition2)
+                                {
+                                    Coefficient -= 20;
+                                }
+                                if (item.Condition3)
+                                {
+                                    Coefficient -= 10;
+                                }
+                                if (item.Condition4)
+                                {
+                                    Coefficient -= 10;
+                                }
+                                if (item.Condition5)
+                                {
+                                    Coefficient -= 10;
+                                }
 
-            //                    // 添加到列表中
-            //                    quotaList.Add(basicQuota * Coefficient / 70);
-            //                }
+                                // 添加到列表中
+                                quotaList.Add(basicQuota * Coefficient / 70);
+                            }
 
-            //                if (dangerCount >= 2)
-            //                {
-            //                    var entity = new CalculateEntity()
-            //                    {
-            //                        HouseHoldId = id,
-            //                        RefuseMark = true
-            //                    };
-            //                    await _calculateRepository.InsertAsync(entity);
-            //                }
-            //                else
-            //                {
-            //                    // 偏离度计算
-            //                    //var maxValue = quotaList.Max();
-            //                    //var minValue = quotaList.Min();
-            //                    var sign = false;
-            //                    // 风险情况判定
-            //                    var riskSign = false;
+                            if (dangerCount >= 2)
+                            {
+                                var entity = new CalculateEntity()
+                                {
+                                    HouseHoldId = id,
+                                    RefuseMark = true
+                                };
+                                await _calculateRepository.InsertAsync(entity);
+                            }
+                            else
+                            {
+                                // 偏离度计算
+                                //var maxValue = quotaList.Max();
+                                //var minValue = quotaList.Min();
+                                var sign = false;
+                                // 风险情况判定
+                                var riskSign = false;
 
-            //                    //quotaList.Remove(maxValue);
-            //                    //quotaList.Remove(minValue);
+                                //quotaList.Remove(maxValue);
+                                //quotaList.Remove(minValue);
 
-            //                    // 五个值求取平均值,求取标准差
-            //                    //float total = 0.00F;
-            //                    double avg = quotaList.Average();
-            //                    double sum = quotaList.Sum(d => Math.Pow(d - avg, 2));
-            //                    double ret = Math.Sqrt(sum / quotaList.Count());
+                                // 五个值求取平均值,求取标准差
+                                //float total = 0.00F;
+                                double avg = quotaList.Average();
+                                double sum = quotaList.Sum(d => Math.Pow(d - avg, 2));
+                                double ret = Math.Sqrt(sum / quotaList.Count());
 
-            //                    // 计算变异系数
-            //                    if (ret / avg > 0.4)
-            //                    //if (maxValue - minValue > average * 0.5)
-            //                    {
-            //                        sign = true;
-            //                    }
-            //                    if (dangerCount == 1)
-            //                    {
-            //                        riskSign = true;
-            //                    }
+                                // 计算变异系数
+                                if (ret / avg > 0.5)
+                                //if (maxValue - minValue > average * 0.5)
+                                {
+                                    sign = true;
+                                }
+                                if (dangerCount == 1)
+                                {
+                                    riskSign = true;
+                                }
 
-            //                    // 授信额度大于30万设置30万封顶
-            //                    if (avg > 30)
-            //                    {
-            //                        avg = 30;
-            //                    }
-            //                    else
-            //                    {
-            //                        // 取整,四舍六入
-            //                        avg = Math.Floor(avg);
-            //                    }
+                                var entity = new CalculateEntity()
+                                {
+                                    HouseHoldId = id,
+                                    Average = avg,
+                                    StandardDeviation = ret,
+                                    Deviation = ret / avg,
+                                    VarianceSum = sum,
+                                    DangerUserMark = riskSign,
+                                    DeviationMark = sign
+                                };
 
-            //                    var entity = new CalculateEntity()
-            //                    {
-            //                        HouseHoldId = id,
-            //                        Average = avg,
-            //                        StandardDeviation = ret,
-            //                        Deviation = ret / avg,
-            //                        VarianceSum = sum,
-            //                        DangerUserMark = riskSign,
-            //                        DeviationMark = sign
-            //                    };
-            //                    await _calculateRepository.InsertAsync(entity);
-            //                    //float total = 0.00F;
-            //                    //quotaList.ForEach(i => total += i);
-            //                    //float average = total / quotaList.Count();
+                                // 授信额度大于30万设置30万封顶
+                                if (avg > 30)
+                                {
+                                    avg = 30;
+                                }
+                                else
+                                {
+                                    // 取整,四舍六入
+                                    avg = Math.Floor(avg);
+                                }
 
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+                                await _calculateRepository.InsertAsync(entity);
+                                //float total = 0.00F;
+                                //quotaList.ForEach(i => total += i);
+                                //float average = total / quotaList.Count();
+
+                            }
+                        }
+                    }
+                }
+            }
             var sectionListStr = await _userPowerRepository.Select
                 .Where(i => i.UserId == userId)
                 .ToOneAsync(i => i.Power);
@@ -280,8 +281,8 @@ namespace Admin.Core.Service.Questionnaire.HouseHold
         {
             var appraiseList = await _appraiseRepository.Select
                 .Where(i => i.AppraiserId == userId)
-                .Where(i => i.HouseHoldId.Contains(code))
-                .Include(i => i.HouseHold)
+                .Where(i => i.HouseHold.BelongedStreet == code)
+                //.Include(i => i.HouseHold)
                 .IncludeMany(i => i.Members, then => then.Include(h => h.HouseHoldMember))
                 .ToListAsync();
 
@@ -540,7 +541,7 @@ namespace Admin.Core.Service.Questionnaire.HouseHold
         public async Task<IResponseOutput> ResultCollectAsync(string code)
         {
             var houseList = await _houseHoldRepository.Select
-                .Where(i => i.Id.Contains(code))
+                .Where(i => i.BelongedStreet == code)
                 .IncludeMany(i => i.Members)
                 .Include(i => i.SuggestCreditor)
                 .ToListAsync();

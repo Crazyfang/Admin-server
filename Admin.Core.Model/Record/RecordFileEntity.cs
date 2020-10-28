@@ -14,6 +14,11 @@ namespace Admin.Core.Model.Record
         public string RecordFileName { get; set; }
 
         /// <summary>
+        /// 是否到期日
+        /// </summary>
+        public bool? HasCreditDueDate { get; set; }
+
+        /// <summary>
         /// 档案文件类型
         /// </summary>
         public long? RecordFileTypeId { get; set; }

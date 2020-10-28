@@ -287,7 +287,7 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                     double ret = Math.Sqrt(sum / quotaList.Count());
 
                     // 计算变异系数
-                    if (ret / avg > 0.4)
+                    if (ret / avg > 0.5)
                     //if (maxValue - minValue > average * 0.5)
                     {
                         sign = true;
@@ -296,6 +296,17 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                     {
                         riskSign = true;
                     }
+
+                    var calEntity = new CalculateEntity()
+                    {
+                        HouseHoldId = input.HouseHoldId,
+                        Average = avg,
+                        StandardDeviation = ret,
+                        Deviation = ret / avg,
+                        VarianceSum = sum,
+                        DangerUserMark = riskSign,
+                        DeviationMark = sign
+                    };
 
                     // 授信额度大于30万设置30万封顶
                     if (avg > 30)
@@ -318,16 +329,6 @@ namespace Admin.Core.Service.Questionnaire.Appraise
                         .Set(i => i.DangerUserMark, riskSign)
                         .Where(i => i.Id == input.HouseHoldId).ExecuteAffrowsAsync();
 
-                    var calEntity = new CalculateEntity()
-                    {
-                        HouseHoldId = input.HouseHoldId,
-                        Average = avg,
-                        StandardDeviation = ret,
-                        Deviation = ret / avg,
-                        VarianceSum = sum,
-                        DangerUserMark = riskSign,
-                        DeviationMark = sign
-                    };
                     await _calculateRepository.InsertAsync(calEntity);
                 }
             }

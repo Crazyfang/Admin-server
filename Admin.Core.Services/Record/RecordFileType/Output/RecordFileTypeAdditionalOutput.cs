@@ -14,6 +14,8 @@ namespace Admin.Core.Service.Record.RecordFileType.Output
 
         public string Remarks { get; set; }
 
+        public bool? HasContractNo { get; set; }
+
         public long CheckedRecordFileTypeId { get; set; }
 
         public List<RecordFileAdditionalOuput> Children { get; set; }
