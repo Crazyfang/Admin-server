@@ -84,6 +84,7 @@
     <Folder Include="Controllers\Loan\" />
     <Folder Include="Controllers\Questionnaire\" />
     <Folder Include="Files\" />
+    <Folder Include="Controllers\Antimoney\" />
   </ItemGroup>
 
   <ItemGroup>

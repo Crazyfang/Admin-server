@@ -17,6 +17,11 @@ namespace Admin.Core.Common.Configs
         /// 文档图片上传配置
         /// </summary>
         public FileUploadConfig Document { get; set; }
+
+        /// <summary>
+        /// 反洗钱图片上传
+        /// </summary>
+        public FileUploadConfig Antimoney { get; set; }
     }
 
     /// <summary>

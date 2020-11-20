@@ -24,6 +24,7 @@
     <Folder Include="Helpers\" />
     <Folder Include="Loan\" />
     <Folder Include="Questionnaire\" />
+    <Folder Include="Antimoney\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Admin.Core.Common\Admin.Core.Common.csproj" />

@@ -682,6 +682,143 @@
             <param name="input"></param>
             <returns></returns>
         </member>
+        <member name="T:Admin.Core.Controllers.Antimoney.AreaController">
+            <summary>
+            域控制器
+            </summary>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.CompanyController.Page(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Antimoney.CompanyEntity})">
+            <summary>
+            获取分页公司信息
+            </summary>
+            <param name="input">分页参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.CompanyController.Add(Admin.Core.Service.Antimoney.Company.Input.CompanyAddInput)">
+            <summary>
+            添加公司信息
+            </summary>
+            <param name="input">公司基本信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.CompanyController.Edit(Admin.Core.Service.Antimoney.Company.Input.CompanyEditInput)">
+            <summary>
+            编辑公司信息
+            </summary>
+            <param name="input">公司信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.CompanyController.Get(System.Int64)">
+            <summary>
+            根据公司主键获取公司信息
+            </summary>
+            <param name="companyId">公司主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.CompanyController.Delete(System.Int64)">
+            <summary>
+            删除公司
+            </summary>
+            <param name="companyId">公司主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.ContractController.Page(Admin.Core.Common.Input.PageInput{Admin.Core.Service.Antimoney.Contract.Input.ContractSearchInput})">
+            <summary>
+            合同分页
+            </summary>
+            <param name="input">分页参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.ContractController.Add(Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput)">
+            <summary>
+            添加合同
+            </summary>
+            <param name="input">合同基本信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.ContractController.Edit(Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput)">
+            <summary>
+            编辑合同
+            </summary>
+            <param name="input">合同基本信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.ContractController.GetFileList(System.Int64)">
+            <summary>
+            根据合同号返回文件列表
+            </summary>
+            <param name="contractId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.ContractController.Get(System.Int64)">
+            <summary>
+            根据合同主键获取合同信息
+            </summary>
+            <param name="contractId">合同主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.ContractController.Delete(System.Int64)">
+            <summary>
+            删除合同
+            </summary>
+            <param name="contractId">合同主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.ContractController.GetNotes(System.Int64)">
+            <summary>
+            获取提醒
+            </summary>
+            <param name="contractId">合同主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.ContractController.AddOrEditNotes(Admin.Core.Service.Antimoney.Contract.Input.ContractNoticeInput)">
+            <summary>
+            更新提醒
+            </summary>
+            <param name="input">提醒内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.ContractController.GenerateContratList(Admin.Core.Common.Input.PageInput{Admin.Core.Service.Antimoney.Contract.Input.ContractSearchInput})">
+            <summary>
+            生成合同Excel文件
+            </summary>
+            <param name="input">分页参数</param>
+            <returns>文件地址</returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.ContractController.DownloadFile(System.String)">
+            <summary>
+            下载合同Excel文件
+            </summary>
+            <param name="fileName">文件名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.CurrencyController.List">
+            <summary>
+            获取币种Select数据
+            </summary>
+            <returns>币种Select</returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.FileController.Add(System.Collections.Generic.List{Admin.Core.Service.Antimoney.File.Input.FileAddOrEditInput})">
+            <summary>
+            添加或编辑合同下文件
+            </summary>
+            <param name="input">文件列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.FileController.FileImageUpload(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            上传文件图片
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.PictureController.Get(System.Int64)">
+            <summary>
+            根据文件主键获取
+            </summary>
+            <param name="fileId"></param>
+            <returns></returns>
+        </member>
         <member name="T:Admin.Core.Controllers.BaseController">
             <summary>
             基础控制器

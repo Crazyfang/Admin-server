@@ -578,40 +578,52 @@ namespace Admin.Core.Service.Questionnaire.HouseHold
             col = row.CreateCell(4);
             col.SetCellValue("与户主关系");
 
-            // 建议授信人姓名
             col = row.CreateCell(5);
+            col.SetCellValue("是否有有效合同");
+
+            col = row.CreateCell(6);
+            col.SetCellValue("有效合同最晚到期日");
+
+            col = row.CreateCell(7);
+            col.SetCellValue("配偶是否有有效合同");
+
+            col = row.CreateCell(8);
+            col.SetCellValue("配偶有效合同最晚到期日");
+
+            // 建议授信人姓名
+            col = row.CreateCell(9);
             col.SetCellValue("建议授信人姓名");
 
             // 建议授信人身份证号
-            col = row.CreateCell(6);
+            col = row.CreateCell(10);
             col.SetCellValue("建议授信人身份证号");
 
             // 建议授信额(万元)
-            col = row.CreateCell(7);
+            col = row.CreateCell(11);
             col.SetCellValue("建议授信额(万元)");
 
             // 偏离过大警告
-            col = row.CreateCell(8);
+            col = row.CreateCell(12);
             col.SetCellValue("偏离过大警告");
 
             // 出现一户风险情况认定
-            col = row.CreateCell(9);
+            col = row.CreateCell(13);
             col.SetCellValue("出现一户风险情况认定");
 
             // 拒绝授信表示标识
-            col = row.CreateCell(10);
+            col = row.CreateCell(14);
             col.SetCellValue("拒绝授信表示标识");
 
-            // 拒绝授信表示标识
-            col = row.CreateCell(11);
+            // 支行确认授信人名字
+            col = row.CreateCell(15);
             col.SetCellValue("支行确认授信人名字");
 
-            // 拒绝授信表示标识
-            col = row.CreateCell(12);
+            // 支行确认授信人身份证号
+            col = row.CreateCell(16);
             col.SetCellValue("支行确认授信人身份证号");
 
-            // 拒绝授信表示标识
-            col = row.CreateCell(13);
+            // 支行确认授信额度
+            col = row.CreateCell(17);
             col.SetCellValue("支行确认授信额度");
 
             foreach (var item in houseList)
@@ -625,63 +637,63 @@ namespace Admin.Core.Service.Questionnaire.HouseHold
                 if(item.SuggestCreditor == null)
                 {
                     // 建议授信人姓名
-                    col = row.CreateCell(5);
+                    col = row.CreateCell(9);
                     col.SetCellValue("");
 
                     // 建议授信人身份证号
-                    col = row.CreateCell(6);
+                    col = row.CreateCell(10);
                     col.SetCellValue("");
                 }
                 else
                 {
                     // 建议授信人姓名
-                    col = row.CreateCell(5);
+                    col = row.CreateCell(9);
                     col.SetCellValue(item.SuggestCreditor.MemberName);
 
                     // 建议授信人身份证号
-                    col = row.CreateCell(6);
+                    col = row.CreateCell(10);
                     col.SetCellValue(item.SuggestCreditor.IdNumber);
                 }
                 
 
                 // 建议授信额(万元)
-                col = row.CreateCell(7);
+                col = row.CreateCell(11);
                 col.SetCellValue(item.SuggestCreditLimit.HasValue ? item.SuggestCreditLimit.Value : 0);
 
                 // 偏离过大警告
-                col = row.CreateCell(8);
-                col.SetCellValue(item.DeviationMark);
+                col = row.CreateCell(12);
+                col.SetCellValue(item.DeviationMark ? "是" : "");
 
                 // 出现一户风险情况认定
-                col = row.CreateCell(9);
-                col.SetCellValue(item.DangerUserMark);
+                col = row.CreateCell(13);
+                col.SetCellValue(item.DangerUserMark ? "是" : "");
 
                 // 拒绝授信表示标识
-                col = row.CreateCell(10);
-                col.SetCellValue(item.RefuseMark);
+                col = row.CreateCell(14);
+                col.SetCellValue(item.RefuseMark ? "是" : "");
 
                 if (memberCount > 1)
                 {
                     // 合并户号
                     sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 0, 0));
                     // 合并建议授信人姓名
-                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 5, 5));
-                    // 合并建议授信人身份证号
-                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 6, 6));
-                    // 合并建议授信额
-                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 7, 7));
-                    // 合并偏离过大警告
-                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 8, 8));
-                    // 合并出现一户风险情况认定
                     sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 9, 9));
-                    // 合并拒绝授信表示标识
+                    // 合并建议授信人身份证号
                     sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 10, 10));
-                    // 合并支行确认授信人名字
+                    // 合并建议授信额
                     sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 11, 11));
-                    // 合并支行确认授信人身份证号
+                    // 合并偏离过大警告
                     sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 12, 12));
-                    // 合并支行确认授信额度
+                    // 合并出现一户风险情况认定
                     sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 13, 13));
+                    // 合并拒绝授信表示标识
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 14, 14));
+                    // 合并支行确认授信人名字
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 15, 15));
+                    // 合并支行确认授信人身份证号
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 16, 16));
+                    // 合并支行确认授信额度
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowIndex, rowIndex + memberCount - 1, 17, 17));
                 }
 
                 for(var i = 0; i < item.Members.Count; i++)
@@ -706,6 +718,18 @@ namespace Admin.Core.Service.Questionnaire.HouseHold
                     // 与户主关系
                     col = row.CreateCell(4);
                     col.SetCellValue(item.Members[i].Relationship);
+
+                    col = row.CreateCell(5);
+                    col.SetCellValue(item.Members[i].SignedContractOrNot ? "有" : "");
+
+                    col = row.CreateCell(6);
+                    col.SetCellValue(item.Members[i].MaxContractDate.HasValue ? item.Members[i].MaxContractDate.Value.ToString("yyyy-MM-dd") : "");
+
+                    col = row.CreateCell(7);
+                    col.SetCellValue(item.Members[i].SpouseSignedContract ? "有" : "");
+
+                    col = row.CreateCell(8);
+                    col.SetCellValue(item.Members[i].SpouseMaxContractDate.HasValue ? item.Members[i].SpouseMaxContractDate.Value.ToString("yyyy-MM-dd") : "");
 
                     rowIndex += 1;
                 }

@@ -91,6 +91,26 @@ namespace Admin.Core.Model.Questionnaire
         /// </summary>
         public bool OwnedHarvestInternet { get; set; }
 
+        /// <summary>
+        /// 是否有合同
+        /// </summary>
+        public bool SignedContractOrNot { get; set; }
+
+        /// <summary>
+        /// 合同最大时间
+        /// </summary>
+        public DateTime? MaxContractDate { get; set; }
+
+        /// <summary>
+        /// 配偶是否有合同
+        /// </summary>
+        public bool SpouseSignedContract { get; set; }
+
+        /// <summary>
+        /// 配偶合同最大时间
+        /// </summary>
+        public DateTime? SpouseMaxContractDate { get; set; }
+
         [Navigate(nameof(MemberResidenceEntity.HouseHoldMemberId))]
         public List<MemberResidenceEntity> MemberResidences { get; set; }
     }

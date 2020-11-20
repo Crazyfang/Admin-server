@@ -415,6 +415,15 @@ namespace Admin.Core.Service.Record.Record
                         OperateType = "编辑",
                         OperateInfo = $"编辑了{recordEntity.RecordUserName}档案"
                     };
+                    // 删除已移除的文件类别
+                    var fileTypeIdList = fileInput.Where(i => i.CheckedRecordFileTypeId != 0).Select(i => i.CheckedRecordFileTypeId);
+                    var deletedFileTypeIdList = await _checkedRecordFileTypeRepository.Select.Where(i => i.RecordId == input.Id).ToListAsync(i => i.Id);
+                    foreach(var item in deletedFileTypeIdList.Except(fileTypeIdList))
+                    {
+                        await _checkedRecordFileTypeRepository.DeleteAsync(i => i.Id == item);
+                        await _checkedRecordFileRepository.DeleteAsync(i => i.CheckedRecordFileTypeId == item);
+                    }
+
                     foreach (var recordFileTypeInput in fileInput)
                     {
                         var recordFileType = await _recordFileTypeRepository.Select.WhereDynamic(recordFileTypeInput.RecordFileTypeId).ToOneAsync();
@@ -641,17 +650,53 @@ namespace Admin.Core.Service.Record.Record
                 OperateType = "补充提交",
                 OperateInfo = $"补充提交 {record.UserName}档案"
             };
+            // 删除已经删除的选中文件类别
+            // 删除文件类型下有已移交的文件则只是删除未移交的文件，若全是未移交，则连同文件类型也一起删除
+            var idList = input.Where(i => i.CheckedRecordFileTypeId != 0).Select(i => i.CheckedRecordFileTypeId).ToList();
+            var oldIdList = await _checkedRecordFileTypeRepository.Select.Where(i => i.RecordId == record.Id).ToListAsync(i => i.Id);
+            foreach(var checkedRecordFileTypeId in oldIdList.Except(idList))
+            {
+                var checkedFileCount = await _checkedRecordFileRepository.Select.Where(i => i.CheckedRecordFileTypeId == checkedRecordFileTypeId && i.HandOverSign != 0).CountAsync();
+                if(checkedFileCount > 0)
+                {
+                    await _checkedRecordFileRepository.DeleteAsync(i => i.CheckedRecordFileTypeId == checkedRecordFileTypeId && i.HandOverSign == 0);
+                }
+                else
+                {
+                    await _checkedRecordFileTypeRepository.DeleteAsync(i => i.Id == checkedRecordFileTypeId);
+                    await _checkedRecordFileRepository.DeleteAsync(i => i.CheckedRecordFileTypeId == checkedRecordFileTypeId && i.HandOverSign == 0);
+                }
+            }
+
             foreach (var recordFileType in input)
             {
                 var child = recordFileType.Children.Where(i => i.Checked == true);
 
                 if (child.Count() == 0)
                 {
-                    continue;
+                    if(recordFileType.CheckedRecordFileTypeId != 0)
+                    {
+                        // 判断当前文件类型下是否存在移交的文件，若无则删除当前文件类型，若有，则保留
+                        var fileCount = await _checkedRecordFileRepository.Select.Where(i => i.CheckedRecordFileTypeId == recordFileType.CheckedRecordFileTypeId && i.HandOverSign != 0).CountAsync();
+                        if(fileCount == 0)
+                        {
+                            await _checkedRecordFileTypeRepository.DeleteAsync(i => i.Id == recordFileType.CheckedRecordFileTypeId);
+                        }
+                        await _checkedRecordFileRepository.DeleteAsync(i => i.CheckedRecordFileTypeId == recordFileType.CheckedRecordFileTypeId && i.HandOverSign == 0);
+                    }
+                    // 对已经取消勾选文件至为0的文件类别进行删除
+                    //if(recordFileType.CheckedRecordFileTypeId != 0)
+                    //{
+                    //    // 删除选中文件类别
+                    //    await _checkedRecordFileTypeRepository.DeleteAsync(recordFileType.CheckedRecordFileTypeId);
+                    //    // 删除选中文件
+                    //    await _checkedRecordFileRepository.DeleteAsync(i => i.CheckedRecordFileTypeId == recordFileType.CheckedRecordFileTypeId);
+                    //}
                 }
                 else
                 {
                     var checkedRecordFileTypeId = recordFileType.CheckedRecordFileTypeId;
+                    // 选中文件类别号为0代表是新增
                     if (recordFileType.CheckedRecordFileTypeId == 0)
                     {
                         var fileType = await _recordFileTypeRepository.Select.WhereDynamic(recordFileType.RecordFileTypeId).ToOneAsync();
@@ -669,6 +714,11 @@ namespace Admin.Core.Service.Record.Record
                     //var checkedRecordFileIdList = checkedRecordFileList.Select(i => i.Id).ToList();
                     //var dataBaseIdList = await _checkedRecordFileRepository.Select
                     //    .Where(i => i.RecordId == )
+                    // 删除取消勾选的文件
+                    var checedFileIdList = checkedRecordFileList.Where(i => i.Id != 0).Select(i => i.Id);
+                    var oldCheckedFileIdList = await _checkedRecordFileRepository.Select.Where(i => i.CheckedRecordFileTypeId == checkedRecordFileTypeId && !checedFileIdList.Contains(i.Id)).ToListAsync(i => i.Id);
+                    await _checkedRecordFileRepository.DeleteAsync(i => oldCheckedFileIdList.Contains(i.Id));
+
                     foreach (var checkedRecordFile in checkedRecordFileList)
                     {
                         if (checkedRecordFile.OtherSign == 0)
@@ -744,6 +794,7 @@ namespace Admin.Core.Service.Record.Record
                 }
             }
 
+            // 更新当前档案状态
             var noHandCount = await _checkedRecordFileRepository.Select
                 .Where(i => i.HandOverSign == 2 && i.RecordId == record.Id)
                 .CountAsync();

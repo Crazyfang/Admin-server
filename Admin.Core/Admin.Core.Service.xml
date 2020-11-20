@@ -1423,6 +1423,377 @@
             说明
             </summary>
         </member>
+        <member name="M:Admin.Core.Service.Antimoney.Company.ICompanyService.CompanyPageAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Model.Antimoney.CompanyEntity})">
+            <summary>
+            返回公司分页数据
+            </summary>
+            <param name="input">分页条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Company.ICompanyService.AddCompanyAsync(Admin.Core.Service.Antimoney.Company.Input.CompanyAddInput)">
+            <summary>
+            添加公司
+            </summary>
+            <param name="input">添加公司基本信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Company.ICompanyService.EditCompanyAsync(Admin.Core.Service.Antimoney.Company.Input.CompanyEditInput)">
+            <summary>
+            编辑公司
+            </summary>
+            <param name="input">编辑公司基本信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Company.ICompanyService.GetCompanyAsync(System.Int64)">
+            <summary>
+            根据公司主键获取公司信息
+            </summary>
+            <param name="companyId">公司主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Company.ICompanyService.DeleteCompanyAsync(System.Int64)">
+            <summary>
+            根据公司主键删除公司
+            </summary>
+            <param name="companyId">公司主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Contract.IContractService.ContractPageAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Service.Antimoney.Contract.Input.ContractSearchInput})">
+            <summary>
+            合同分页
+            </summary>
+            <param name="input">分页信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Contract.IContractService.AddContractAsync(Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput)">
+            <summary>
+            添加合同
+            </summary>
+            <param name="input">合同基本信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Contract.IContractService.EditContractAsync(Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput)">
+            <summary>
+            编辑合同
+            </summary>
+            <param name="input">合同基本信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Contract.IContractService.ReturnFileByContractIdAsync(System.Int64)">
+            <summary>
+            根据合同号返回文件列表
+            </summary>
+            <param name="contractId">合同号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Contract.IContractService.GetContractAsync(System.Int64)">
+            <summary>
+            根据主键获取合同信息
+            </summary>
+            <param name="contractId">合同主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Contract.IContractService.DeleteContractAsync(System.Int64)">
+            <summary>
+            根据主键删除合同信息
+            </summary>
+            <param name="contratId">合同主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Contract.IContractService.GetNoticeAsync(System.Int64)">
+            <summary>
+            获取通知
+            </summary>
+            <param name="contractId">合同主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Contract.IContractService.AddOrEditNoticeAsync(Admin.Core.Service.Antimoney.Contract.Input.ContractNoticeInput)">
+            <summary>
+            添加或更新通知
+            </summary>
+            <param name="input">添加内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Contract.IContractService.GenerateContractListAsync(Admin.Core.Common.Input.PageInput{Admin.Core.Service.Antimoney.Contract.Input.ContractSearchInput})">
+            <summary>
+            生成合同Excel表
+            </summary>
+            <param name="input">分页参数</param>
+            <returns></returns>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.ContractNo">
+            <summary>
+             合同号
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.RemitterName">
+            <summary>
+            汇款人姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.RemitterAddress">
+            <summary>
+            汇款人地址
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.ConsigneeName">
+            <summary>
+            收货人姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.ConsigneeAddress">
+            <summary>
+            收货人地址
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.CurrencyId">
+            <summary>
+            币种
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.Amount">
+            <summary>
+            金额
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.SettlementDate">
+            <summary>
+            解付日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.PaymentNature">
+            <summary>
+            款项性质
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.DeliveryDate">
+            <summary>
+            发货日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.DataSubmitInfo">
+            <summary>
+            资料提交情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.LadingInquireDate">
+            <summary>
+            提单查询日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractAddInput.Remarks">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.ContractNo">
+            <summary>
+             合同号
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.RemitterName">
+            <summary>
+            汇款人姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.RemitterAddress">
+            <summary>
+            汇款人地址
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.ConsigneeName">
+            <summary>
+            收货人姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.ConsigneeAddress">
+            <summary>
+            收货人地址
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.CurrencyId">
+            <summary>
+            币种
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.Amount">
+            <summary>
+            金额
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.SettlementDate">
+            <summary>
+            解付日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.PaymentNature">
+            <summary>
+            款项性质
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.DeliveryDate">
+            <summary>
+            发货日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.DataSubmitInfo">
+            <summary>
+            资料提交情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.LadingInquireDate">
+            <summary>
+            提单查询日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Input.ContractEditInput.Remarks">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.ContractNo">
+            <summary>
+             合同号
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.RemitterName">
+            <summary>
+            汇款人姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.RemitterAddress">
+            <summary>
+            汇款人地址
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.ConsigneeName">
+            <summary>
+            收货人姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.ConsigneeAddress">
+            <summary>
+            收货人地址
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.Currency">
+            <summary>
+            币种
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.Amount">
+            <summary>
+            金额
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.SettlementDate">
+            <summary>
+            解付日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.PaymentNature">
+            <summary>
+            款项性质
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.DeliveryDate">
+            <summary>
+            发货日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.Remarks">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.AwakeTime">
+            <summary>
+            提醒日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.AwakeNotes">
+            <summary>
+            提醒事项
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.DataSubmitInfo">
+            <summary>
+            资料提交情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.LadingInquireDate">
+            <summary>
+            提单查询日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.Contract.Output.ContractPageOutput.EnableSign">
+            <summary>
+            启用标记
+            </summary>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Currency.ICurrencyService.ReturnSelectListAsync">
+            <summary>
+            返回币种选择列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.File.IFileService.AddFileAsync(System.Collections.Generic.IList{Admin.Core.Service.Antimoney.File.Input.FileAddOrEditInput})">
+            <summary>
+            添加合同下的文件
+            </summary>
+            <param name="input">文件列表</param>
+            <returns></returns>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.File.Input.FileAddOrEditInput.FileName">
+            <summary>
+            文件名称
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.File.Input.FileAddOrEditInput.FilePath">
+            <summary>
+            文件路径
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.File.Output.FileAddOutput.FileName">
+            <summary>
+            文件名称
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Service.Antimoney.File.Output.FileAddOutput.FilePath">
+            <summary>
+            文件路径
+            </summary>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Picture.IPictureService.ReturnPictureListByFileIdAsync(System.Int64)">
+            <summary>
+            返回文件下面的图片列表
+            </summary>
+            <param name="fileId">文件主键</param>
+            <returns></returns>
+        </member>
+        <member name="M:Admin.Core.Service.Antimoney.Picture.IPictureService.AddOrEditPictureAsync(System.Collections.Generic.List{Admin.Core.Service.Antimoney.Picture.Output.PictureListOutput},System.Int64)">
+            <summary>
+            添加图片
+            </summary>
+            <param name="input">图片列表</param>
+            <param name="fileId">文件主键</param>
+            <returns></returns>
+        </member>
+        <member name="T:Admin.Core.Service.Antimoney.Picture.Output.PictureListOutput">
+            <summary>
+            图片列表输出
+            </summary>
+        </member>
         <member name="M:Admin.Core.Service.Loan.LoanMethod.ILoanMethodService.AddLoanMethodAsync(Admin.Core.Model.Loan.LoanMethodEntity)">
             <summary>
             添加贷款方式变更

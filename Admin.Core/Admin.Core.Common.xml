@@ -515,6 +515,11 @@
             文档图片上传配置
             </summary>
         </member>
+        <member name="P:Admin.Core.Common.Configs.UploadConfig.Antimoney">
+            <summary>
+            反洗钱图片上传
+            </summary>
+        </member>
         <member name="T:Admin.Core.Common.Configs.FileUploadConfig">
             <summary>
             文件上传配置

@@ -58,5 +58,12 @@
     <Folder Include="Questionnaire\Calculate\" />
     <Folder Include="Questionnaire\UserPower\" />
     <Folder Include="Questionnaire\SectionCode\" />
+    <Folder Include="Antimoney\" />
+    <Folder Include="Antimoney\Company\" />
+    <Folder Include="Antimoney\Contract\" />
+    <Folder Include="Antimoney\File\" />
+    <Folder Include="Antimoney\PresetFile\" />
+    <Folder Include="Antimoney\Currency\" />
+    <Folder Include="Antimoney\Picture\" />
   </ItemGroup>
 </Project>

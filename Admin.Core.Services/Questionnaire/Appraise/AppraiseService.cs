@@ -49,7 +49,6 @@ namespace Admin.Core.Service.Questionnaire.Appraise
             var members = await _houseHoldMemberRepository.Select
                 .Where(i => i.HouseHoldId == id)
                 .ToListAsync();
-
             var appraise = new AppraiseAddOutput()
             {
                 HouseHoldId = id,

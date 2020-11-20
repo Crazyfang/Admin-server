@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Admin.Core.Common.Configs;
 using Microsoft.Extensions.FileProviders;
+using System;
 
 namespace Admin.Core.Extensions
 {
@@ -28,6 +29,7 @@ namespace Admin.Core.Extensions
             var uploadConfig = app.ApplicationServices.GetRequiredService<IOptions<UploadConfig>>();
             UseFileUploadConfig(app, uploadConfig.Value.Avatar);
             UseFileUploadConfig(app, uploadConfig.Value.Document);
+            UseFileUploadConfig(app, uploadConfig.Value.Antimoney);
         }
     }
 

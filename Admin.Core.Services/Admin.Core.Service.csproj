@@ -96,5 +96,20 @@
     <Folder Include="Questionnaire\UserPower\" />
     <Folder Include="Questionnaire\SectionCode\" />
     <Folder Include="Questionnaire\SectionCode\Output\" />
+    <Folder Include="Antimoney\" />
+    <Folder Include="Antimoney\Company\" />
+    <Folder Include="Antimoney\Company\Output\" />
+    <Folder Include="Antimoney\Company\Input\" />
+    <Folder Include="Antimoney\Contract\" />
+    <Folder Include="Antimoney\Contract\Input\" />
+    <Folder Include="Antimoney\Contract\Output\" />
+    <Folder Include="Antimoney\File\" />
+    <Folder Include="Antimoney\File\Input\" />
+    <Folder Include="Antimoney\File\Output\" />
+    <Folder Include="Antimoney\Currency\" />
+    <Folder Include="Antimoney\Currency\Output\" />
+    <Folder Include="Antimoney\Picture\" />
+    <Folder Include="Antimoney\Picture\Input\" />
+    <Folder Include="Antimoney\Picture\Output\" />
   </ItemGroup>
 </Project>

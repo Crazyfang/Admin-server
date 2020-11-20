@@ -534,6 +534,126 @@
             排序
             </summary>
         </member>
+        <member name="P:Admin.Core.Model.Antimoney.CompanyEntity.CompanyName">
+            <summary>
+            公司名称
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.CompanyEntity.BusinessLicense">
+            <summary>
+            营业执照号码
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.ContractNo">
+            <summary>
+             合同号
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.RemitterName">
+            <summary>
+            汇款人姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.RemitterAddress">
+            <summary>
+            汇款人地址
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.ConsigneeName">
+            <summary>
+            收货人姓名
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.ConsigneeAddress">
+            <summary>
+            收货人地址
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.Amount">
+            <summary>
+            金额
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.SettlementDate">
+            <summary>
+            解付日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.PaymentNature">
+            <summary>
+            款项性质
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.DeliveryDate">
+            <summary>
+            发货日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.Remarks">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.AwakeTime">
+            <summary>
+            提醒日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.AwakeNotes">
+            <summary>
+            提醒事项
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.DataSubmitInfo">
+            <summary>
+            资料提交情况
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.LadingInquireDate">
+            <summary>
+            提单查询日期
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.ContractEntity.EnableSign">
+            <summary>
+            启用标记
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.FileEntity.FileName">
+            <summary>
+            文件名称
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.FileEntity.FilePath">
+            <summary>
+            文件路径
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.FileEntity.Contract">
+            <summary>
+            关联合同
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.FileEntity.PresetFile">
+            <summary>
+            关联预设文件
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.FileEntity.OverSign">
+            <summary>
+            完成标记
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.FileEntity.PictureList">
+            <summary>
+            图片列表
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Antimoney.PresetFileEntity.FileName">
+            <summary>
+            文件名字
+            </summary>
+        </member>
         <member name="P:Admin.Core.Model.Loan.CompressDeadlineEntity.BeginTime">
             <summary>
             起始日期
@@ -1003,6 +1123,26 @@
         <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.OwnedHarvestInternet">
             <summary>
             是否有丰收互联
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.SignedContractOrNot">
+            <summary>
+            是否有合同
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.MaxContractDate">
+            <summary>
+            合同最大时间
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.SpouseSignedContract">
+            <summary>
+            配偶是否有合同
+            </summary>
+        </member>
+        <member name="P:Admin.Core.Model.Questionnaire.HouseHoldMemberEntity.SpouseMaxContractDate">
+            <summary>
+            配偶合同最大时间
             </summary>
         </member>
         <member name="T:Admin.Core.Model.Questionnaire.MemberResidenceEntity">

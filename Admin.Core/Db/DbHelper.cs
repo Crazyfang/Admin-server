@@ -15,6 +15,7 @@ using Admin.Core.Model.Record;
 using Admin.Core.Controllers.Record;
 using Admin.Core.Model.Loan;
 using Admin.Core.Model.Questionnaire;
+using Admin.Core.Model.Antimoney;
 
 namespace Admin.Core.Db
 {
@@ -113,7 +114,12 @@ namespace Admin.Core.Db
                 typeof(MemberResidenceEntity),
                 typeof(CalculateEntity),
                 typeof(UserPowerEntity),
-                typeof(SectionCodeEntity)
+                typeof(SectionCodeEntity),
+                typeof(CompanyEntity),
+                typeof(ContractEntity),
+                typeof(FileEntity),
+                typeof(PresetFileEntity),
+                typeof(CurrencyEntity)
             });
             Console.WriteLine($"{(msg.NotNull() ? msg : $"sync {dbType} structure")} succeed\r\n");
         }
