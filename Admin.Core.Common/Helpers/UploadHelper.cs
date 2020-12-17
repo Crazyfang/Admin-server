@@ -3,6 +3,7 @@ using Admin.Core.Common.Configs;
 using Admin.Core.Common.Output;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -17,6 +18,65 @@ namespace Admin.Core.Common.Helpers
     [SingleInstance]
     public class UploadHelper
     {
+        /// <summary>
+        /// 上传多文件
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="config"></param>
+        /// <param name="args"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<IResponseOutput<List<FileInfo>>> UploadMultiAsync(List<IFormFile> files, FileUploadConfig config, object args, CancellationToken cancellationToken = default)
+        {
+            var res = new ResponseOutput<List<FileInfo>>();
+            var msg = "";
+            var count = 0;
+            var gather = new List<FileInfo>();
+
+            if (files == null || files.Count < 1)
+            {
+                return res.NotOk("请上传文件！");
+            }
+            foreach (var file in files)
+            {
+                //格式限制
+                if (!config.ContentType.Contains(file.ContentType))
+                {
+                    msg += $"{file.FileName}文件格式错误<br>";
+                }
+
+                //大小限制
+                if (!(file.Length <= config.MaxSize))
+                {
+                    msg += $"{file.FileName}文件格式错误<br>";
+                }
+
+                var fileInfo = new FileInfo(file.FileName, file.Length)
+                {
+                    UploadPath = config.UploadPath,
+                    RequestPath = config.RequestPath
+                };
+
+                var dateTimeFormat = config.DateTimeFormat.NotNull() ? DateTime.Now.ToString(config.DateTimeFormat) : "";
+                var format = config.Format.NotNull() ? StringHelper.Format(config.Format, args) : "";
+                fileInfo.RelativePath = Path.Combine(dateTimeFormat, format).ToPath();
+
+                if (!Directory.Exists(fileInfo.FileDirectory))
+                {
+                    Directory.CreateDirectory(fileInfo.FileDirectory);
+                }
+
+                fileInfo.SaveName = $"{IdWorkerHelper.GenId64()}.{fileInfo.Extension}";
+
+                await SaveAsync(file, fileInfo.FilePath, cancellationToken);
+                count += 1;
+                gather.Add(fileInfo);
+            }
+
+            msg = msg.Insert(0, $"上传成功{count}张图片<br>");
+            return res.Ok(gather, msg);
+        }
+
         /// <summary>
         /// 上传单文件
         /// </summary>

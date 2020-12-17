@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Linq;
 
 namespace Admin.Core.Controllers.Antimoney
 {
@@ -52,13 +53,13 @@ namespace Admin.Core.Controllers.Antimoney
         /// <returns></returns>
         [HttpPost]
         [Login]
-        public async Task<IResponseOutput> FileImageUpload([FromForm] IFormFile file)
+        public async Task<IResponseOutput> FileImageUpload([FromForm]List<IFormFile> file)
         {
             var config = _uploadConfig.Antimoney;
-            var res = await _uploadHelper.UploadAsync(file, config, new { Directory = "Image" });
+            var res = await _uploadHelper.UploadMultiAsync(file, config, new { Directory = "Image" });
             if (res.Success)
             {
-                return ResponseOutput.Ok(res.Data.FileRelativePath);
+                return ResponseOutput.Ok(res.Data, res.Msg);
             }
 
             return ResponseOutput.NotOk("上传失败！");

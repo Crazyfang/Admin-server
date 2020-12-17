@@ -35,6 +35,7 @@ using PermissionHandler = Admin.Core.Auth.PermissionHandler;
 using Admin.Core.Extensions;
 using Admin.Core.Common.Attributes;
 using Admin.Core.Hubs;
+using Quartz;
 
 namespace Admin.Core
 {
@@ -225,6 +226,54 @@ namespace Admin.Core
 
             //阻止NLog接收状态消息
             services.Configure<ConsoleLifetimeOptions>(opts => opts.SuppressStatusMessages = true);
+            //services.AddQuartz(q =>
+            //{
+            //    // handy when part of cluster or you want to otherwise identify multiple schedulers
+            //    q.SchedulerId = "Scheduler-Core";
+
+            //    // we take this from appsettings.json, just show it's possible
+            //    // q.SchedulerName = "Quartz ASP.NET Core Sample Scheduler";
+
+            //    // we could leave DI configuration intact and then jobs need
+            //    // to have public no-arg constructor
+            //    // the MS DI is expected to produce transient job instances
+            //    // this WONT'T work with scoped services like EF Core's DbContext
+            //    q.UseMicrosoftDependencyInjectionJobFactory(options =>
+            //    {
+            //        // if we don't have the job in DI, allow fallback 
+            //        // to configure via default constructor
+            //        options.AllowDefaultConstructor = true;
+            //    });
+
+            //    // or for scoped service support like EF Core DbContext
+            //    // q.UseMicrosoftDependencyInjectionScopedJobFactory();
+
+            //    // these are the defaults
+            //    q.UseSimpleTypeLoader();
+            //    q.UseInMemoryStore();
+            //    q.UseDefaultThreadPool(tp =>
+            //    {
+            //        tp.MaxConcurrency = 10;
+            //    });
+
+            //    // quickest way to create a job with single trigger is to use ScheduleJob
+            //    // (requires version 3.2)
+            //    q.ScheduleJob<TestJob>(trigger => trigger
+            //        .WithIdentity("Combined Configuration Trigger")
+            //        .StartAt(DateBuilder.EvenSecondDate(DateTimeOffset.UtcNow.AddSeconds(7)))
+            //        .WithDailyTimeIntervalSchedule(x => x.WithInterval(10, IntervalUnit.Second))
+            //        .WithDescription("my awesome trigger configured for a job with single call")
+            //    );
+
+            //    // convert time zones using converter that can handle Windows/Linux differences
+            //    q.UseTimeZoneConverter();
+            //});
+
+            //services.AddQuartzServer(options =>
+            //{
+            //    // when shutting down we want jobs to complete gracefully
+            //    options.WaitForJobsToComplete = true;
+            //});
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

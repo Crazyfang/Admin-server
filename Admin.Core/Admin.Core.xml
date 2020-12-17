@@ -805,7 +805,7 @@
             <param name="input">文件列表</param>
             <returns></returns>
         </member>
-        <member name="M:Admin.Core.Controllers.Antimoney.FileController.FileImageUpload(Microsoft.AspNetCore.Http.IFormFile)">
+        <member name="M:Admin.Core.Controllers.Antimoney.FileController.FileImageUpload(System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile})">
             <summary>
             上传文件图片
             </summary>

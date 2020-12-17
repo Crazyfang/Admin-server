@@ -931,6 +931,16 @@
             文件上传帮助类
             </summary>
         </member>
+        <member name="M:Admin.Core.Common.Helpers.UploadHelper.UploadMultiAsync(System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile},Admin.Core.Common.Configs.FileUploadConfig,System.Object,System.Threading.CancellationToken)">
+            <summary>
+            上传多文件
+            </summary>
+            <param name="file"></param>
+            <param name="config"></param>
+            <param name="args"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:Admin.Core.Common.Helpers.UploadHelper.UploadAsync(Microsoft.AspNetCore.Http.IFormFile,Admin.Core.Common.Configs.FileUploadConfig,System.Object,System.Threading.CancellationToken)">
             <summary>
             上传单文件
