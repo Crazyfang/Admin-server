@@ -162,7 +162,7 @@ namespace Admin.Core.Controllers.Record
         [AllowAnonymous]
         public async Task<IResponseOutput> GetAdditionalInfo(long id)
         {
-            return await _recordService.GetRecordAddtionalInfoAsync(id);
+            return await _recordService.GetRecordAdditionalInfoAsync(id);
         }
 
         /// <summary>
@@ -183,7 +183,6 @@ namespace Admin.Core.Controllers.Record
             if (fullAccess)
             {
                 return await _recordService.GetAsync(id);
-
             }
             else
             {
@@ -195,7 +194,7 @@ namespace Admin.Core.Controllers.Record
                 }
                 else
                 {
-                    return await _recordService.GetRecordAddtionalInfoAsync(id);
+                    return await _recordService.GetRecordAdditionalInfoAsync(id);
                 }
             }
         }

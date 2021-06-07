@@ -55,7 +55,7 @@ namespace Admin.Core.Service.Record.Record
             , ICheckedRecordFileRepository checkedRecordFileRepository
             , IRecordFileTypeRepository recordFileTypeRepository
             , IRecordHistoryRepository recordHistoryRepository
-            , IRecordFileRepository recordFileRepostory
+            , IRecordFileRepository recordFileRepository
             , ICheckedRecordFileTypeRepository checkedRecordFileTypeRepository
             , IRecordIdRepository recordIdRepository
             , IDepartmentRepository departmentRepository
@@ -71,7 +71,7 @@ namespace Admin.Core.Service.Record.Record
             _checkedRecordFileRepository = checkedRecordFileRepository;
             _recordFileTypeRepository = recordFileTypeRepository;
             _recordHistoryRepository = recordHistoryRepository;
-            _recordFileRepository = recordFileRepostory;
+            _recordFileRepository = recordFileRepository;
             _checkedRecordFileTypeRepository = checkedRecordFileTypeRepository;
             _recordIdRepository = recordIdRepository;
             _departmentRepository = departmentRepository;
@@ -162,7 +162,7 @@ namespace Admin.Core.Service.Record.Record
             return ResponseOutput.Ok(output);
         }
 
-        public async Task<IResponseOutput> GetRecordAddtionalInfoAsync(long id)
+        public async Task<IResponseOutput> GetRecordAdditionalInfoAsync(long id)
         {
             var output = new RecordAdditionalInfoOutput();
             var entity = await _recordRepository.Select.WhereDynamic(id).Include(i => i.ManagerDepartment).Include(i => i.ManagerUser).ToOneAsync();
@@ -211,9 +211,9 @@ namespace Admin.Core.Service.Record.Record
                     .Where(i => i.RecordId == id)
                     .Where(i => i.CheckedRecordFileTypeId == item.CheckedRecordFileTypeId)
                     .ToListAsync();
-                var addtionalRecordFileList = _mapper.Map<List<RecordFileAdditionalOuput>>(recordFileList);
+                var additionalRecordFileList = _mapper.Map<List<RecordFileAdditionalOuput>>(recordFileList);
 
-                foreach(var file in addtionalRecordFileList)
+                foreach(var file in additionalRecordFileList)
                 {
                     foreach(var checkedFile in checkedRecordFileList)
                     {
@@ -240,10 +240,10 @@ namespace Admin.Core.Service.Record.Record
                         CheckedRecordFileId = otherFile.Id,
                         HandOverSign = otherFile.HandOverSign
                     };
-                    addtionalRecordFileList.Add(otherEntity);
+                    additionalRecordFileList.Add(otherEntity);
                 }
 
-                item.Children = addtionalRecordFileList;
+                item.Children = additionalRecordFileList;
             }
 
             output.RecordFileTypeList = entityList;
@@ -416,7 +416,7 @@ namespace Admin.Core.Service.Record.Record
                         OperateInfo = $"编辑了{recordEntity.RecordUserName}档案"
                     };
                     // 删除已移除的文件类别
-                    var fileTypeIdList = fileInput.Where(i => i.CheckedRecordFileTypeId != 0).Select(i => i.CheckedRecordFileTypeId);
+                    var fileTypeIdList = fileInput.Where(i => i.CheckedRecordFileTypeId != 0).Select(i => i.CheckedRecordFileTypeId).ToList();
                     var deletedFileTypeIdList = await _checkedRecordFileTypeRepository.Select.Where(i => i.RecordId == input.Id).ToListAsync(i => i.Id);
                     foreach(var item in deletedFileTypeIdList.Except(fileTypeIdList))
                     {
@@ -432,7 +432,7 @@ namespace Admin.Core.Service.Record.Record
                            
                             var checkedFileList = recordFileTypeInput.Children.Where(i => i.Checked == true);
 
-                            if (checkedFileList.Count() > 0)
+                            if (checkedFileList.Any())
                             {
                                 var checkedRecordFileTypeEntity = new CheckedRecordFileTypeEntity()
                                 {
@@ -471,7 +471,7 @@ namespace Admin.Core.Service.Record.Record
                             var checkedRecordFileType = await _checkedRecordFileTypeRepository.Select.WhereDynamic(recordFileTypeInput.CheckedRecordFileTypeId).ToOneAsync();
                             var checkedFileList = recordFileTypeInput.Children.Where(i => i.Checked == true);
 
-                            if (checkedFileList.Count() > 0 || checkedRecordFileType.Remarks != recordFileTypeInput.Remarks)
+                            if (checkedFileList.Any() || checkedRecordFileType.Remarks != recordFileTypeInput.Remarks)
                             {
                                 recordHistory.OperateInfo += $"<br> 文件类型:{recordFileType.FileTypeName}";
                                 if (!string.IsNullOrEmpty(checkedRecordFileType.Remarks))
@@ -481,7 +481,7 @@ namespace Admin.Core.Service.Record.Record
                             }
 
                             //没有勾选项删除勾选文件类型
-                            if(checkedFileList.Count() == 0)
+                            if(!checkedFileList.Any())
                             {
                                 await _checkedRecordFileTypeRepository.DeleteAsync(checkedRecordFileType);
                             }
@@ -577,7 +577,7 @@ namespace Admin.Core.Service.Record.Record
                         var checkedRecordFileTypeId = await _checkedRecordFileTypeRepository.InsertAsync(checkedRecordFileTypeEntity);
                         var checkedFileList = recordFileTypeInput.Children.Where(i => i.Checked == true);
 
-                        if (checkedFileList.Count() > 0)
+                        if (checkedFileList.Any())
                         {
                             var recordFileType = await _recordFileTypeRepository.Select.WhereDynamic(recordFileTypeInput.RecordFileTypeId).ToOneAsync();
                             recordHistory.OperateInfo += $"<br> 文件类型:{recordFileType.FileTypeName}";
@@ -620,17 +620,17 @@ namespace Admin.Core.Service.Record.Record
                         .CountAsync();
                     if (borrowCount > 0)
                     {
-                        await _recordRepository.UpdateDiy.Set(i => i.Status, 2).ExecuteAffrowsAsync();
+                        await _recordRepository.UpdateDiy.Set(i => i.Status, 2).Where(i => i.Id == recordEntity.Id).ExecuteAffrowsAsync();
                     }
                     else
                     {
                         if (handCount > 0)
                         {
-                            await _recordRepository.UpdateDiy.Set(i => i.Status, 1).ExecuteAffrowsAsync();
+                            await _recordRepository.UpdateDiy.Set(i => i.Status, 1).Where(i => i.Id == recordEntity.Id).ExecuteAffrowsAsync();
                         }
                         else
                         {
-                            await _recordRepository.UpdateDiy.Set(i => i.Status, 0).ExecuteAffrowsAsync();
+                            await _recordRepository.UpdateDiy.Set(i => i.Status, 0).Where(i => i.Id == recordEntity.Id).ExecuteAffrowsAsync();
                         }
                     }
                     await _checkedRecordFileRepository.UpdateDiy.Set(i => i.HandOverSign, 0).Where(i => i.RecordId == input.Id && i.HandOverSign == 2).ExecuteAffrowsAsync();
@@ -657,10 +657,12 @@ namespace Admin.Core.Service.Record.Record
             foreach(var checkedRecordFileTypeId in oldIdList.Except(idList))
             {
                 var checkedFileCount = await _checkedRecordFileRepository.Select.Where(i => i.CheckedRecordFileTypeId == checkedRecordFileTypeId && i.HandOverSign != 0).CountAsync();
+                // 删除未移交的文件
                 if(checkedFileCount > 0)
                 {
                     await _checkedRecordFileRepository.DeleteAsync(i => i.CheckedRecordFileTypeId == checkedRecordFileTypeId && i.HandOverSign == 0);
                 }
+                // 删除未移交的文件并且删除档案类别
                 else
                 {
                     await _checkedRecordFileTypeRepository.DeleteAsync(i => i.Id == checkedRecordFileTypeId);
@@ -672,7 +674,7 @@ namespace Admin.Core.Service.Record.Record
             {
                 var child = recordFileType.Children.Where(i => i.Checked == true);
 
-                if (child.Count() == 0)
+                if (!child.Any())
                 {
                     if(recordFileType.CheckedRecordFileTypeId != 0)
                     {
@@ -715,8 +717,9 @@ namespace Admin.Core.Service.Record.Record
                     //var dataBaseIdList = await _checkedRecordFileRepository.Select
                     //    .Where(i => i.RecordId == )
                     // 删除取消勾选的文件
-                    var checedFileIdList = checkedRecordFileList.Where(i => i.Id != 0).Select(i => i.Id);
-                    var oldCheckedFileIdList = await _checkedRecordFileRepository.Select.Where(i => i.CheckedRecordFileTypeId == checkedRecordFileTypeId && !checedFileIdList.Contains(i.Id)).ToListAsync(i => i.Id);
+                    var checkedFileIdList = checkedRecordFileList.Where(i => i.Id != 0).Select(i => i.Id);
+                    // TODO 可能出现问题的地方，亟待解决
+                    var oldCheckedFileIdList = await _checkedRecordFileRepository.Select.Where(i => i.CheckedRecordFileTypeId == checkedRecordFileTypeId && !checkedFileIdList.Contains(i.Id) && i.HandOverSign == 0).ToListAsync(i => i.Id);
                     await _checkedRecordFileRepository.DeleteAsync(i => oldCheckedFileIdList.Contains(i.Id));
 
                     foreach (var checkedRecordFile in checkedRecordFileList)
@@ -895,7 +898,7 @@ namespace Admin.Core.Service.Record.Record
                     {
                         var count = item.Children.Where(i => i.Checked == true);
 
-                        if (count.Count() > 0)
+                        if (count.Any())
                         {
                             sign = true;
                             recordHistory.OperateInfo += $"<br> 档案类型 {item.Name}-{item.Remarks}";
@@ -1330,7 +1333,7 @@ namespace Admin.Core.Service.Record.Record
 
             var entity = new NotifyEntity()
             {
-                UserId = record.ManagerUserId.Value,
+                UserId = record.ManagerUserId.GetValueOrDefault(),
                 Message = $"{record.RecordId}档案申请更换文件成功"
             };
 

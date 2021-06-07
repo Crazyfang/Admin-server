@@ -69,7 +69,7 @@ namespace Admin.Core.Service.Record.Record
         /// </summary>
         /// <param name="id">档案主键</param>
         /// <returns></returns>
-        Task<IResponseOutput> GetRecordAddtionalInfoAsync(long id);
+        Task<IResponseOutput> GetRecordAdditionalInfoAsync(long id);
 
         /// <summary>
         /// 获取档案(直接返回类)

@@ -32,7 +32,7 @@
         </member>
         <member name="M:Admin.Core.Service.Admin.Api.IApiService.AddAsync(Admin.Core.Service.Admin.Api.Input.ApiAddInput)">
             <summary>
-            ���
+            ����
             </summary>
             <param name="input"></param>
             <returns></returns>
@@ -2625,7 +2625,7 @@
             <param name="id">档案主键</param>
             <returns></returns>
         </member>
-        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetRecordAddtionalInfoAsync(System.Int64)">
+        <member name="M:Admin.Core.Service.Record.Record.IRecordService.GetRecordAdditionalInfoAsync(System.Int64)">
             <summary>
             获取档案补充提交信息(包含已选中文件类别)
             </summary>
