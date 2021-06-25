@@ -6,5 +6,7 @@ namespace Admin.Core.Service.Antimoney.Contract.Input
         public long CompanyId { get; set; }
 
         public string ContractNo { get; set; }
+        
+        public double? Amount { get; set; }
     }
 }

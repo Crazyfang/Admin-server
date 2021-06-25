@@ -39,10 +39,12 @@ namespace Admin.Core.Service.Antimoney.Contract
         {
             var list = await _contractRepository.Select
                 .WhereIf(input.Filter.CompanyId != 0, i => i.CompanyId == input.Filter.CompanyId)
-                .WhereIf(!string.IsNullOrEmpty(input.Filter.ContractNo), i => i.ContractNo == input.Filter.ContractNo)
+                .WhereIf(!string.IsNullOrEmpty(input.Filter.ContractNo), i => i.ContractNo.Contains(input.Filter.ContractNo))
+                .WhereIf(input.Filter.Amount.HasValue, i => i.Amount == input.Filter.Amount)
                 .IncludeMany(i => i.Files)
                 .Include(i => i.Currency)
                 .Count(out var total)
+                .Page(input.CurrentPage, input.PageSize)
                 .ToListAsync();
 
             var output = new PageOutput<ContractPageOutput>()
