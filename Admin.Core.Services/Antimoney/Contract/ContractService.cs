@@ -38,6 +38,7 @@ namespace Admin.Core.Service.Antimoney.Contract
         public async Task<IResponseOutput> ContractPageAsync(PageInput<ContractSearchInput> input)
         {
             var list = await _contractRepository.Select
+                .Where(i => i.SettlementDate >= DateTime.Parse("2020-6-1"))
                 .WhereIf(input.Filter.CompanyId != 0, i => i.CompanyId == input.Filter.CompanyId)
                 .WhereIf(!string.IsNullOrEmpty(input.Filter.ContractNo), i => i.ContractNo.Contains(input.Filter.ContractNo))
                 .WhereIf(input.Filter.Amount.HasValue, i => i.Amount == input.Filter.Amount)
@@ -177,7 +178,7 @@ namespace Admin.Core.Service.Antimoney.Contract
 
             // 汇款人姓名
             col = row.CreateCell(2);
-            col.SetCellValue("汇款人姓名");
+            col.SetCellValue("汇款人名称");
 
             // 汇款人地址
             col = row.CreateCell(3);
@@ -185,7 +186,7 @@ namespace Admin.Core.Service.Antimoney.Contract
 
             // 收货人姓名
             col = row.CreateCell(4);
-            col.SetCellValue("收货人姓名");
+            col.SetCellValue("收货人名称");
 
             // 收货人地址
             col = row.CreateCell(5);

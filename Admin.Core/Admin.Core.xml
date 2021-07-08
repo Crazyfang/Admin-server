@@ -819,6 +819,14 @@
             <param name="fileId"></param>
             <returns></returns>
         </member>
+        <member name="M:Admin.Core.Controllers.Antimoney.PictureController.GetPictureList(System.Int64,System.Int64)">
+            <summary>
+            根据合同主键和文件主键返回文件列表
+            </summary>
+            <param name="contractId"></param>
+            <param name="fileId"></param>
+            <returns></returns>
+        </member>
         <member name="T:Admin.Core.Controllers.BaseController">
             <summary>
             基础控制器

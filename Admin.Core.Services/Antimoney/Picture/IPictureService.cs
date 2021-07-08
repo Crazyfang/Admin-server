@@ -22,5 +22,13 @@ namespace Admin.Core.Service.Antimoney.Picture
         /// <param name="fileId">文件主键</param>
         /// <returns></returns>
         Task<IResponseOutput> AddOrEditPictureAsync(List<PictureListOutput> input, long fileId);
+
+        /// <summary>
+        /// 通过合同主键返回图片列表
+        /// </summary>
+        /// <param name="contractId">合同主键</param>
+        /// <param name="fileId">文件主键(决定图片排列顺序)</param>
+        /// <returns></returns>
+        Task<IResponseOutput> ReturnPictureListByContractIdAsync(long contractId, long fileId);
     }
 }

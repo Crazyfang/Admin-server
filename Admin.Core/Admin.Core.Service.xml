@@ -1789,6 +1789,14 @@
             <param name="fileId">文件主键</param>
             <returns></returns>
         </member>
+        <member name="M:Admin.Core.Service.Antimoney.Picture.IPictureService.ReturnPictureListByContractIdAsync(System.Int64,System.Int64)">
+            <summary>
+            通过合同主键返回图片列表
+            </summary>
+            <param name="contractId">合同主键</param>
+            <param name="fileId">文件主键(决定图片排列顺序)</param>
+            <returns></returns>
+        </member>
         <member name="T:Admin.Core.Service.Antimoney.Picture.Output.PictureListOutput">
             <summary>
             图片列表输出
